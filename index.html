@@ -1,9 +1,1573 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <title>Breakout AI - Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breakout AI Solutions — Internal Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --navy-light: #1a3a5c;
+    --gold: #c9a84c;
+    --gold-light: #e8c96e;
+    --white: #ffffff;
+    --off-white: #f4f6f9;
+    --text-main: #1a1a2e;
+    --text-muted: #6b7a99;
+    --text-light: #9aa5be;
+    --border: #e2e8f0;
+    --green: #10b981;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --sidebar-w: 240px;
+    --header-h: 64px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+  }
+
+/* SIDEBAR */
+#sidebar {
+width: var(–sidebar-w);
+background: var(–navy);
+min-height: 100vh;
+position: fixed;
+top: 0; left: 0;
+display: flex;
+flex-direction: column;
+z-index: 100;
+}
+.sidebar-logo {
+padding: 24px 20px 20px;
+border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-logo .logo-mark {
+font-family: ‘Playfair Display’, serif;
+font-size: 17px;
+font-weight: 700;
+color: var(–white);
+line-height: 1.2;
+}
+.sidebar-logo .logo-sub {
+font-size: 10px;
+font-weight: 500;
+letter-spacing: 0.12em;
+color: var(–gold);
+text-transform: uppercase;
+margin-top: 3px;
+}
+.sidebar-nav {
+padding: 16px 0;
+flex: 1;
+}
+.nav-section-label {
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: rgba(255,255,255,0.25);
+padding: 12px 20px 6px;
+}
+.nav-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 10px 20px;
+cursor: pointer;
+color: rgba(255,255,255,0.55);
+font-size: 13.5px;
+font-weight: 400;
+transition: all 0.15s;
+border-left: 3px solid transparent;
+text-decoration: none;
+}
+.nav-item:hover {
+color: var(–white);
+background: rgba(255,255,255,0.05);
+}
+.nav-item.active {
+color: var(–white);
+background: rgba(201,168,76,0.1);
+border-left-color: var(–gold);
+font-weight: 500;
+}
+.nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+.sidebar-footer {
+padding: 16px 20px;
+border-top: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-user {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.user-avatar {
+width: 32px; height: 32px;
+background: var(–gold);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 12px; font-weight: 700; color: var(–navy);
+}
+.user-info .user-name { font-size: 12px; font-weight: 500; color: var(–white); }
+.user-info .user-role { font-size: 10px; color: rgba(255,255,255,0.4); }
+
+/* MAIN CONTENT */
+#main {
+margin-left: var(–sidebar-w);
+flex: 1;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+#topbar {
+height: var(–header-h);
+background: var(–white);
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 32px;
+position: sticky;
+top: 0;
+z-index: 50;
+}
+.topbar-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 18px;
+font-weight: 600;
+color: var(–navy);
+}
+.topbar-actions { display: flex; align-items: center; gap: 12px; }
+.btn {
+padding: 8px 18px;
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.15s;
+border: none;
+}
+.btn-primary {
+background: var(–navy);
+color: var(–white);
+}
+.btn-primary:hover { background: var(–navy-light); }
+.btn-gold {
+background: var(–gold);
+color: var(–navy);
+}
+.btn-gold:hover { background: var(–gold-light); }
+.btn-outline {
+background: transparent;
+border: 1.5px solid var(–border);
+color: var(–text-main);
+}
+.btn-outline:hover { border-color: var(–navy); }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-danger { background: var(–red); color: white; }
+.btn-success { background: var(–green); color: white; }
+
+#content { padding: 32px; flex: 1; }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* OVERVIEW */
+.section-header { margin-bottom: 24px; }
+.section-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 24px;
+font-weight: 600;
+color: var(–navy);
+}
+.section-header p { color: var(–text-muted); font-size: 14px; margin-top: 4px; }
+
+.metrics-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 16px;
+margin-bottom: 28px;
+}
+.metric-card {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 20px 24px;
+position: relative;
+overflow: hidden;
+}
+.metric-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 4px; height: 100%;
+background: var(–gold);
+border-radius: 10px 0 0 10px;
+}
+.metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(–text-muted); margin-bottom: 8px; }
+.metric-value { font-size: 32px; font-weight: 600; color: var(–navy); line-height: 1; }
+.metric-sub { font-size: 12px; color: var(–text-light); margin-top: 6px; }
+.metric-card.green::before { background: var(–green); }
+.metric-card.blue::before { background: var(–blue); }
+.metric-card.amber::before { background: var(–amber); }
+.metric-card.purple::before { background: var(–purple); }
+.metric-card.red::before { background: var(–red); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.card {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 22px 24px;
+}
+.card-title {
+font-size: 13px;
+font-weight: 600;
+color: var(–navy);
+margin-bottom: 16px;
+letter-spacing: 0.02em;
+}
+
+/* PIPELINE MINI */
+.pipeline-stage-row {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 8px 0;
+border-bottom: 1px solid var(–border);
+font-size: 13px;
+}
+.pipeline-stage-row:last-child { border-bottom: none; }
+.stage-dot {
+width: 8px; height: 8px; border-radius: 50%;
+display: inline-block; margin-right: 8px;
+}
+.stage-count {
+font-weight: 600;
+color: var(–navy);
+font-size: 15px;
+}
+
+/* ACTIVITY FEED */
+.activity-item {
+display: flex;
+gap: 12px;
+padding: 10px 0;
+border-bottom: 1px solid var(–border);
+font-size: 13px;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-icon {
+width: 28px; height: 28px;
+border-radius: 50%;
+background: var(–off-white);
+display: flex; align-items: center; justify-content: center;
+font-size: 12px;
+flex-shrink: 0;
+}
+.activity-text { color: var(–text-main); line-height: 1.4; }
+.activity-time { color: var(–text-light); font-size: 11px; margin-top: 2px; }
+
+/* LEADS TABLE */
+.table-controls {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 16px;
+gap: 12px;
+}
+.search-input {
+padding: 8px 14px;
+border: 1.5px solid var(–border);
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-main);
+background: var(–white);
+width: 240px;
+outline: none;
+transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(–navy); }
+.select-input {
+padding: 8px 12px;
+border: 1.5px solid var(–border);
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-main);
+background: var(–white);
+outline: none;
+cursor: pointer;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 13px;
+}
+thead th {
+text-align: left;
+padding: 10px 14px;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+color: var(–text-muted);
+background: var(–off-white);
+border-bottom: 1px solid var(–border);
+}
+tbody tr {
+border-bottom: 1px solid var(–border);
+transition: background 0.1s;
+}
+tbody tr:hover { background: #f8fafc; }
+tbody td { padding: 12px 14px; color: var(–text-main); vertical-align: middle; }
+.badge {
+display: inline-block;
+padding: 3px 9px;
+border-radius: 20px;
+font-size: 11px;
+font-weight: 500;
+}
+.badge-new { background: #eff6ff; color: #2563eb; }
+.badge-approved { background: #f0fdf4; color: #16a34a; }
+.badge-contacted { background: #fffbeb; color: #b45309; }
+.badge-replied { background: #f0fdf4; color: #15803d; }
+.badge-discovery { background: #fdf4ff; color: #7e22ce; }
+.badge-proposal { background: #fff7ed; color: #c2410c; }
+.badge-won { background: #f0fdf4; color: #166534; }
+.badge-lost { background: #fef2f2; color: #b91c1c; }
+.badge-audit { background: #fdf4ff; color: #6d28d9; }
+
+/* PIPELINE BOARD */
+.pipeline-board {
+display: flex;
+gap: 14px;
+overflow-x: auto;
+padding-bottom: 16px;
+}
+.pipeline-col {
+min-width: 190px;
+max-width: 190px;
+background: var(–off-white);
+border-radius: 10px;
+padding: 14px 12px;
+border: 1px solid var(–border);
+}
+.pipeline-col-header {
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+color: var(–text-muted);
+margin-bottom: 10px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.pipeline-col-count {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 1px 7px;
+font-size: 11px;
+font-weight: 600;
+color: var(–navy);
+}
+.pipeline-card {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 7px;
+padding: 12px;
+margin-bottom: 8px;
+cursor: pointer;
+transition: box-shadow 0.15s, transform 0.1s;
+}
+.pipeline-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.09); transform: translateY(-1px); }
+.pc-name { font-size: 13px; font-weight: 500; color: var(–navy); margin-bottom: 4px; }
+.pc-industry { font-size: 11px; color: var(–text-muted); }
+.pc-date { font-size: 10px; color: var(–text-light); margin-top: 6px; }
+
+/* SCRAPING */
+.scrape-form {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 24px;
+margin-bottom: 24px;
+}
+.form-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(–text-muted); }
+.form-input {
+padding: 9px 13px;
+border: 1.5px solid var(–border);
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-main);
+background: var(–white);
+outline: none;
+transition: border-color 0.15s;
+min-width: 160px;
+}
+.form-input:focus { border-color: var(–navy); }
+.scrape-results-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 14px;
+}
+.scrape-results-title { font-size: 14px; font-weight: 600; color: var(–navy); }
+.scrape-row {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 14px 18px;
+margin-bottom: 10px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+}
+.scrape-info { flex: 1; }
+.scrape-name { font-size: 13px; font-weight: 600; color: var(–navy); }
+.scrape-detail { font-size: 12px; color: var(–text-muted); margin-top: 2px; }
+.scrape-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* EMAIL OUTREACH */
+.template-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+.template-tab {
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 500;
+cursor: pointer;
+border: 1.5px solid var(–border);
+background: var(–white);
+color: var(–text-muted);
+transition: all 0.15s;
+}
+.template-tab.active, .template-tab:hover {
+background: var(–navy);
+color: var(–white);
+border-color: var(–navy);
+}
+.email-draft {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 22px 24px;
+margin-bottom: 16px;
+}
+.email-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.email-subject { font-size: 14px; font-weight: 600; color: var(–navy); }
+.email-vertical { font-size: 11px; color: var(–text-muted); }
+.email-body { font-size: 13px; color: var(–text-main); line-height: 1.7; white-space: pre-wrap; background: var(–off-white); border-radius: 6px; padding: 14px 16px; }
+.email-footer { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+
+/* PROPOSAL GENERATOR */
+.vertical-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.vertical-card {
+background: var(–white);
+border: 2px solid var(–border);
+border-radius: 10px;
+padding: 18px;
+cursor: pointer;
+text-align: center;
+transition: all 0.15s;
+}
+.vertical-card:hover, .vertical-card.selected {
+border-color: var(–gold);
+background: #fffbf0;
+}
+.vertical-card .vc-icon { font-size: 26px; margin-bottom: 8px; }
+.vertical-card .vc-name { font-size: 13px; font-weight: 600; color: var(–navy); }
+.vertical-card .vc-desc { font-size: 11px; color: var(–text-muted); margin-top: 3px; }
+.proposal-output {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 28px 32px;
+}
+.proposal-header {
+text-align: center;
+padding-bottom: 20px;
+border-bottom: 2px solid var(–gold);
+margin-bottom: 24px;
+}
+.proposal-title { font-family: ‘Playfair Display’, serif; font-size: 24px; color: var(–navy); margin-bottom: 6px; }
+.proposal-sub { font-size: 13px; color: var(–text-muted); }
+.proposal-section { margin-bottom: 20px; }
+.proposal-section-title {
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 8px;
+}
+.proposal-section p { font-size: 13.5px; color: var(–text-main); line-height: 1.7; }
+.proposal-section ul { padding-left: 18px; }
+.proposal-section li { font-size: 13.5px; color: var(–text-main); line-height: 1.8; }
+
+/* SETTINGS */
+.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.settings-card { background: var(–white); border: 1px solid var(–border); border-radius: 10px; padding: 22px 24px; }
+.settings-card-title { font-size: 14px; font-weight: 600; color: var(–navy); margin-bottom: 4px; }
+.settings-card-desc { font-size: 12px; color: var(–text-muted); margin-bottom: 16px; }
+.integration-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(–border); }
+.integration-row:last-child { border-bottom: none; }
+.integration-name { font-size: 13px; font-weight: 500; color: var(–navy); }
+.integration-status { font-size: 11px; color: var(–text-muted); }
+.status-dot {
+display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+margin-right: 5px;
+}
+.dot-connected { background: var(–green); }
+.dot-pending { background: var(–amber); }
+.dot-disconnected { background: #d1d5db; }
+.toggle-wrap { display: flex; align-items: center; gap: 8px; }
+.toggle {
+width: 36px; height: 20px;
+background: #d1d5db;
+border-radius: 10px;
+position: relative;
+cursor: pointer;
+transition: background 0.2s;
+}
+.toggle.on { background: var(–green); }
+.toggle::after {
+content: ‘’;
+position: absolute;
+width: 14px; height: 14px;
+background: white;
+border-radius: 50%;
+top: 3px; left: 3px;
+transition: left 0.2s;
+box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle.on::after { left: 19px; }
+
+/* MODAL */
+.modal-overlay {
+display: none;
+position: fixed; inset: 0;
+background: rgba(10,22,40,0.55);
+z-index: 200;
+align-items: center;
+justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+background: var(–white);
+border-radius: 12px;
+padding: 28px 32px;
+width: 520px;
+max-width: 95vw;
+max-height: 85vh;
+overflow-y: auto;
+box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.modal-title { font-family: ‘Playfair Display’, serif; font-size: 18px; color: var(–navy); }
+.modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(–text-muted); line-height: 1; }
+.modal-close:hover { color: var(–navy); }
+.field-group { margin-bottom: 14px; }
+.field-label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(–text-muted); margin-bottom: 5px; }
+.field-input {
+width: 100%;
+padding: 9px 13px;
+border: 1.5px solid var(–border);
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-main);
+outline: none;
+transition: border-color 0.15s;
+}
+.field-input:focus { border-color: var(–navy); }
+.field-select {
+width: 100%;
+padding: 9px 13px;
+border: 1.5px solid var(–border);
+border-radius: 6px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–text-main);
+outline: none;
+background: var(–white);
+}
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(–border); }
+
+/* TOAST */
+#toast {
+position: fixed;
+bottom: 28px; right: 28px;
+background: var(–navy);
+color: white;
+padding: 12px 20px;
+border-radius: 8px;
+font-size: 13px;
+font-weight: 500;
+z-index: 999;
+display: none;
+box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+border-left: 4px solid var(–gold);
+animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+from { transform: translateY(20px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+/* EMPTY STATE */
+.empty-state {
+text-align: center;
+padding: 48px 24px;
+color: var(–text-muted);
+}
+.empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
+.empty-state p { font-size: 14px; }
+
+/* MISC */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.mt-4 { margin-top: 4px; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mb-0 { margin-bottom: 0; }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 11px; }
+.text-muted { color: var(–text-muted); }
+.fw-600 { font-weight: 600; }
+.divider { border: none; border-top: 1px solid var(–border); margin: 20px 0; }
+.chip {
+display: inline-block;
+padding: 2px 8px;
+border-radius: 4px;
+font-size: 11px;
+font-weight: 500;
+background: var(–off-white);
+color: var(–text-muted);
+border: 1px solid var(–border);
+}
+.gold-divider {
+height: 2px;
+background: linear-gradient(90deg, var(–gold), transparent);
+margin: 20px 0;
+border-radius: 2px;
+}
+</style>
+
 </head>
-<body style="background:green; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
-  <h1 style="color:white; font-family:sans-serif;">Breakout AI — Pipeline is live!</h1>
+<body>
+
+<!-- SIDEBAR -->
+
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">Breakout AI</div>
+    <div class="logo-sub">Solutions</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Workspace</div>
+    <div class="nav-item active" onclick="showPanel('overview', this)">
+      <span class="nav-icon">◉</span> Overview
+    </div>
+    <div class="nav-item" onclick="showPanel('leads', this)">
+      <span class="nav-icon">◈</span> Leads
+    </div>
+    <div class="nav-item" onclick="showPanel('scraping', this)">
+      <span class="nav-icon">⊕</span> Scraping
+    </div>
+    <div class="nav-item" onclick="showPanel('pipeline', this)">
+      <span class="nav-icon">◫</span> Pipeline
+    </div>
+    <div class="nav-section-label">Outreach</div>
+    <div class="nav-item" onclick="showPanel('outreach', this)">
+      <span class="nav-icon">◎</span> Email Outreach
+    </div>
+    <div class="nav-item" onclick="showPanel('proposals', this)">
+      <span class="nav-icon">◳</span> Proposals
+    </div>
+    <div class="nav-section-label">System</div>
+    <div class="nav-item" onclick="showPanel('settings', this)">
+      <span class="nav-icon">◌</span> Settings
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">D</div>
+      <div class="user-info">
+        <div class="user-name">Dave</div>
+        <div class="user-role">Owner · Palm Desert, CA</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+
+<div id="main">
+  <div id="topbar">
+    <div class="topbar-title" id="topbar-title">Overview</div>
+    <div class="topbar-actions">
+      <button class="btn btn-outline btn-sm" onclick="showModal('add-lead-modal')">+ Add Lead</button>
+      <button class="btn btn-gold btn-sm" onclick="showPanel('scraping', document.querySelector('[onclick*=scraping]'))">Launch Scrape</button>
+    </div>
+  </div>
+
+  <div id="content">
+
+```
+<!-- OVERVIEW PANEL -->
+<div id="panel-overview" class="panel active">
+  <div class="section-header">
+    <h2>Good morning, Dave.</h2>
+    <p>Here's what's happening with Breakout AI Solutions today.</p>
+  </div>
+  <div class="metrics-grid" id="metrics-grid"></div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Pipeline Summary</div>
+      <div id="pipeline-summary"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Recent Activity</div>
+      <div id="activity-feed"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADS PANEL -->
+<div id="panel-leads" class="panel">
+  <div class="section-header">
+    <h2>Lead Database</h2>
+    <p>All approved businesses in your CRM.</p>
+  </div>
+  <div class="card">
+    <div class="table-controls">
+      <div class="flex gap-8">
+        <input type="text" class="search-input" placeholder="Search leads..." oninput="filterLeads(this.value)" id="lead-search">
+        <select class="select-input" onchange="filterLeadsByStatus(this.value)" id="status-filter">
+          <option value="">All Statuses</option>
+          <option value="New Lead">New Lead</option>
+          <option value="Approved">Approved</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Replied">Replied</option>
+          <option value="Discovery Call">Discovery Call</option>
+          <option value="Audit Opportunity">Audit Opportunity</option>
+          <option value="Proposal Sent">Proposal Sent</option>
+          <option value="Closed Won">Closed Won</option>
+          <option value="Closed Lost">Closed Lost</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="showModal('add-lead-modal')">+ Add Lead</button>
+    </div>
+    <table id="leads-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Industry</th>
+          <th>Location</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Source</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="leads-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SCRAPING PANEL -->
+<div id="panel-scraping" class="panel">
+  <div class="section-header">
+    <h2>Lead Scraping</h2>
+    <p>Search for businesses, review results, and approve them into your CRM.</p>
+  </div>
+  <div class="scrape-form">
+    <div class="card-title" style="margin-bottom:14px;">Configure Search</div>
+    <div class="form-row">
+      <div class="form-group">
+        <div class="form-label">Industry / Vertical</div>
+        <input type="text" class="form-input" id="scrape-industry" placeholder="e.g. Med Spa, Contractor" style="min-width:200px;">
+      </div>
+      <div class="form-group">
+        <div class="form-label">City / Region</div>
+        <input type="text" class="form-input" id="scrape-location" placeholder="e.g. Palm Desert, CA">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Max Results</div>
+        <select class="form-input" id="scrape-limit" style="min-width:100px;">
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+        </select>
+      </div>
+      <div class="form-group" style="justify-content:flex-end;">
+        <button class="btn btn-gold" onclick="runScrape()">Run Search</button>
+      </div>
+    </div>
+  </div>
+  <div id="scrape-results-area"></div>
+</div>
+
+<!-- PIPELINE PANEL -->
+<div id="panel-pipeline" class="panel">
+  <div class="section-header">
+    <h2>Sales Pipeline</h2>
+    <p>Track every opportunity from first contact to closed deal.</p>
+  </div>
+  <div class="pipeline-board" id="pipeline-board"></div>
+</div>
+
+<!-- EMAIL OUTREACH PANEL -->
+<div id="panel-outreach" class="panel">
+  <div class="section-header">
+    <h2>Email Outreach</h2>
+    <p>Templates, drafts, and send queue by vertical.</p>
+  </div>
+  <div class="template-tabs" id="outreach-tabs"></div>
+  <div id="outreach-content"></div>
+</div>
+
+<!-- PROPOSALS PANEL -->
+<div id="panel-proposals" class="panel">
+  <div class="section-header">
+    <h2>Proposal Generator</h2>
+    <p>Select a client vertical to generate a tailored proposal outline.</p>
+  </div>
+  <div class="vertical-grid" id="vertical-grid"></div>
+  <div id="proposal-output" style="display:none;"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="panel-settings" class="panel">
+  <div class="section-header">
+    <h2>Settings &amp; Integrations</h2>
+    <p>Connect your tools, configure preferences, and manage your workspace.</p>
+  </div>
+  <div class="settings-grid" id="settings-grid"></div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ADD LEAD MODAL -->
+
+<div class="modal-overlay" id="add-lead-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add New Lead</div>
+      <button class="modal-close" onclick="closeModal('add-lead-modal')">×</button>
+    </div>
+    <div class="form-row" style="flex-wrap:wrap; gap:14px;">
+      <div class="field-group" style="flex:1; min-width:200px;">
+        <label class="field-label">Company Name *</label>
+        <input type="text" class="field-input" id="new-company" placeholder="Business name">
+      </div>
+      <div class="field-group" style="flex:1; min-width:160px;">
+        <label class="field-label">Industry</label>
+        <input type="text" class="field-input" id="new-industry" placeholder="e.g. Med Spa">
+      </div>
+    </div>
+    <div class="form-row" style="flex-wrap:wrap; gap:14px; margin-top:14px;">
+      <div class="field-group" style="flex:1; min-width:160px;">
+        <label class="field-label">Location</label>
+        <input type="text" class="field-input" id="new-location" placeholder="City, State">
+      </div>
+      <div class="field-group" style="flex:1; min-width:160px;">
+        <label class="field-label">Phone</label>
+        <input type="text" class="field-input" id="new-phone" placeholder="(760) 555-0000">
+      </div>
+    </div>
+    <div class="field-group" style="margin-top:14px;">
+      <label class="field-label">Email</label>
+      <input type="email" class="field-input" id="new-email" placeholder="contact@business.com">
+    </div>
+    <div class="field-group" style="margin-top:14px;">
+      <label class="field-label">Website</label>
+      <input type="text" class="field-input" id="new-website" placeholder="https://...">
+    </div>
+    <div class="form-row" style="flex-wrap:wrap; gap:14px; margin-top:14px;">
+      <div class="field-group" style="flex:1;">
+        <label class="field-label">Status</label>
+        <select class="field-select" id="new-status">
+          <option>New Lead</option>
+          <option>Approved</option>
+          <option>Contacted</option>
+          <option>Replied</option>
+          <option>Discovery Call</option>
+          <option>Audit Opportunity</option>
+          <option>Proposal Sent</option>
+          <option>Closed Won</option>
+          <option>Closed Lost</option>
+        </select>
+      </div>
+      <div class="field-group" style="flex:1;">
+        <label class="field-label">Source</label>
+        <select class="field-select" id="new-source">
+          <option>Manual</option>
+          <option>Scrape</option>
+          <option>Referral</option>
+          <option>Website</option>
+          <option>Cold Outreach</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-group" style="margin-top:14px;">
+      <label class="field-label">Notes</label>
+      <input type="text" class="field-input" id="new-notes" placeholder="Optional notes...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-lead-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD DETAIL MODAL -->
+
+<div class="modal-overlay" id="lead-detail-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="detail-title">Lead Detail</div>
+      <button class="modal-close" onclick="closeModal('lead-detail-modal')">×</button>
+    </div>
+    <div id="lead-detail-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('lead-detail-modal')">Close</button>
+      <button class="btn btn-danger btn-sm" id="detail-delete-btn">Delete Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+<script>
+// =====================
+// DATA STORE
+// =====================
+var leads = [
+  { id:1, company:"Desert Glow Med Spa", industry:"Med Spa", location:"Palm Desert, CA", email:"info@desertglow.com", phone:"(760) 555-0101", website:"desertglow.com", status:"Discovery Call", source:"Scrape", notes:"Interested in AI chatbot for booking" },
+  { id:2, company:"Coachella Valley Roofing", industry:"Contractor", location:"Indio, CA", email:"mike@cvroofing.com", phone:"(760) 555-0202", website:"cvroofing.com", status:"Contacted", source:"Scrape", notes:"Owner is Mike, sent intro email" },
+  { id:3, company:"Summit Law Group", industry:"Law Firm", location:"Palm Springs, CA", email:"intake@summitlaw.com", phone:"(760) 555-0303", website:"summitlaw.com", status:"Replied", source:"Referral", notes:"Replied — wants to learn more" },
+  { id:4, company:"Sage Dental Care", industry:"Dental", location:"Rancho Mirage, CA", email:"hello@sagedental.com", phone:"(760) 555-0404", website:"sagedental.com", status:"Audit Opportunity", source:"Scrape", notes:"Audit scheduled for next week" },
+  { id:5, company:"Desert Realty Group", industry:"Real Estate", location:"Palm Desert, CA", email:"info@drg.com", phone:"(760) 555-0505", website:"drg.com", status:"Proposal Sent", source:"Manual", notes:"Proposal sent, follow up Friday" },
+  { id:6, company:"Sun & Shade Landscaping", industry:"Local Service", location:"Cathedral City, CA", email:"contact@sunshade.com", phone:"(760) 555-0606", website:"sunshade.com", status:"New Lead", source:"Scrape", notes:"" },
+  { id:7, company:"Prestige Auto Detail", industry:"Auto", location:"Indio, CA", email:"team@prestigeauto.com", phone:"(760) 555-0707", website:"prestigeauto.com", status:"Closed Won", source:"Referral", notes:"Signed contract — building chatbot" },
+  { id:8, company:"Oasis Chiro & Wellness", industry:"Wellness", location:"La Quinta, CA", email:"front@oasischiro.com", phone:"(760) 555-0808", website:"oasischiro.com", status:"Approved", source:"Scrape", notes:"" }
+];
+var nextId = 9;
+
+var activity = [
+  { icon:"✉", text:"Email sent to Coachella Valley Roofing", time:"Today, 9:14am" },
+  { icon:"📞", text:"Discovery call booked with Desert Glow Med Spa", time:"Today, 8:30am" },
+  { icon:"📋", text:"Proposal sent to Desert Realty Group", time:"Yesterday, 4:02pm" },
+  { icon:"✅", text:"Prestige Auto Detail marked Closed Won", time:"Yesterday, 11:45am" },
+  { icon:"🔍", text:"Scrape returned 8 results for Law Firms, Palm Springs", time:"Yesterday, 10:00am" }
+];
+
+var scrapeResults = [];
+var selectedVertical = null;
+var currentDetailId = null;
+
+// =====================
+// NAVIGATION
+// =====================
+function showPanel(name, el) {
+  var panels = document.querySelectorAll('.panel');
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+  document.getElementById('panel-' + name).classList.add('active');
+
+  var navItems = document.querySelectorAll('.nav-item');
+  for (var j = 0; j < navItems.length; j++) navItems[j].classList.remove('active');
+  if (el) el.classList.add('active');
+
+  var titles = { overview: 'Overview', leads: 'Lead Database', scraping: 'Lead Scraping', pipeline: 'Sales Pipeline', outreach: 'Email Outreach', proposals: 'Proposal Generator', settings: 'Settings & Integrations' };
+  document.getElementById('topbar-title').textContent = titles[name] || name;
+
+  if (name === 'overview') renderOverview();
+  if (name === 'leads') renderLeads();
+  if (name === 'pipeline') renderPipeline();
+  if (name === 'outreach') renderOutreach();
+  if (name === 'proposals') renderProposals();
+  if (name === 'settings') renderSettings();
+}
+
+// =====================
+// OVERVIEW
+// =====================
+function renderOverview() {
+  var approved = 0, contacted = 0, replied = 0, won = 0, proposals = 0;
+  for (var i = 0; i < leads.length; i++) {
+    var s = leads[i].status;
+    if (s !== 'Closed Lost') approved++;
+    if (s === 'Contacted' || s === 'Replied' || s === 'Discovery Call' || s === 'Audit Opportunity' || s === 'Proposal Sent') contacted++;
+    if (s === 'Replied') replied++;
+    if (s === 'Closed Won') won++;
+    if (s === 'Proposal Sent') proposals++;
+  }
+
+  var metrics = [
+    { label:'Total Leads', value: leads.length, sub:'In CRM', cls:'' },
+    { label:'Leads Contacted', value: contacted, sub:'Outreach sent', cls:'blue' },
+    { label:'Replies Received', value: replied, sub:'Engaged prospects', cls:'green' },
+    { label:'Proposals Sent', value: proposals, sub:'Active opportunities', cls:'amber' },
+    { label:'Closed Won', value: won, sub:'Clients signed', cls:'purple' },
+    { label:'Open Pipeline', value: leads.length - won, sub:'Active leads', cls:'red' }
+  ];
+
+  var mg = document.getElementById('metrics-grid');
+  mg.innerHTML = '';
+  for (var m = 0; m < metrics.length; m++) {
+    var mt = metrics[m];
+    mg.innerHTML += '<div class="metric-card ' + mt.cls + '">' +
+      '<div class="metric-label">' + mt.label + '</div>' +
+      '<div class="metric-value">' + mt.value + '</div>' +
+      '<div class="metric-sub">' + mt.sub + '</div>' +
+      '</div>';
+  }
+
+  var stages = ['New Lead','Approved','Contacted','Replied','Discovery Call','Audit Opportunity','Proposal Sent','Closed Won','Closed Lost'];
+  var colors = ['#3b82f6','#10b981','#f59e0b','#06b6d4','#8b5cf6','#ec4899','#f97316','#16a34a','#ef4444'];
+  var ps = document.getElementById('pipeline-summary');
+  ps.innerHTML = '';
+  for (var si = 0; si < stages.length; si++) {
+    var count = 0;
+    for (var li = 0; li < leads.length; li++) { if (leads[li].status === stages[si]) count++; }
+    if (count > 0) {
+      ps.innerHTML += '<div class="pipeline-stage-row">' +
+        '<span><span class="stage-dot" style="background:' + colors[si] + '"></span>' + stages[si] + '</span>' +
+        '<span class="stage-count">' + count + '</span>' +
+        '</div>';
+    }
+  }
+
+  var af = document.getElementById('activity-feed');
+  af.innerHTML = '';
+  for (var ai = 0; ai < activity.length; ai++) {
+    var act = activity[ai];
+    af.innerHTML += '<div class="activity-item">' +
+      '<div class="activity-icon">' + act.icon + '</div>' +
+      '<div><div class="activity-text">' + act.text + '</div><div class="activity-time">' + act.time + '</div></div>' +
+      '</div>';
+  }
+}
+
+// =====================
+// LEADS TABLE
+// =====================
+function statusBadge(s) {
+  var map = { 'New Lead':'badge-new', 'Approved':'badge-approved', 'Contacted':'badge-contacted', 'Replied':'badge-replied', 'Discovery Call':'badge-discovery', 'Audit Opportunity':'badge-audit', 'Proposal Sent':'badge-proposal', 'Closed Won':'badge-won', 'Closed Lost':'badge-lost' };
+  return '<span class="badge ' + (map[s] || '') + '">' + s + '</span>';
+}
+
+function renderLeads(filter, statusFilter) {
+  var tbody = document.getElementById('leads-tbody');
+  tbody.innerHTML = '';
+  var search = filter || (document.getElementById('lead-search') ? document.getElementById('lead-search').value.toLowerCase() : '');
+  var sf = statusFilter || (document.getElementById('status-filter') ? document.getElementById('status-filter').value : '');
+  var shown = 0;
+  for (var i = 0; i < leads.length; i++) {
+    var l = leads[i];
+    if (sf && l.status !== sf) continue;
+    if (search && l.company.toLowerCase().indexOf(search) === -1 && l.industry.toLowerCase().indexOf(search) === -1) continue;
+    shown++;
+    var row = '<tr>' +
+      '<td><strong>' + l.company + '</strong></td>' +
+      '<td><span class="chip">' + l.industry + '</span></td>' +
+      '<td>' + l.location + '</td>' +
+      '<td>' + (l.email ? '<a href="mailto:' + l.email + '" style="color:var(--navy)">' + l.email + '</a>' : '—') + '</td>' +
+      '<td>' + statusBadge(l.status) + '</td>' +
+      '<td>' + l.source + '</td>' +
+      '<td><button class="btn btn-outline btn-sm" onclick="viewLead(' + l.id + ')">View</button></td>' +
+      '</tr>';
+    tbody.innerHTML += row;
+  }
+  if (shown === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-muted);">No leads found.</td></tr>';
+  }
+}
+
+function filterLeads(val) { renderLeads(val.toLowerCase(), null); }
+function filterLeadsByStatus(val) { renderLeads(null, val); }
+
+function viewLead(id) {
+  var l = null;
+  for (var i = 0; i < leads.length; i++) { if (leads[i].id === id) { l = leads[i]; break; } }
+  if (!l) return;
+  currentDetailId = id;
+  document.getElementById('detail-title').textContent = l.company;
+  var body = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">' +
+    '<div><div class="field-label">Industry</div><div class="text-sm mt-4">' + l.industry + '</div></div>' +
+    '<div><div class="field-label">Location</div><div class="text-sm mt-4">' + l.location + '</div></div>' +
+    '<div><div class="field-label">Email</div><div class="text-sm mt-4">' + (l.email || '—') + '</div></div>' +
+    '<div><div class="field-label">Phone</div><div class="text-sm mt-4">' + (l.phone || '—') + '</div></div>' +
+    '<div><div class="field-label">Website</div><div class="text-sm mt-4">' + (l.website || '—') + '</div></div>' +
+    '<div><div class="field-label">Source</div><div class="text-sm mt-4">' + l.source + '</div></div>' +
+    '<div style="grid-column:span 2"><div class="field-label">Status</div><div class="mt-4">' + statusBadge(l.status) + '</div></div>' +
+    '<div style="grid-column:span 2"><div class="field-label">Notes</div><div class="text-sm mt-4">' + (l.notes || '—') + '</div></div>' +
+    '</div>' +
+    '<div class="gold-divider"></div>' +
+    '<div><div class="field-label" style="margin-bottom:8px;">Update Status</div>' +
+    '<div class="flex gap-8" style="flex-wrap:wrap;">' +
+    '<select class="field-select" id="update-status-select" style="flex:1; min-width:160px;">' +
+    '<option value="">Select new status...</option>' +
+    '<option>New Lead</option><option>Approved</option><option>Contacted</option><option>Replied</option><option>Discovery Call</option><option>Audit Opportunity</option><option>Proposal Sent</option><option>Closed Won</option><option>Closed Lost</option>' +
+    '</select>' +
+    '<button class="btn btn-primary btn-sm" onclick="updateLeadStatus(' + id + ')">Update</button>' +
+    '</div></div>';
+  document.getElementById('lead-detail-body').innerHTML = body;
+  document.getElementById('detail-delete-btn').onclick = function() { deleteLead(id); };
+  showModal('lead-detail-modal');
+}
+
+function updateLeadStatus(id) {
+  var sel = document.getElementById('update-status-select');
+  if (!sel.value) return;
+  for (var i = 0; i < leads.length; i++) {
+    if (leads[i].id === id) { leads[i].status = sel.value; break; }
+  }
+  closeModal('lead-detail-modal');
+  renderLeads();
+  showToast('Status updated to ' + sel.value);
+  activity.unshift({ icon:'🔄', text:'Status updated: ' + id + ' → ' + sel.value, time:'Just now' });
+}
+
+function deleteLead(id) {
+  leads = leads.filter(function(l) { return l.id !== id; });
+  closeModal('lead-detail-modal');
+  renderLeads();
+  showToast('Lead removed.');
+}
+
+function addLead() {
+  var company = document.getElementById('new-company').value.trim();
+  if (!company) { showToast('Company name is required.'); return; }
+  var newLead = {
+    id: nextId++,
+    company: company,
+    industry: document.getElementById('new-industry').value || 'Unknown',
+    location: document.getElementById('new-location').value || '',
+    email: document.getElementById('new-email').value || '',
+    phone: document.getElementById('new-phone').value || '',
+    website: document.getElementById('new-website').value || '',
+    status: document.getElementById('new-status').value,
+    source: document.getElementById('new-source').value,
+    notes: document.getElementById('new-notes').value || ''
+  };
+  leads.push(newLead);
+  activity.unshift({ icon:'➕', text:'New lead added: ' + company, time:'Just now' });
+  closeModal('add-lead-modal');
+  var fields = ['new-company','new-industry','new-location','new-email','new-phone','new-website','new-notes'];
+  for (var i = 0; i < fields.length; i++) document.getElementById(fields[i]).value = '';
+  renderLeads();
+  showToast('Lead added: ' + company);
+}
+
+// =====================
+// SCRAPING
+// =====================
+var fakeBizData = {
+  'Med Spa': ['Glow Aesthetics','Desert Bloom Med Spa','Elite Skin Studio','Refresh Wellness','Pure Radiance Spa','Oasis Glow','Lux MedSpa','Balance Beauty Clinic'],
+  'Contractor': ['ProBuild Construction','Summit Roofing','Desert Home Renovations','Peak Builders','Solid Foundation Co','All-Star Remodeling','True Line Contractors','Prime Renovations'],
+  'Law Firm': ['Apex Legal Group','Desert Justice Law','Pacific Rim Attorneys','Precision Law Partners','First Choice Legal','Summit Law Associates','Guardian Legal','Clear Path Law'],
+  'Dental': ['Smile Studio Dental','Desert Tooth Co','Bright Dental Care','White Oak Dentistry','New Day Dental','Peak Smiles','Comfort Dental Group','Oasis Family Dentistry'],
+  'Real Estate': ['Desert Properties LLC','Coachella Valley Homes','Prestige Realty','Sun State Properties','Landmark Real Estate','Prime Valley Realty','Crest Property Group','Valley View Realty'],
+  'Local Service': ['Quick Fix Plumbing','Desert HVAC Pro','All Clear Electrical','Sun Valley Cleaning','Reliable Pest Control','Oasis Lawn Care','Desert Pest Solutions','Premier Pool Service']
+};
+
+function runScrape() {
+  var industry = document.getElementById('scrape-industry').value.trim() || 'Local Service';
+  var location = document.getElementById('scrape-location').value.trim() || 'Palm Desert, CA';
+  var limit = parseInt(document.getElementById('scrape-limit').value) || 10;
+  var key = 'Local Service';
+  for (var k in fakeBizData) {
+    if (industry.toLowerCase().indexOf(k.toLowerCase()) !== -1 || k.toLowerCase().indexOf(industry.toLowerCase()) !== -1) { key = k; break; }
+  }
+  var pool = fakeBizData[key] || fakeBizData['Local Service'];
+  scrapeResults = [];
+  for (var i = 0; i < Math.min(limit, pool.length, 8); i++) {
+    scrapeResults.push({
+      name: pool[i],
+      industry: industry || key,
+      location: location,
+      email: pool[i].toLowerCase().replace(/ /g,'') + '@gmail.com',
+      phone: '(760) 555-' + (1000 + i * 111),
+      approved: null
+    });
+  }
+  renderScrapeResults();
+  showToast('Found ' + scrapeResults.length + ' results for ' + industry + ' in ' + location);
+}
+
+function renderScrapeResults() {
+  var area = document.getElementById('scrape-results-area');
+  if (scrapeResults.length === 0) { area.innerHTML = ''; return; }
+  var pending = scrapeResults.filter(function(r){ return r.approved === null; });
+  var html = '<div class="scrape-results-header">' +
+    '<div class="scrape-results-title">' + scrapeResults.length + ' Results — ' + pending.length + ' Pending Review</div>' +
+    '<button class="btn btn-primary btn-sm" onclick="approveAll()">Approve All</button>' +
+    '</div>';
+  for (var i = 0; i < scrapeResults.length; i++) {
+    var r = scrapeResults[i];
+    var status_html = '';
+    if (r.approved === true) status_html = '<span class="badge badge-approved">Approved</span>';
+    else if (r.approved === false) status_html = '<span class="badge badge-lost">Rejected</span>';
+    else status_html = '<div class="scrape-actions">' +
+      '<button class="btn btn-success btn-sm" onclick="approveScrape(' + i + ')">✓ Approve</button>' +
+      '<button class="btn btn-danger btn-sm" onclick="rejectScrape(' + i + ')">✗ Reject</button>' +
+      '</div>';
+    html += '<div class="scrape-row">' +
+      '<div class="scrape-info">' +
+      '<div class="scrape-name">' + r.name + '</div>' +
+      '<div class="scrape-detail">' + r.industry + ' · ' + r.location + ' · ' + r.email + ' · ' + r.phone + '</div>' +
+      '</div>' + status_html + '</div>';
+  }
+  area.innerHTML = html;
+}
+
+function approveScrape(i) {
+  scrapeResults[i].approved = true;
+  var r = scrapeResults[i];
+  leads.push({ id: nextId++, company: r.name, industry: r.industry, location: r.location, email: r.email, phone: r.phone, website: '', status: 'Approved', source: 'Scrape', notes: '' });
+  activity.unshift({ icon:'✅', text:'Approved from scrape: ' + r.name, time:'Just now' });
+  showToast(r.name + ' added to CRM.');
+  renderScrapeResults();
+}
+
+function rejectScrape(i) {
+  scrapeResults[i].approved = false;
+  renderScrapeResults();
+}
+
+function approveAll() {
+  for (var i = 0; i < scrapeResults.length; i++) {
+    if (scrapeResults[i].approved === null) approveScrape(i);
+  }
+}
+
+// =====================
+// PIPELINE
+// =====================
+var stageColors = {
+  'New Lead':'#3b82f6','Approved':'#10b981','Contacted':'#f59e0b','Replied':'#06b6d4',
+  'Discovery Call':'#8b5cf6','Audit Opportunity':'#ec4899','Proposal Sent':'#f97316',
+  'Closed Won':'#16a34a','Closed Lost':'#ef4444'
+};
+
+function renderPipeline() {
+  var stages = Object.keys(stageColors);
+  var board = document.getElementById('pipeline-board');
+  board.innerHTML = '';
+  for (var si = 0; si < stages.length; si++) {
+    var stage = stages[si];
+    var color = stageColors[stage];
+    var colLeads = leads.filter(function(l) { return l.status === stage; });
+    var cards = '';
+    for (var li = 0; li < colLeads.length; li++) {
+      var l = colLeads[li];
+      cards += '<div class="pipeline-card" onclick="viewLead(' + l.id + ')">' +
+        '<div class="pc-name">' + l.company + '</div>' +
+        '<div class="pc-industry">' + l.industry + '</div>' +
+        '<div class="pc-date">' + l.location + '</div>' +
+        '</div>';
+    }
+    board.innerHTML += '<div class="pipeline-col">' +
+      '<div class="pipeline-col-header" style="color:' + color + '">' +
+      stage + '<span class="pipeline-col-count">' + colLeads.length + '</span>' +
+      '</div>' + (cards || '<div style="text-align:center; padding:16px 0; font-size:12px; color:var(--text-light);">No leads</div>') +
+      '</div>';
+  }
+}
+
+// =====================
+// EMAIL OUTREACH
+// =====================
+var emailTemplates = {
+  'Contractor': {
+    subject: 'Most contractors are losing leads after hours — here\'s why',
+    body: 'Hi [Owner Name],\n\nI came across [Company Name] while researching top contractors in the area — impressive work.\n\nI\'m Dave with Breakout AI Solutions. We specialize in helping contractors stop losing leads after hours by installing AI systems that respond to website inquiries and calls 24/7.\n\nMost of our contractor clients see 15–30% more booked jobs within the first 90 days — without hiring anyone new.\n\nWould it make sense to spend 15 minutes looking at where you might be leaving money on the table?\n\nNo pressure — just a straight audit of what\'s working and what isn\'t.\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  },
+  'Med Spa': {
+    subject: 'Your front desk can\'t book appointments at 11pm — ours can',
+    body: 'Hi [Owner Name],\n\nI noticed [Company Name] has great reviews — your clients clearly love you.\n\nI\'m Dave with Breakout AI Solutions. We help med spas convert more website visitors into booked appointments using AI systems that work around the clock — even when your team is closed.\n\nOne of our med spa clients increased their monthly bookings by 22% in the first 60 days.\n\nI\'d love to do a quick 15-minute walkthrough of what that could look like for your practice.\n\nInterested?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  },
+  'Law Firm': {
+    subject: 'What happens when a potential client calls your firm at 8pm?',
+    body: 'Hi [Name],\n\nLegal clients don\'t wait — they move on to the next firm.\n\nI\'m Dave with Breakout AI Solutions. We build AI intake systems for law firms that qualify leads, answer common questions, and schedule consultations automatically — 24/7.\n\nThe result? Your firm captures more clients without your team working more hours.\n\nI\'d love to share a quick case study from a firm similar to yours. Worth 15 minutes?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  },
+  'Dental': {
+    subject: 'How top dental practices are filling their schedule on autopilot',
+    body: 'Hi [Office Manager / Doctor Name],\n\nI\'ll get straight to the point.\n\nI\'m Dave with Breakout AI Solutions. We help dental practices automate patient intake, appointment reminders, and follow-ups using AI — reducing no-shows and freeing your front desk to focus on in-office care.\n\nOur dental clients typically see a 25–40% reduction in no-shows within the first 90 days.\n\nWould a quick 15-minute walkthrough be worth your time?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  },
+  'Real Estate': {
+    subject: 'AI is changing how top agents handle leads — are you keeping up?',
+    body: 'Hi [Agent / Broker Name],\n\nThe top-producing agents in every market are now using AI to respond to buyer and seller inquiries instantly — before your competition does.\n\nI\'m Dave with Breakout AI Solutions. We build AI systems for real estate teams that qualify leads, answer property questions, and schedule showings automatically.\n\nI\'d love to share how we\'ve helped agents in your area improve their response time and close more deals. Worth a quick call?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  },
+  'Local Service': {
+    subject: 'You\'re probably losing 30% of your leads — here\'s how to fix it',
+    body: 'Hi [Owner Name],\n\nMost local service businesses lose leads because nobody\'s available to respond fast enough.\n\nI\'m Dave with Breakout AI Solutions. We install AI systems that respond to your website visitors, qualify them, and get them booked — in minutes, not hours.\n\nWe\'ve helped businesses like yours stop leaving money on the table without hiring more staff.\n\nWould it be worth a 15-minute call to see what that could look like for [Company Name]?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
+  }
+};
+
+var activeEmailTab = 'Contractor';
+
+function renderOutreach() {
+  var tabs = document.getElementById('outreach-tabs');
+  tabs.innerHTML = '';
+  var keys = Object.keys(emailTemplates);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var active = k === activeEmailTab ? ' active' : '';
+    tabs.innerHTML += '<div class="template-tab' + active + '" onclick="setEmailTab(\'' + k + '\')">' + k + '</div>';
+  }
+  renderEmailDraft();
+}
+
+function setEmailTab(key) {
+  activeEmailTab = key;
+  renderOutreach();
+}
+
+function renderEmailDraft() {
+  var tmpl = emailTemplates[activeEmailTab];
+  var content = document.getElementById('outreach-content');
+  content.innerHTML = '<div class="email-draft">' +
+    '<div class="email-meta"><div><div class="email-subject">' + tmpl.subject + '</div><div class="email-vertical" style="margin-top:3px;">Vertical: ' + activeEmailTab + '</div></div></div>' +
+    '<div class="email-body">' + tmpl.body.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' +
+    '<div class="email-footer">' +
+    '<button class="btn btn-primary btn-sm" onclick="markEmailSent()">Mark as Sent</button>' +
+    '<button class="btn btn-outline btn-sm" onclick="copyEmail()">Copy Template</button>' +
+    '</div>' +
+    '</div>' +
+    '<div class="card mt-16">' +
+    '<div class="card-title">Outreach Queue</div>' +
+    '<div id="outreach-queue-body"></div>' +
+    '</div>';
+  renderOutreachQueue();
+}
+
+function renderOutreachQueue() {
+  var qb = document.getElementById('outreach-queue-body');
+  if (!qb) return;
+  var contacted = leads.filter(function(l) { return l.status === 'Contacted' || l.status === 'Replied'; });
+  if (contacted.length === 0) { qb.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>No outreach in queue.</p></div>'; return; }
+  var html = '<table><thead><tr><th>Company</th><th>Industry</th><th>Status</th><th>Email</th></tr></thead><tbody>';
+  for (var i = 0; i < contacted.length; i++) {
+    var l = contacted[i];
+    html += '<tr><td><strong>' + l.company + '</strong></td><td>' + l.industry + '</td><td>' + statusBadge(l.status) + '</td><td>' + (l.email || '—') + '</td></tr>';
+  }
+  html += '</tbody></table>';
+  qb.innerHTML = html;
+}
+
+function markEmailSent() {
+  showToast('Email template queued for ' + activeEmailTab + ' leads.');
+  activity.unshift({ icon:'✉', text:'Email template sent to ' + activeEmailTab + ' queue', time:'Just now' });
+}
+
+function copyEmail() {
+  var tmpl = emailTemplates[activeEmailTab];
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(tmpl.body);
+    showToast('Template copied to clipboard!');
+  } else {
+    showToast('Copy: use Ctrl+A on the template text');
+  }
+}
+
+// =====================
+// PROPOSALS
+// =====================
+var verticals = [
+  { name:'Contractor', icon:'🔨', desc:'Roofing, remodeling, build' },
+  { name:'Med Spa', icon:'💆', desc:'Aesthetics & wellness' },
+  { name:'Law Firm', icon:'⚖️', desc:'Legal services & intake' },
+  { name:'Dental', icon:'🦷', desc:'Dental practice & patients' },
+  { name:'Real Estate', icon:'🏠', desc:'Agents, brokers & teams' },
+  { name:'Local Service', icon:'🔧', desc:'Plumbing, HVAC, cleaning' }
+];
+
+var proposalContent = {
+  'Contractor': {
+    challenge: 'Most contractors lose 25–40% of inbound leads simply because no one is available to respond quickly enough — especially outside business hours. Manual follow-up is inconsistent, and sales conversations aren\'t being tracked or optimized.',
+    solution: 'Breakout AI Solutions will install a custom AI system that captures every inbound inquiry 24/7, qualifies the lead, and routes it to you or your team instantly. The system also automates follow-up sequences so no lead falls through the cracks.',
+    deliverables: ['24/7 AI lead capture widget on website', 'Automated lead qualification & routing', 'Follow-up sequence automation (text + email)', 'CRM integration for full pipeline visibility', 'Monthly performance reporting & optimization'],
+    roi: 'Our contractor clients typically see 15–30% more booked jobs within 90 days without adding headcount. Based on an average job value of $5,000, capturing 3–5 additional jobs per month represents $15,000–$25,000 in new monthly revenue.'
+  },
+  'Med Spa': {
+    challenge: 'Med spas rely heavily on online presence and word of mouth, but fail to convert website visitors into bookings at scale. Front desk teams can\'t respond to inquiries instantly, and after-hours traffic goes unanswered.',
+    solution: 'We build an AI-powered booking assistant that lives on your website and social media, answering questions about services, capturing contact info, and booking consultations automatically — 24 hours a day.',
+    deliverables: ['AI booking assistant (website + social)', 'Automated appointment reminders & confirmations', 'Post-visit follow-up sequences', 'Review collection automation', 'Monthly analytics dashboard'],
+    roi: 'Med spas using our AI systems see an average 20–35% increase in monthly bookings. At an average service value of $300, that\'s an estimated $6,000–$12,000 in additional monthly revenue from the same traffic.'
+  },
+  'Law Firm': {
+    challenge: 'Legal prospects have high intent but low patience. If your firm doesn\'t respond within minutes, they\'ve already called the next attorney. Most law firms also spend significant staff time on intake tasks that don\'t require human judgment.',
+    solution: 'We build an AI intake system that qualifies prospects, captures case details, and schedules consultations automatically — presenting your firm as responsive, organized, and professional from the first interaction.',
+    deliverables: ['24/7 AI intake bot (website + phone integration)', 'Automated case qualification workflow', 'Consultation scheduling system', 'CRM data capture & segmentation', 'Weekly lead pipeline report'],
+    roi: 'The average law firm captures 2–4 additional retained clients per month after implementing our intake system. At an average retainer value of $3,500, this represents $7,000–$14,000 in new monthly revenue.'
+  },
+  'Dental': {
+    challenge: 'Dental practices lose significant revenue to no-shows, poor recall rates, and staff time spent on manual appointment management. Many patients also go to competitors when questions aren\'t answered quickly.',
+    solution: 'We deploy an AI patient engagement system that handles appointment reminders, new patient intake, recall campaigns, and FAQs automatically — reducing no-shows and freeing your front desk team.',
+    deliverables: ['AI new patient intake automation', 'Appointment confirmation & reminder system', 'Recall campaign automation (6-month, annual)', 'FAQ chatbot for website', 'No-show reduction reporting'],
+    roi: 'Dental practices using our system see a 25–40% reduction in no-shows and a 15–20% increase in recall visit completion. For a practice with 200 patients/month, this can represent $8,000–$15,000 in recovered monthly revenue.'
+  },
+  'Real Estate': {
+    challenge: 'Speed to lead is everything in real estate. Agents who respond within 5 minutes are 100x more likely to make contact than those who respond in 30 minutes. Most teams can\'t maintain that speed manually.',
+    solution: 'We build an AI lead response and nurture system that engages every new lead instantly, qualifies them based on your criteria, and warms them up for your agents — so every conversation starts from a position of strength.',
+    deliverables: ['Instant AI lead response system', 'Automated lead qualification by budget/timeline', 'Showing scheduler integration', 'Long-term nurture sequence automation', 'Pipeline dashboard for team leaders'],
+    roi: 'Real estate teams using our AI see a 2–4x improvement in lead-to-appointment conversion. At an average commission of $10,000, closing just 2 additional deals per month represents $20,000 in added GCI.'
+  },
+  'Local Service': {
+    challenge: 'Local service businesses typically operate on thin margins and small teams, meaning every unanswered call or ignored website visitor is real money lost. Most don\'t have the staff or systems to follow up consistently.',
+    solution: 'We build lightweight AI systems that answer your website visitors, capture contact details, qualify service needs, and trigger immediate follow-up — making your small business feel like a large, responsive operation.',
+    deliverables: ['Website AI lead capture & qualification', 'Automated text + email follow-up sequences', 'Service quote request intake automation', 'Review request automation', 'Simple performance dashboard'],
+    roi: 'Local service businesses typically recover 20–35% more leads after implementing our system. For a business averaging $500/job and receiving 40 leads/month, capturing 8 additional jobs represents $4,000 in recovered monthly revenue.'
+  }
+};
+
+function renderProposals() {
+  var grid = document.getElementById('vertical-grid');
+  grid.innerHTML = '';
+  for (var i = 0; i < verticals.length; i++) {
+    var v = verticals[i];
+    var selected = selectedVertical === v.name ? ' selected' : '';
+    grid.innerHTML += '<div class="vertical-card' + selected + '" onclick="selectVertical(\'' + v.name + '\')">' +
+      '<div class="vc-icon">' + v.icon + '</div>' +
+      '<div class="vc-name">' + v.name + '</div>' +
+      '<div class="vc-desc">' + v.desc + '</div>' +
+      '</div>';
+  }
+  if (selectedVertical) renderProposalOutput();
+}
+
+function selectVertical(name) {
+  selectedVertical = name;
+  renderProposals();
+  document.getElementById('proposal-output').style.display = 'block';
+  renderProposalOutput();
+}
+
+function renderProposalOutput() {
+  var p = proposalContent[selectedVertical];
+  if (!p) return;
+  var v = null;
+  for (var i = 0; i < verticals.length; i++) { if (verticals[i].name === selectedVertical) { v = verticals[i]; break; } }
+  var out = document.getElementById('proposal-output');
+  var delItems = '';
+  for (var d = 0; d < p.deliverables.length; d++) delItems += '<li>' + p.deliverables[d] + '</li>';
+  out.innerHTML = '<div class="proposal-output">' +
+    '<div class="proposal-header">' +
+    '<div style="font-size:32px; margin-bottom:8px;">' + v.icon + '</div>' +
+    '<div class="proposal-title">AI Solutions Proposal for ' + selectedVertical + 's</div>' +
+    '<div class="proposal-sub">Prepared by Breakout AI Solutions · Human-first AI that gets results</div>' +
+    '</div>' +
+    '<div class="proposal-section"><div class="proposal-section-title">The Challenge</div><p>' + p.challenge + '</p></div>' +
+    '<div class="proposal-section"><div class="proposal-section-title">Our Solution</div><p>' + p.solution + '</p></div>' +
+    '<div class="proposal-section"><div class="proposal-section-title">What We Build</div><ul>' + delItems + '</ul></div>' +
+    '<div class="proposal-section"><div class="proposal-section-title">The ROI Case</div><p>' + p.roi + '</p></div>' +
+    '<div class="proposal-section"><div class="proposal-section-title">Our Process</div><p>Free Discovery Call → AI Audit → ROI Presentation → We Build It → You See Results</p></div>' +
+    '<div class="gold-divider"></div>' +
+    '<div style="text-align:center; padding: 8px 0;">' +
+    '<div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Ready to move forward?</div>' +
+    '<button class="btn btn-gold" onclick="showToast(\'Proposal export coming soon — copy from screen for now.\')">Export Proposal</button>' +
+    '</div>' +
+    '</div>';
+}
+
+// =====================
+// SETTINGS
+// =====================
+function renderSettings() {
+  var grid = document.getElementById('settings-grid');
+  grid.innerHTML = '<div class="settings-card">' +
+    '<div class="settings-card-title">Integrations</div>' +
+    '<div class="settings-card-desc">Connect your tools to automate outreach and data sync.</div>' +
+    '<div class="integration-row"><div><div class="integration-name">Gmail</div><div class="integration-status"><span class="status-dot dot-pending"></span>Pending connection</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'Gmail OAuth — coming soon.\')">Connect</button></div>' +
+    '<div class="integration-row"><div><div class="integration-name">Google Business Scraper</div><div class="integration-status"><span class="status-dot dot-connected"></span>Simulated / Active</div></div><button class="btn btn-outline btn-sm">Configure</button></div>' +
+    '<div class="integration-row"><div><div class="integration-name">GoHighLevel CRM</div><div class="integration-status"><span class="status-dot dot-disconnected"></span>Not connected</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'GHL integration — coming soon.\')">Connect</button></div>' +
+    '<div class="integration-row"><div><div class="integration-name">Calendly</div><div class="integration-status"><span class="status-dot dot-disconnected"></span>Not connected</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'Calendly integration — coming soon.\')">Connect</button></div>' +
+    '</div>' +
+    '<div class="settings-card">' +
+    '<div class="settings-card-title">Notifications</div>' +
+    '<div class="settings-card-desc">Control when and how you receive alerts.</div>' +
+    '<div class="integration-row"><div class="integration-name">New lead approved</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">Email reply received</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">Pipeline stage change</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">Weekly summary report</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
+    '</div>' +
+    '<div class="settings-card">' +
+    '<div class="settings-card-title">Business Profile</div>' +
+    '<div class="settings-card-desc">Your agency details used in proposals and outreach.</div>' +
+    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Business Name</label><input type="text" class="field-input" value="Breakout AI Solutions"></div>' +
+    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Location</label><input type="text" class="field-input" value="Palm Desert, CA"></div>' +
+    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Website</label><input type="text" class="field-input" value="breakoutaisolutions.com"></div>' +
+    '<div class="field-group"><label class="field-label">Sender Email</label><input type="email" class="field-input" value="dave@breakoutaisolutions.com"></div>' +
+    '<div class="mt-16"><button class="btn btn-primary btn-sm" onclick="showToast(\'Profile saved.\')">Save Profile</button></div>' +
+    '</div>' +
+    '<div class="settings-card">' +
+    '<div class="settings-card-title">Dashboard Preferences</div>' +
+    '<div class="settings-card-desc">Customize your workspace experience.</div>' +
+    '<div class="integration-row"><div class="integration-name">Dark mode</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">Show closed deals in pipeline</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">Auto-approve scrape results</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
+    '<div class="integration-row"><div class="integration-name">AI-assisted proposal copy</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
+    '</div>';
+}
+
+function toggleSetting(el) {
+  if (el.classList.contains('on')) el.classList.remove('on');
+  else el.classList.add('on');
+}
+
+// =====================
+// MODAL & TOAST
+// =====================
+function showModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
+});
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function() { t.style.display = 'none'; }, 3000);
+}
+
+// =====================
+// INIT
+// =====================
+renderOverview();
+</script>
+
 </body>
 </html>
