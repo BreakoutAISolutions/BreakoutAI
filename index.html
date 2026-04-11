@@ -4,1569 +4,1250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Breakout AI Solutions — Internal Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<title>Breakout AI Solutions — Live Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0a1628;
-    --navy-mid: #112240;
-    --navy-light: #1a3a5c;
-    --gold: #c9a84c;
-    --gold-light: #e8c96e;
-    --white: #ffffff;
-    --off-white: #f4f6f9;
-    --text-main: #1a1a2e;
-    --text-muted: #6b7a99;
-    --text-light: #9aa5be;
-    --border: #e2e8f0;
-    --green: #10b981;
-    --red: #ef4444;
-    --amber: #f59e0b;
-    --blue: #3b82f6;
-    --purple: #8b5cf6;
-    --sidebar-w: 240px;
-    --header-h: 64px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--text-main);
-    min-height: 100vh;
-    display: flex;
-  }
+:root {
+  --bg: #07090f;
+  --surface: #0d1117;
+  --card: #111827;
+  --border: #1e2d3d;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #10b981;
+  --gold: #f59e0b;
+  --red: #ef4444;
+  --text: #cbd5e1;
+  --muted: #475569;
+  --bright: #f1f5f9;
+}
 
-/* SIDEBAR */
-#sidebar {
-width: var(–sidebar-w);
-background: var(–navy);
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘Inter’, sans-serif;
 min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
 position: fixed;
-top: 0; left: 0;
-display: flex;
-flex-direction: column;
-z-index: 100;
+inset: 0;
+background-image:
+linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+background-size: 48px 48px;
+pointer-events: none;
+z-index: 0;
 }
-.sidebar-logo {
-padding: 24px 20px 20px;
-border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.sidebar-logo .logo-mark {
-font-family: ‘Playfair Display’, serif;
-font-size: 17px;
-font-weight: 700;
-color: var(–white);
-line-height: 1.2;
-}
-.sidebar-logo .logo-sub {
-font-size: 10px;
-font-weight: 500;
-letter-spacing: 0.12em;
-color: var(–gold);
-text-transform: uppercase;
-margin-top: 3px;
-}
-.sidebar-nav {
-padding: 16px 0;
-flex: 1;
-}
-.nav-section-label {
-font-size: 9px;
-font-weight: 600;
-letter-spacing: 0.15em;
-text-transform: uppercase;
-color: rgba(255,255,255,0.25);
-padding: 12px 20px 6px;
-}
-.nav-item {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 10px 20px;
-cursor: pointer;
-color: rgba(255,255,255,0.55);
-font-size: 13.5px;
-font-weight: 400;
-transition: all 0.15s;
-border-left: 3px solid transparent;
-text-decoration: none;
-}
-.nav-item:hover {
-color: var(–white);
-background: rgba(255,255,255,0.05);
-}
-.nav-item.active {
-color: var(–white);
-background: rgba(201,168,76,0.1);
-border-left-color: var(–gold);
-font-weight: 500;
-}
-.nav-item .nav-icon { font-size: 15px; width: 18px; text-align: center; }
-.sidebar-footer {
-padding: 16px 20px;
-border-top: 1px solid rgba(255,255,255,0.07);
-}
-.sidebar-user {
-display: flex;
-align-items: center;
-gap: 10px;
-}
-.user-avatar {
-width: 32px; height: 32px;
-background: var(–gold);
-border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-font-size: 12px; font-weight: 700; color: var(–navy);
-}
-.user-info .user-name { font-size: 12px; font-weight: 500; color: var(–white); }
-.user-info .user-role { font-size: 10px; color: rgba(255,255,255,0.4); }
 
-/* MAIN CONTENT */
-#main {
-margin-left: var(–sidebar-w);
-flex: 1;
-display: flex;
-flex-direction: column;
+/* –– SCREENS –– */
+.screen {
+display: none;
+position: relative;
+z-index: 1;
 min-height: 100vh;
 }
-#topbar {
-height: var(–header-h);
-background: var(–white);
+.screen.active { display: flex; }
+
+/* –– SPLASH –– */
+#splash {
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 40px 24px;
+}
+
+.splash-glow {
+position: absolute;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+pointer-events: none;
+}
+
+.brand-tag {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–accent);
+text-transform: uppercase;
+margin-bottom: 24px;
+opacity: 0.8;
+}
+
+.splash h1 {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(36px, 6vw, 72px);
+font-weight: 800;
+color: var(–bright);
+line-height: 1.05;
+margin-bottom: 8px;
+}
+
+.splash h1 em {
+font-style: normal;
+color: var(–accent);
+}
+
+.splash .tagline {
+font-size: clamp(16px, 2.5vw, 22px);
+color: var(–muted);
+font-weight: 300;
+margin-bottom: 48px;
+max-width: 560px;
+}
+
+.splash .client-pill {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: rgba(255,255,255,0.04);
+border: 1px solid var(–border);
+border-radius: 100px;
+padding: 10px 24px;
+margin-bottom: 56px;
+font-size: 14px;
+color: var(–text);
+}
+
+.splash .client-pill .dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–accent3);
+box-shadow: 0 0 8px var(–accent3);
+animation: blink 2s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.splash .stat-row {
+display: flex;
+gap: 40px;
+margin-bottom: 56px;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.splash-stat { text-align: center; }
+.splash-stat .num {
+font-family: ‘Syne’, sans-serif;
+font-size: 36px;
+font-weight: 800;
+color: var(–accent);
+display: block;
+}
+.splash-stat .lbl {
+font-size: 12px;
+color: var(–muted);
+font-family: ‘IBM Plex Mono’, monospace;
+letter-spacing: 1px;
+}
+
+.btn-primary {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: var(–accent);
+color: var(–bg);
+border: none;
+border-radius: 10px;
+padding: 16px 36px;
+font-family: ‘Syne’, sans-serif;
+font-size: 16px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s;
+letter-spacing: 0.5px;
+}
+.btn-primary:hover { background: #33ddff; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(0,212,255,0.3); }
+
+.powered-by {
+position: absolute;
+bottom: 24px;
+right: 24px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+color: var(–muted);
+opacity: 0.5;
+letter-spacing: 2px;
+}
+
+/* –– STATION SCREEN –– */
+#station-screen {
+flex-direction: column;
+padding: 0;
+}
+
+.top-bar {
+background: var(–surface);
 border-bottom: 1px solid var(–border);
+padding: 14px 32px;
 display: flex;
 align-items: center;
 justify-content: space-between;
-padding: 0 32px;
 position: sticky;
 top: 0;
-z-index: 50;
+z-index: 100;
 }
-.topbar-title {
-font-family: ‘Playfair Display’, serif;
-font-size: 18px;
-font-weight: 600;
-color: var(–navy);
+
+.top-bar .tbl {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–muted);
+letter-spacing: 2px;
 }
-.topbar-actions { display: flex; align-items: center; gap: 12px; }
-.btn {
-padding: 8px 18px;
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
+
+.top-bar .tbl span { color: var(–accent); }
+
+.progress-wrap {
+flex: 1;
+max-width: 400px;
+margin: 0 40px;
+}
+
+.progress-track {
+height: 3px;
+background: var(–border);
+border-radius: 2px;
+overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent), var(–accent2));
+border-radius: 2px;
+transition: width 0.5s ease;
+}
+
+.progress-label {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+color: var(–muted);
+text-align: right;
+margin-top: 4px;
+}
+
+.tally-pill {
+display: flex;
+gap: 16px;
+}
+
+.tally-item {
+text-align: center;
+}
+
+.tally-item .tv {
+font-family: ‘Syne’, sans-serif;
+font-size: 14px;
+font-weight: 700;
+color: var(–accent3);
+display: block;
+}
+
+.tally-item .tl {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 9px;
+color: var(–muted);
+letter-spacing: 1px;
+}
+
+/* –– STATION CONTENT –– */
+.station-content {
+flex: 1;
+padding: 48px 32px;
+max-width: 900px;
+margin: 0 auto;
+width: 100%;
+}
+
+.station-eyebrow {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 20px;
+}
+
+.station-num-badge {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–muted);
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 4px 10px;
+border-radius: 4px;
+}
+
+.station-category {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+padding: 4px 10px;
+border-radius: 4px;
+text-transform: uppercase;
+}
+
+.station-main-title {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(26px, 4vw, 42px);
+font-weight: 800;
+color: var(–bright);
+line-height: 1.1;
+margin-bottom: 16px;
+}
+
+.station-main-title em {
+font-style: normal;
+}
+
+.station-hook {
+font-size: 17px;
+color: var(–text);
+line-height: 1.65;
+margin-bottom: 32px;
+max-width: 680px;
+font-weight: 300;
+}
+
+/* Before/After */
+.bva {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 16px;
+margin-bottom: 32px;
+}
+
+.bva-card {
+border-radius: 10px;
+padding: 18px 20px;
+}
+
+.bva-card.before {
+background: rgba(239,68,68,0.07);
+border: 1px solid rgba(239,68,68,0.2);
+}
+
+.bva-card.after {
+background: rgba(16,185,129,0.07);
+border: 1px solid rgba(16,185,129,0.2);
+}
+
+.bva-label {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 10px;
+letter-spacing: 2px;
+margin-bottom: 8px;
+text-transform: uppercase;
+}
+
+.bva-card.before .bva-label { color: var(–red); }
+.bva-card.after .bva-label { color: var(–accent3); }
+
+.bva-text {
+font-size: 14px;
+line-height: 1.6;
+color: var(–text);
+}
+
+/* Questions */
+.questions-block {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 24px;
+margin-bottom: 28px;
+}
+
+.questions-block .qb-title {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–accent);
+text-transform: uppercase;
+margin-bottom: 20px;
+}
+
+.q-item {
+margin-bottom: 20px;
+}
+
+.q-item:last-child { margin-bottom: 0; }
+
+.q-label {
+font-size: 14px;
+color: var(–text);
+margin-bottom: 8px;
+line-height: 1.4;
 font-weight: 500;
-cursor: pointer;
-transition: all 0.15s;
+}
+
+.q-input {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.q-input input {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 10px 14px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 15px;
+color: var(–bright);
+width: 100px;
+text-align: center;
+transition: border-color 0.2s;
+}
+
+.q-input input:focus {
+outline: none;
+border-color: var(–accent);
+}
+
+.q-input .unit {
+font-size: 13px;
+color: var(–muted);
+}
+
+/* Run demo button */
+.run-demo-btn {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: linear-gradient(135deg, var(–accent), #0088cc);
+color: var(–bg);
 border: none;
+border-radius: 10px;
+padding: 14px 28px;
+font-family: ‘Syne’, sans-serif;
+font-size: 15px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s;
+margin-bottom: 28px;
 }
-.btn-primary {
-background: var(–navy);
-color: var(–white);
-}
-.btn-primary:hover { background: var(–navy-light); }
-.btn-gold {
-background: var(–gold);
-color: var(–navy);
-}
-.btn-gold:hover { background: var(–gold-light); }
-.btn-outline {
-background: transparent;
-border: 1.5px solid var(–border);
-color: var(–text-main);
-}
-.btn-outline:hover { border-color: var(–navy); }
-.btn-sm { padding: 5px 12px; font-size: 12px; }
-.btn-danger { background: var(–red); color: white; }
-.btn-success { background: var(–green); color: white; }
 
-#content { padding: 32px; flex: 1; }
+.run-demo-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,212,255,0.3); }
+.run-demo-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-/* PANELS */
-.panel { display: none; }
-.panel.active { display: block; }
-
-/* OVERVIEW */
-.section-header { margin-bottom: 24px; }
-.section-header h2 {
-font-family: ‘Playfair Display’, serif;
-font-size: 24px;
-font-weight: 600;
-color: var(–navy);
+/* Output */
+.output-panel {
+display: none;
+background: rgba(0,0,0,0.5);
+border: 1px solid var(–border);
+border-radius: 12px;
+overflow: hidden;
+margin-bottom: 28px;
 }
-.section-header p { color: var(–text-muted); font-size: 14px; margin-top: 4px; }
 
-.metrics-grid {
+.output-panel.visible { display: block; }
+
+.output-header {
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+padding: 10px 18px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.output-header .dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+}
+
+.output-header .dot.g { background: #10b981; }
+.output-header .dot.y { background: #f59e0b; }
+.output-header .dot.r { background: #ef4444; }
+
+.output-header .oht {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–muted);
+margin-left: 6px;
+letter-spacing: 1px;
+}
+
+.output-body {
+padding: 20px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 13px;
+line-height: 1.8;
+color: var(–text);
+white-space: pre-wrap;
+word-break: break-word;
+}
+
+/* Savings card */
+.savings-card {
+display: none;
+background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(0,212,255,0.1));
+border: 1px solid rgba(16,185,129,0.3);
+border-radius: 12px;
+padding: 24px;
+margin-bottom: 28px;
+}
+
+.savings-card.visible { display: block; }
+
+.savings-card .sc-title {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 3px;
+color: var(–accent3);
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.savings-grid {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 gap: 16px;
-margin-bottom: 28px;
-}
-.metric-card {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 20px 24px;
-position: relative;
-overflow: hidden;
-}
-.metric-card::before {
-content: ‘’;
-position: absolute;
-top: 0; left: 0;
-width: 4px; height: 100%;
-background: var(–gold);
-border-radius: 10px 0 0 10px;
-}
-.metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(–text-muted); margin-bottom: 8px; }
-.metric-value { font-size: 32px; font-weight: 600; color: var(–navy); line-height: 1; }
-.metric-sub { font-size: 12px; color: var(–text-light); margin-top: 6px; }
-.metric-card.green::before { background: var(–green); }
-.metric-card.blue::before { background: var(–blue); }
-.metric-card.amber::before { background: var(–amber); }
-.metric-card.purple::before { background: var(–purple); }
-.metric-card.red::before { background: var(–red); }
-
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.card {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 22px 24px;
-}
-.card-title {
-font-size: 13px;
-font-weight: 600;
-color: var(–navy);
-margin-bottom: 16px;
-letter-spacing: 0.02em;
 }
 
-/* PIPELINE MINI */
-.pipeline-stage-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 8px 0;
-border-bottom: 1px solid var(–border);
-font-size: 13px;
-}
-.pipeline-stage-row:last-child { border-bottom: none; }
-.stage-dot {
-width: 8px; height: 8px; border-radius: 50%;
-display: inline-block; margin-right: 8px;
-}
-.stage-count {
-font-weight: 600;
-color: var(–navy);
-font-size: 15px;
+.saving-stat .sv {
+font-family: ‘Syne’, sans-serif;
+font-size: 28px;
+font-weight: 800;
+color: var(–accent3);
+display: block;
 }
 
-/* ACTIVITY FEED */
-.activity-item {
-display: flex;
-gap: 12px;
-padding: 10px 0;
-border-bottom: 1px solid var(–border);
-font-size: 13px;
-}
-.activity-item:last-child { border-bottom: none; }
-.activity-icon {
-width: 28px; height: 28px;
-border-radius: 50%;
-background: var(–off-white);
-display: flex; align-items: center; justify-content: center;
+.saving-stat .sl {
 font-size: 12px;
-flex-shrink: 0;
+color: var(–muted);
+margin-top: 2px;
 }
-.activity-text { color: var(–text-main); line-height: 1.4; }
-.activity-time { color: var(–text-light); font-size: 11px; margin-top: 2px; }
 
-/* LEADS TABLE */
-.table-controls {
+/* Bottom nav */
+.bottom-nav {
+background: var(–surface);
+border-top: 1px solid var(–border);
+padding: 16px 32px;
 display: flex;
 align-items: center;
 justify-content: space-between;
-margin-bottom: 16px;
-gap: 12px;
+position: sticky;
+bottom: 0;
+z-index: 100;
 }
-.search-input {
-padding: 8px 14px;
-border: 1.5px solid var(–border);
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-main);
-background: var(–white);
-width: 240px;
-outline: none;
-transition: border-color 0.15s;
+
+.nav-hint {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+color: var(–muted);
+letter-spacing: 1px;
 }
-.search-input:focus { border-color: var(–navy); }
-.select-input {
-padding: 8px 12px;
-border: 1.5px solid var(–border);
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-main);
-background: var(–white);
-outline: none;
+
+.btn-next {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: var(–accent);
+color: var(–bg);
+border: none;
+border-radius: 8px;
+padding: 12px 28px;
+font-family: ‘Syne’, sans-serif;
+font-size: 15px;
+font-weight: 700;
 cursor: pointer;
+transition: all 0.2s;
 }
-table {
-width: 100%;
-border-collapse: collapse;
-font-size: 13px;
-}
-thead th {
-text-align: left;
-padding: 10px 14px;
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0.06em;
-text-transform: uppercase;
-color: var(–text-muted);
-background: var(–off-white);
-border-bottom: 1px solid var(–border);
-}
-tbody tr {
-border-bottom: 1px solid var(–border);
-transition: background 0.1s;
-}
-tbody tr:hover { background: #f8fafc; }
-tbody td { padding: 12px 14px; color: var(–text-main); vertical-align: middle; }
-.badge {
-display: inline-block;
-padding: 3px 9px;
-border-radius: 20px;
-font-size: 11px;
-font-weight: 500;
-}
-.badge-new { background: #eff6ff; color: #2563eb; }
-.badge-approved { background: #f0fdf4; color: #16a34a; }
-.badge-contacted { background: #fffbeb; color: #b45309; }
-.badge-replied { background: #f0fdf4; color: #15803d; }
-.badge-discovery { background: #fdf4ff; color: #7e22ce; }
-.badge-proposal { background: #fff7ed; color: #c2410c; }
-.badge-won { background: #f0fdf4; color: #166534; }
-.badge-lost { background: #fef2f2; color: #b91c1c; }
-.badge-audit { background: #fdf4ff; color: #6d28d9; }
+.btn-next:hover { background: #33ddff; }
 
-/* PIPELINE BOARD */
-.pipeline-board {
-display: flex;
-gap: 14px;
-overflow-x: auto;
-padding-bottom: 16px;
-}
-.pipeline-col {
-min-width: 190px;
-max-width: 190px;
-background: var(–off-white);
-border-radius: 10px;
-padding: 14px 12px;
-border: 1px solid var(–border);
-}
-.pipeline-col-header {
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0.06em;
-text-transform: uppercase;
-color: var(–text-muted);
-margin-bottom: 10px;
-display: flex;
+.btn-back {
+display: inline-flex;
 align-items: center;
-justify-content: space-between;
-}
-.pipeline-col-count {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 1px 7px;
-font-size: 11px;
-font-weight: 600;
-color: var(–navy);
-}
-.pipeline-card {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 7px;
-padding: 12px;
-margin-bottom: 8px;
-cursor: pointer;
-transition: box-shadow 0.15s, transform 0.1s;
-}
-.pipeline-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.09); transform: translateY(-1px); }
-.pc-name { font-size: 13px; font-weight: 500; color: var(–navy); margin-bottom: 4px; }
-.pc-industry { font-size: 11px; color: var(–text-muted); }
-.pc-date { font-size: 10px; color: var(–text-light); margin-top: 6px; }
-
-/* SCRAPING */
-.scrape-form {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 24px;
-margin-bottom: 24px;
-}
-.form-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
-.form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(–text-muted); }
-.form-input {
-padding: 9px 13px;
-border: 1.5px solid var(–border);
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-main);
-background: var(–white);
-outline: none;
-transition: border-color 0.15s;
-min-width: 160px;
-}
-.form-input:focus { border-color: var(–navy); }
-.scrape-results-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 14px;
-}
-.scrape-results-title { font-size: 14px; font-weight: 600; color: var(–navy); }
-.scrape-row {
-background: var(–white);
+gap: 8px;
+background: transparent;
+color: var(–muted);
 border: 1px solid var(–border);
 border-radius: 8px;
-padding: 14px 18px;
-margin-bottom: 10px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 12px;
-}
-.scrape-info { flex: 1; }
-.scrape-name { font-size: 13px; font-weight: 600; color: var(–navy); }
-.scrape-detail { font-size: 12px; color: var(–text-muted); margin-top: 2px; }
-.scrape-actions { display: flex; gap: 8px; flex-shrink: 0; }
-
-/* EMAIL OUTREACH */
-.template-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
-.template-tab {
-padding: 6px 14px;
-border-radius: 20px;
-font-size: 12px;
-font-weight: 500;
-cursor: pointer;
-border: 1.5px solid var(–border);
-background: var(–white);
-color: var(–text-muted);
-transition: all 0.15s;
-}
-.template-tab.active, .template-tab:hover {
-background: var(–navy);
-color: var(–white);
-border-color: var(–navy);
-}
-.email-draft {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 22px 24px;
-margin-bottom: 16px;
-}
-.email-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.email-subject { font-size: 14px; font-weight: 600; color: var(–navy); }
-.email-vertical { font-size: 11px; color: var(–text-muted); }
-.email-body { font-size: 13px; color: var(–text-main); line-height: 1.7; white-space: pre-wrap; background: var(–off-white); border-radius: 6px; padding: 14px 16px; }
-.email-footer { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
-
-/* PROPOSAL GENERATOR */
-.vertical-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-.vertical-card {
-background: var(–white);
-border: 2px solid var(–border);
-border-radius: 10px;
-padding: 18px;
-cursor: pointer;
-text-align: center;
-transition: all 0.15s;
-}
-.vertical-card:hover, .vertical-card.selected {
-border-color: var(–gold);
-background: #fffbf0;
-}
-.vertical-card .vc-icon { font-size: 26px; margin-bottom: 8px; }
-.vertical-card .vc-name { font-size: 13px; font-weight: 600; color: var(–navy); }
-.vertical-card .vc-desc { font-size: 11px; color: var(–text-muted); margin-top: 3px; }
-.proposal-output {
-background: var(–white);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 28px 32px;
-}
-.proposal-header {
-text-align: center;
-padding-bottom: 20px;
-border-bottom: 2px solid var(–gold);
-margin-bottom: 24px;
-}
-.proposal-title { font-family: ‘Playfair Display’, serif; font-size: 24px; color: var(–navy); margin-bottom: 6px; }
-.proposal-sub { font-size: 13px; color: var(–text-muted); }
-.proposal-section { margin-bottom: 20px; }
-.proposal-section-title {
-font-size: 12px;
+padding: 12px 20px;
+font-family: ‘Syne’, sans-serif;
+font-size: 14px;
 font-weight: 600;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: var(–gold);
-margin-bottom: 8px;
-}
-.proposal-section p { font-size: 13.5px; color: var(–text-main); line-height: 1.7; }
-.proposal-section ul { padding-left: 18px; }
-.proposal-section li { font-size: 13.5px; color: var(–text-main); line-height: 1.8; }
-
-/* SETTINGS */
-.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.settings-card { background: var(–white); border: 1px solid var(–border); border-radius: 10px; padding: 22px 24px; }
-.settings-card-title { font-size: 14px; font-weight: 600; color: var(–navy); margin-bottom: 4px; }
-.settings-card-desc { font-size: 12px; color: var(–text-muted); margin-bottom: 16px; }
-.integration-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(–border); }
-.integration-row:last-child { border-bottom: none; }
-.integration-name { font-size: 13px; font-weight: 500; color: var(–navy); }
-.integration-status { font-size: 11px; color: var(–text-muted); }
-.status-dot {
-display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-margin-right: 5px;
-}
-.dot-connected { background: var(–green); }
-.dot-pending { background: var(–amber); }
-.dot-disconnected { background: #d1d5db; }
-.toggle-wrap { display: flex; align-items: center; gap: 8px; }
-.toggle {
-width: 36px; height: 20px;
-background: #d1d5db;
-border-radius: 10px;
-position: relative;
 cursor: pointer;
-transition: background 0.2s;
+transition: all 0.2s;
 }
-.toggle.on { background: var(–green); }
-.toggle::after {
-content: ‘’;
-position: absolute;
-width: 14px; height: 14px;
-background: white;
-border-radius: 50%;
-top: 3px; left: 3px;
-transition: left 0.2s;
-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-.toggle.on::after { left: 19px; }
+.btn-back:hover { color: var(–text); border-color: var(–text); }
 
-/* MODAL */
-.modal-overlay {
-display: none;
-position: fixed; inset: 0;
-background: rgba(10,22,40,0.55);
-z-index: 200;
+.nav-btns { display: flex; gap: 10px; }
+
+/* –– CLOSING SCREEN –– */
+#closing-screen {
+flex-direction: column;
 align-items: center;
 justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-background: var(–white);
-border-radius: 12px;
-padding: 28px 32px;
-width: 520px;
-max-width: 95vw;
-max-height: 85vh;
-overflow-y: auto;
-box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
-.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.modal-title { font-family: ‘Playfair Display’, serif; font-size: 18px; color: var(–navy); }
-.modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(–text-muted); line-height: 1; }
-.modal-close:hover { color: var(–navy); }
-.field-group { margin-bottom: 14px; }
-.field-label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(–text-muted); margin-bottom: 5px; }
-.field-input {
-width: 100%;
-padding: 9px 13px;
-border: 1.5px solid var(–border);
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-main);
-outline: none;
-transition: border-color 0.15s;
-}
-.field-input:focus { border-color: var(–navy); }
-.field-select {
-width: 100%;
-padding: 9px 13px;
-border: 1.5px solid var(–border);
-border-radius: 6px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-color: var(–text-main);
-outline: none;
-background: var(–white);
-}
-.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(–border); }
-
-/* TOAST */
-#toast {
-position: fixed;
-bottom: 28px; right: 28px;
-background: var(–navy);
-color: white;
-padding: 12px 20px;
-border-radius: 8px;
-font-size: 13px;
-font-weight: 500;
-z-index: 999;
-display: none;
-box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-border-left: 4px solid var(–gold);
-animation: slideUp 0.25s ease;
-}
-@keyframes slideUp {
-from { transform: translateY(20px); opacity: 0; }
-to { transform: translateY(0); opacity: 1; }
-}
-
-/* EMPTY STATE */
-.empty-state {
 text-align: center;
-padding: 48px 24px;
-color: var(–text-muted);
+padding: 40px 24px;
 }
-.empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
-.empty-state p { font-size: 14px; }
 
-/* MISC */
-.flex { display: flex; }
-.items-center { align-items: center; }
-.gap-8 { gap: 8px; }
-.gap-12 { gap: 12px; }
-.mt-4 { margin-top: 4px; }
-.mt-8 { margin-top: 8px; }
-.mt-16 { margin-top: 16px; }
-.mt-24 { margin-top: 24px; }
-.mb-0 { margin-bottom: 0; }
-.text-sm { font-size: 13px; }
-.text-xs { font-size: 11px; }
-.text-muted { color: var(–text-muted); }
-.fw-600 { font-weight: 600; }
-.divider { border: none; border-top: 1px solid var(–border); margin: 20px 0; }
-.chip {
-display: inline-block;
-padding: 2px 8px;
-border-radius: 4px;
-font-size: 11px;
-font-weight: 500;
-background: var(–off-white);
-color: var(–text-muted);
-border: 1px solid var(–border);
+.closing-glow {
+position: absolute;
+width: 700px; height: 700px;
+background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+pointer-events: none;
 }
-.gold-divider {
-height: 2px;
-background: linear-gradient(90deg, var(–gold), transparent);
-margin: 20px 0;
-border-radius: 2px;
+
+.closing-eyebrow {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–accent3);
+text-transform: uppercase;
+margin-bottom: 20px;
+}
+
+.closing h2 {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(32px, 5vw, 58px);
+font-weight: 800;
+color: var(–bright);
+line-height: 1.1;
+margin-bottom: 16px;
+}
+
+.closing .sub {
+font-size: 18px;
+color: var(–muted);
+margin-bottom: 48px;
+font-weight: 300;
+}
+
+.grand-totals {
+display: flex;
+gap: 0;
+margin-bottom: 48px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 16px;
+overflow: hidden;
+}
+
+.gt-item {
+flex: 1;
+padding: 32px 24px;
+border-right: 1px solid var(–border);
+}
+
+.gt-item:last-child { border-right: none; }
+
+.gt-item .gv {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(32px, 5vw, 52px);
+font-weight: 800;
+display: block;
+margin-bottom: 6px;
+}
+
+.gt-item:nth-child(1) .gv { color: var(–accent); }
+.gt-item:nth-child(2) .gv { color: var(–accent3); }
+.gt-item:nth-child(3) .gv { color: var(–gold); }
+
+.gt-item .gl {
+font-size: 13px;
+color: var(–muted);
+line-height: 1.4;
+}
+
+.closing-cta {
+margin-bottom: 32px;
+}
+
+.closing-cta p {
+font-size: 16px;
+color: var(–text);
+margin-bottom: 24px;
+max-width: 520px;
+margin-left: auto;
+margin-right: auto;
+line-height: 1.6;
+}
+
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+.btn-cta-main {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: var(–accent3);
+color: var(–bg);
+border: none;
+border-radius: 10px;
+padding: 16px 36px;
+font-family: ‘Syne’, sans-serif;
+font-size: 16px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s;
+}
+.btn-cta-main:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(16,185,129,0.3); }
+
+.btn-cta-sec {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: transparent;
+color: var(–text);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 16px 28px;
+font-family: ‘Syne’, sans-serif;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+}
+.btn-cta-sec:hover { border-color: var(–text); }
+
+/* Typing animation */
+@keyframes typing {
+from { width: 0; }
+to { width: 100%; }
+}
+
+.typed {
+overflow: hidden;
+animation: fadeIn 0.05s ease forwards;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+.bva { grid-template-columns: 1fr; }
+.savings-grid { grid-template-columns: 1fr; }
+.grand-totals { flex-direction: column; }
+.gt-item { border-right: none; border-bottom: 1px solid var(–border); }
+.gt-item:last-child { border-bottom: none; }
+.top-bar .tally-pill { display: none; }
+.progress-wrap { max-width: 200px; }
 }
 </style>
 
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<!-- ============ SPLASH ============ -->
 
-<div id="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">Breakout AI</div>
-    <div class="logo-sub">Solutions</div>
+<div class="screen active" id="splash">
+  <div class="splash-glow"></div>
+
+  <div class="brand-tag">Breakout AI Solutions &nbsp;·&nbsp; Live Demo</div>
+
+  <h1 class="splash">What If Your Business<br><em>Ran Itself?</em></h1>
+  <p class="tagline">See exactly how AI handles your leads, follow-ups, proposals, scheduling, billing — and more. In real time.</p>
+
+  <div class="client-pill">
+    <span class="dot"></span>
+    Demo Company: <strong>Apex Home Services</strong> &nbsp;·&nbsp; HVAC · Plumbing · Roofing
   </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Workspace</div>
-    <div class="nav-item active" onclick="showPanel('overview', this)">
-      <span class="nav-icon">◉</span> Overview
+
+  <div class="stat-row">
+    <div class="splash-stat">
+      <span class="num">11</span>
+      <span class="lbl">AI Integrations</span>
     </div>
-    <div class="nav-item" onclick="showPanel('leads', this)">
-      <span class="nav-icon">◈</span> Leads
+    <div class="splash-stat">
+      <span class="num">40+</span>
+      <span class="lbl">Hrs Saved / Week</span>
     </div>
-    <div class="nav-item" onclick="showPanel('scraping', this)">
-      <span class="nav-icon">⊕</span> Scraping
+    <div class="splash-stat">
+      <span class="num">$0</span>
+      <span class="lbl">Extra Headcount</span>
     </div>
-    <div class="nav-item" onclick="showPanel('pipeline', this)">
-      <span class="nav-icon">◫</span> Pipeline
+  </div>
+
+  <button class="btn-primary" onclick="startDemo()">
+    ▶ &nbsp; Start the Demo
+  </button>
+
+  <div class="powered-by">POWERED BY BREAKOUT AI SOLUTIONS</div>
+</div>
+
+<!-- ============ STATION SCREEN ============ -->
+
+<div class="screen" id="station-screen">
+
+  <div class="top-bar">
+    <div class="tbl">STATION <span id="tb-num">01</span> OF 11</div>
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill" style="width:9%"></div>
+      </div>
+      <div class="progress-label" id="prog-label">Step 1 of 11</div>
     </div>
-    <div class="nav-section-label">Outreach</div>
-    <div class="nav-item" onclick="showPanel('outreach', this)">
-      <span class="nav-icon">◎</span> Email Outreach
-    </div>
-    <div class="nav-item" onclick="showPanel('proposals', this)">
-      <span class="nav-icon">◳</span> Proposals
-    </div>
-    <div class="nav-section-label">System</div>
-    <div class="nav-item" onclick="showPanel('settings', this)">
-      <span class="nav-icon">◌</span> Settings
-    </div>
-  </nav>
-  <div class="sidebar-footer">
-    <div class="sidebar-user">
-      <div class="user-avatar">D</div>
-      <div class="user-info">
-        <div class="user-name">Dave</div>
-        <div class="user-role">Owner · Palm Desert, CA</div>
+    <div class="tally-pill">
+      <div class="tally-item">
+        <span class="tv" id="tally-hrs">0 hrs</span>
+        <span class="tl">SAVED / WK</span>
+      </div>
+      <div class="tally-item">
+        <span class="tv" id="tally-dollars">$0</span>
+        <span class="tl">SAVED / YR</span>
       </div>
     </div>
   </div>
-</div>
 
-<!-- MAIN -->
+  <div class="station-content" id="station-content">
+    <!-- Injected by JS -->
+  </div>
 
-<div id="main">
-  <div id="topbar">
-    <div class="topbar-title" id="topbar-title">Overview</div>
-    <div class="topbar-actions">
-      <button class="btn btn-outline btn-sm" onclick="showModal('add-lead-modal')">+ Add Lead</button>
-      <button class="btn btn-gold btn-sm" onclick="showPanel('scraping', document.querySelector('[onclick*=scraping]'))">Launch Scrape</button>
+  <div class="bottom-nav">
+    <div class="nav-hint" id="nav-hint">Enter their answers above, then run the demo</div>
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goBack()">← Back</button>
+      <button class="btn-next" id="btn-next" onclick="goNext()">Next Station →</button>
     </div>
   </div>
 
-  <div id="content">
+</div>
+
+<!-- ============ CLOSING SCREEN ============ -->
+
+<div class="screen" id="closing-screen">
+  <div class="closing-glow"></div>
+
+  <div class="closing">
+    <div class="closing-eyebrow">// Your Results Summary</div>
+    <h2>Here's What AI<br>Does for <span id="close-co">Apex Home Services</span></h2>
+    <p class="sub">Based on what you told us today, here's the real impact — every week, every year.</p>
 
 ```
-<!-- OVERVIEW PANEL -->
-<div id="panel-overview" class="panel active">
-  <div class="section-header">
-    <h2>Good morning, Dave.</h2>
-    <p>Here's what's happening with Breakout AI Solutions today.</p>
+<div class="grand-totals">
+  <div class="gt-item">
+    <span class="gv" id="grand-hrs">0</span>
+    <span class="gl">Hours saved<br>every week</span>
   </div>
-  <div class="metrics-grid" id="metrics-grid"></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Pipeline Summary</div>
-      <div id="pipeline-summary"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Recent Activity</div>
-      <div id="activity-feed"></div>
-    </div>
+  <div class="gt-item">
+    <span class="gv" id="grand-dollars">$0</span>
+    <span class="gl">Saved or recovered<br>every year</span>
+  </div>
+  <div class="gt-item">
+    <span class="gv" id="grand-days">0</span>
+    <span class="gl">Full work days<br>given back per month</span>
   </div>
 </div>
 
-<!-- LEADS PANEL -->
-<div id="panel-leads" class="panel">
-  <div class="section-header">
-    <h2>Lead Database</h2>
-    <p>All approved businesses in your CRM.</p>
-  </div>
-  <div class="card">
-    <div class="table-controls">
-      <div class="flex gap-8">
-        <input type="text" class="search-input" placeholder="Search leads..." oninput="filterLeads(this.value)" id="lead-search">
-        <select class="select-input" onchange="filterLeadsByStatus(this.value)" id="status-filter">
-          <option value="">All Statuses</option>
-          <option value="New Lead">New Lead</option>
-          <option value="Approved">Approved</option>
-          <option value="Contacted">Contacted</option>
-          <option value="Replied">Replied</option>
-          <option value="Discovery Call">Discovery Call</option>
-          <option value="Audit Opportunity">Audit Opportunity</option>
-          <option value="Proposal Sent">Proposal Sent</option>
-          <option value="Closed Won">Closed Won</option>
-          <option value="Closed Lost">Closed Lost</option>
-        </select>
-      </div>
-      <button class="btn btn-primary btn-sm" onclick="showModal('add-lead-modal')">+ Add Lead</button>
-    </div>
-    <table id="leads-table">
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Industry</th>
-          <th>Location</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Source</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="leads-tbody"></tbody>
-    </table>
+<div class="closing-cta">
+  <p>This is what's waiting on the other side of a single AI audit. No new hires. No disruption. Just systems that work while you sleep.</p>
+  <div class="cta-btns">
+    <button class="btn-cta-main" onclick="alert('Schedule your audit at breakoutaisolutions.com')">
+      ✓ &nbsp; Let's Build This For You
+    </button>
+    <button class="btn-cta-sec" onclick="restartDemo()">
+      ↺ &nbsp; Restart Demo
+    </button>
   </div>
 </div>
 
-<!-- SCRAPING PANEL -->
-<div id="panel-scraping" class="panel">
-  <div class="section-header">
-    <h2>Lead Scraping</h2>
-    <p>Search for businesses, review results, and approve them into your CRM.</p>
-  </div>
-  <div class="scrape-form">
-    <div class="card-title" style="margin-bottom:14px;">Configure Search</div>
-    <div class="form-row">
-      <div class="form-group">
-        <div class="form-label">Industry / Vertical</div>
-        <input type="text" class="form-input" id="scrape-industry" placeholder="e.g. Med Spa, Contractor" style="min-width:200px;">
-      </div>
-      <div class="form-group">
-        <div class="form-label">City / Region</div>
-        <input type="text" class="form-input" id="scrape-location" placeholder="e.g. Palm Desert, CA">
-      </div>
-      <div class="form-group">
-        <div class="form-label">Max Results</div>
-        <select class="form-input" id="scrape-limit" style="min-width:100px;">
-          <option>10</option>
-          <option>25</option>
-          <option>50</option>
-        </select>
-      </div>
-      <div class="form-group" style="justify-content:flex-end;">
-        <button class="btn btn-gold" onclick="runScrape()">Run Search</button>
-      </div>
-    </div>
-  </div>
-  <div id="scrape-results-area"></div>
-</div>
-
-<!-- PIPELINE PANEL -->
-<div id="panel-pipeline" class="panel">
-  <div class="section-header">
-    <h2>Sales Pipeline</h2>
-    <p>Track every opportunity from first contact to closed deal.</p>
-  </div>
-  <div class="pipeline-board" id="pipeline-board"></div>
-</div>
-
-<!-- EMAIL OUTREACH PANEL -->
-<div id="panel-outreach" class="panel">
-  <div class="section-header">
-    <h2>Email Outreach</h2>
-    <p>Templates, drafts, and send queue by vertical.</p>
-  </div>
-  <div class="template-tabs" id="outreach-tabs"></div>
-  <div id="outreach-content"></div>
-</div>
-
-<!-- PROPOSALS PANEL -->
-<div id="panel-proposals" class="panel">
-  <div class="section-header">
-    <h2>Proposal Generator</h2>
-    <p>Select a client vertical to generate a tailored proposal outline.</p>
-  </div>
-  <div class="vertical-grid" id="vertical-grid"></div>
-  <div id="proposal-output" style="display:none;"></div>
-</div>
-
-<!-- SETTINGS PANEL -->
-<div id="panel-settings" class="panel">
-  <div class="section-header">
-    <h2>Settings &amp; Integrations</h2>
-    <p>Connect your tools, configure preferences, and manage your workspace.</p>
-  </div>
-  <div class="settings-grid" id="settings-grid"></div>
-</div>
+<div class="powered-by" style="position:relative;bottom:auto;right:auto;margin-top:24px;">BREAKOUT AI SOLUTIONS &nbsp;·&nbsp; breakoutaisolutions.com &nbsp;·&nbsp; (818) 388-3322</div>
 ```
 
   </div>
 </div>
-
-<!-- ADD LEAD MODAL -->
-
-<div class="modal-overlay" id="add-lead-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Add New Lead</div>
-      <button class="modal-close" onclick="closeModal('add-lead-modal')">×</button>
-    </div>
-    <div class="form-row" style="flex-wrap:wrap; gap:14px;">
-      <div class="field-group" style="flex:1; min-width:200px;">
-        <label class="field-label">Company Name *</label>
-        <input type="text" class="field-input" id="new-company" placeholder="Business name">
-      </div>
-      <div class="field-group" style="flex:1; min-width:160px;">
-        <label class="field-label">Industry</label>
-        <input type="text" class="field-input" id="new-industry" placeholder="e.g. Med Spa">
-      </div>
-    </div>
-    <div class="form-row" style="flex-wrap:wrap; gap:14px; margin-top:14px;">
-      <div class="field-group" style="flex:1; min-width:160px;">
-        <label class="field-label">Location</label>
-        <input type="text" class="field-input" id="new-location" placeholder="City, State">
-      </div>
-      <div class="field-group" style="flex:1; min-width:160px;">
-        <label class="field-label">Phone</label>
-        <input type="text" class="field-input" id="new-phone" placeholder="(760) 555-0000">
-      </div>
-    </div>
-    <div class="field-group" style="margin-top:14px;">
-      <label class="field-label">Email</label>
-      <input type="email" class="field-input" id="new-email" placeholder="contact@business.com">
-    </div>
-    <div class="field-group" style="margin-top:14px;">
-      <label class="field-label">Website</label>
-      <input type="text" class="field-input" id="new-website" placeholder="https://...">
-    </div>
-    <div class="form-row" style="flex-wrap:wrap; gap:14px; margin-top:14px;">
-      <div class="field-group" style="flex:1;">
-        <label class="field-label">Status</label>
-        <select class="field-select" id="new-status">
-          <option>New Lead</option>
-          <option>Approved</option>
-          <option>Contacted</option>
-          <option>Replied</option>
-          <option>Discovery Call</option>
-          <option>Audit Opportunity</option>
-          <option>Proposal Sent</option>
-          <option>Closed Won</option>
-          <option>Closed Lost</option>
-        </select>
-      </div>
-      <div class="field-group" style="flex:1;">
-        <label class="field-label">Source</label>
-        <select class="field-select" id="new-source">
-          <option>Manual</option>
-          <option>Scrape</option>
-          <option>Referral</option>
-          <option>Website</option>
-          <option>Cold Outreach</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-group" style="margin-top:14px;">
-      <label class="field-label">Notes</label>
-      <input type="text" class="field-input" id="new-notes" placeholder="Optional notes...">
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('add-lead-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="addLead()">Save Lead</button>
-    </div>
-  </div>
-</div>
-
-<!-- LEAD DETAIL MODAL -->
-
-<div class="modal-overlay" id="lead-detail-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="detail-title">Lead Detail</div>
-      <button class="modal-close" onclick="closeModal('lead-detail-modal')">×</button>
-    </div>
-    <div id="lead-detail-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('lead-detail-modal')">Close</button>
-      <button class="btn btn-danger btn-sm" id="detail-delete-btn">Delete Lead</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
-
-<div id="toast"></div>
 
 <script>
-// =====================
-// DATA STORE
-// =====================
-var leads = [
-  { id:1, company:"Desert Glow Med Spa", industry:"Med Spa", location:"Palm Desert, CA", email:"info@desertglow.com", phone:"(760) 555-0101", website:"desertglow.com", status:"Discovery Call", source:"Scrape", notes:"Interested in AI chatbot for booking" },
-  { id:2, company:"Coachella Valley Roofing", industry:"Contractor", location:"Indio, CA", email:"mike@cvroofing.com", phone:"(760) 555-0202", website:"cvroofing.com", status:"Contacted", source:"Scrape", notes:"Owner is Mike, sent intro email" },
-  { id:3, company:"Summit Law Group", industry:"Law Firm", location:"Palm Springs, CA", email:"intake@summitlaw.com", phone:"(760) 555-0303", website:"summitlaw.com", status:"Replied", source:"Referral", notes:"Replied — wants to learn more" },
-  { id:4, company:"Sage Dental Care", industry:"Dental", location:"Rancho Mirage, CA", email:"hello@sagedental.com", phone:"(760) 555-0404", website:"sagedental.com", status:"Audit Opportunity", source:"Scrape", notes:"Audit scheduled for next week" },
-  { id:5, company:"Desert Realty Group", industry:"Real Estate", location:"Palm Desert, CA", email:"info@drg.com", phone:"(760) 555-0505", website:"drg.com", status:"Proposal Sent", source:"Manual", notes:"Proposal sent, follow up Friday" },
-  { id:6, company:"Sun & Shade Landscaping", industry:"Local Service", location:"Cathedral City, CA", email:"contact@sunshade.com", phone:"(760) 555-0606", website:"sunshade.com", status:"New Lead", source:"Scrape", notes:"" },
-  { id:7, company:"Prestige Auto Detail", industry:"Auto", location:"Indio, CA", email:"team@prestigeauto.com", phone:"(760) 555-0707", website:"prestigeauto.com", status:"Closed Won", source:"Referral", notes:"Signed contract — building chatbot" },
-  { id:8, company:"Oasis Chiro & Wellness", industry:"Wellness", location:"La Quinta, CA", email:"front@oasischiro.com", phone:"(760) 555-0808", website:"oasischiro.com", status:"Approved", source:"Scrape", notes:"" }
+var totalHrs = 0;
+var totalDollars = 0;
+var currentStation = 0;
+var stationDone = [];
+
+var HOURLY = 25; // assumed hourly labor cost for calcs
+
+var stations = [
+  {
+    num: "01",
+    category: "LEAD GENERATION",
+    catColor: "#00d4ff",
+    title: "AI <em style='color:#00d4ff'>Finds Your Leads</em><br>While You Sleep",
+    hook: "Right now, someone on your team is spending hours every week searching for new prospects — Googling, scrolling, copy-pasting names into a spreadsheet. That ends today. AI scrapes, filters, and delivers a ready-to-contact lead list every single morning.",
+    before: "Your team manually searches for leads — Google, Yelp, LinkedIn — one at a time. Hours gone. Half the list is outdated.",
+    after: "AI automatically pulls targeted leads every morning: name, phone, email, business type, location. Your team starts the day ready to call.",
+    questions: [
+      { label: "How many hours per week does your team spend finding and researching new leads?", unit: "hrs/week", key: "leadHrs", default: 5 },
+      { label: "How many people on your team do this task?", unit: "people", key: "leadPeople", default: 2 }
+    ],
+    output: "🔍 AI LEAD SCRAPE — Apex Home Services — Palm Desert, CA\n─────────────────────────────────────────\n\n✅ LEAD #1\nCompany: Sunrise Property Management\nContact: Karen Ellis, Operations Manager\nPhone: (760) 555-0182\nEmail: k.ellis@sunriseprop.com\nService Need: Annual HVAC maintenance — 24 units\nFit Score: 94/100 ★ HIGH VALUE\n\n✅ LEAD #2\nCompany: Desert Palms HOA\nContact: Tom Reyes, Facilities Director\nPhone: (760) 555-0341\nEmail: t.reyes@desertpalms.org\nService Need: Emergency plumbing + quarterly inspections\nFit Score: 89/100 ★ HIGH VALUE\n\n✅ LEAD #3\nCompany: Coachella Valley Medical Offices\nContact: Sandra Park, Office Manager\nPhone: (760) 555-0517\nEmail: s.park@cvmedoffice.com\nService Need: Commercial HVAC replacement — 3 units\nFit Score: 97/100 ★★ PRIORITY\n\n─────────────────────────────────────────\n📊 27 leads found · 3 priority · Delivered 6:00 AM daily",
+    calcHrs: function(q) { return q.leadHrs * q.leadPeople; },
+    calcDollars: function(q) { return q.leadHrs * q.leadPeople * HOURLY * 52; },
+    savingsLabel: function(q) { return { hrs: q.leadHrs * q.leadPeople, dollars: q.leadHrs * q.leadPeople * HOURLY * 52, extra: "That's " + (q.leadHrs * q.leadPeople * 52) + " hours a year your team gets back to close deals — not chase them." }; }
+  },
+  {
+    num: "02",
+    category: "LEAD QUALIFICATION",
+    catColor: "#7c3aed",
+    title: "AI <em style='color:#7c3aed'>Scores Every Lead</em><br>So You Chase the Right Ones",
+    hook: "Not every lead is worth your time. But right now, your team treats them all the same — calling the tire-kickers first and missing the hot ones. AI instantly scores each lead by budget, urgency, and fit, so you always know exactly who to call next.",
+    before: "Every lead goes into the same pile. Your team guesses who's worth calling. Hot leads go cold while time is wasted on the wrong ones.",
+    after: "Every lead gets an instant score: fit, urgency, and budget. Your team calls the 90+ scores first. No guesswork. No wasted calls.",
+    questions: [
+      { label: "How many new leads come in per week?", unit: "leads/week", key: "leadsPerWeek", default: 30 },
+      { label: "What percentage of those leads are actually worth pursuing? (honest estimate)", unit: "%", key: "goodLeadPct", default: 30 }
+    ],
+    output: "🎯 AI LEAD QUALIFIER — Apex Home Services\n─────────────────────────────────────────\n\nLEAD SCORING REPORT — Week of April 7\n\n🟢 PRIORITY TIER (Score 85–100) — CALL FIRST\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Coachella Valley Medical — Score: 97\n   Reason: Large commercial HVAC, urgent timeline, approved budget\n   Recommended action: Call within 1 hour\n\n2. Sunrise Property Mgmt — Score: 94\n   Reason: Recurring contract potential, 24 units, warm referral\n   Recommended action: Call today, mention maintenance packages\n\n🟡 NURTURE TIER (Score 50–84) — FOLLOW UP\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n3. Desert Palms HOA — Score: 76\n   Reason: Interested but comparing 3 vendors\n   Recommended action: Send comparison guide, follow up Thursday\n\n🔴 LOW PRIORITY (Score 0–49) — AUTO-NURTURE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n4. Residential Inquiry — Score: 31\n   Reason: Small job, no urgency, price shopping\n   Recommended action: Add to email nurture sequence\n\n─────────────────────────────────────────\nResult: Your team focuses on 2 real deals instead of 30 cold calls.",
+    calcHrs: function(q) { return 3; },
+    calcDollars: function(q) {
+      var wasted = q.leadsPerWeek * (1 - q.goodLeadPct/100);
+      return Math.round(wasted * 0.5 * HOURLY * 52);
+    },
+    savingsLabel: function(q) {
+      var wasted = Math.round(q.leadsPerWeek * (1 - q.goodLeadPct/100));
+      return { hrs: 3, dollars: Math.round(wasted * 0.5 * HOURLY * 52), extra: "Your team stops wasting calls on " + wasted + " low-quality leads per week." };
+    }
+  },
+  {
+    num: "03",
+    category: "CRM AUTOMATION",
+    catColor: "#f59e0b",
+    title: "AI <em style='color:#f59e0b'>Fills Your CRM</em><br>The Moment a Lead Comes In",
+    hook: "Data entry is the silent killer of sales productivity. Every time your team manually enters a lead into your CRM, that's time they're not selling. AI captures every lead the second it arrives — name, phone, notes, history — and it's already in your system before anyone picks up the phone.",
+    before: "Leads come in by phone, text, and email. Someone has to enter them into the CRM manually — if they remember at all. Leads fall through the cracks daily.",
+    after: "Every lead auto-populates into your CRM the instant it arrives. Tagged, categorized, assigned. Your team opens the CRM and everything is already there.",
+    questions: [
+      { label: "How many hours per week does your team spend on data entry and CRM updates?", unit: "hrs/week", key: "crmHrs", default: 6 },
+      { label: "How many people do this?", unit: "people", key: "crmPeople", default: 2 }
+    ],
+    output: "📋 AUTO CRM ENTRY — Apex Home Services\n─────────────────────────────────────────\n\n✅ NEW RECORD CREATED — 9:14 AM\n\nContact: Sandra Park\nCompany: Coachella Valley Medical Offices\nPhone: (760) 555-0517\nEmail: s.park@cvmedoffice.com\nSource: Website form\nService Requested: Commercial HVAC replacement\nUnits: 3 rooftop systems\nEstimated Value: $18,000–$24,000\nUrgency: High — needs done before summer\nAssigned To: Mike R. (Senior Sales)\nNext Action: Call by 10:00 AM\nFollow-up Reminder: Set for April 10\n\nNOTES AUTO-POPULATED:\n\"Customer mentioned 3 existing Carrier units — 12+ years old. Interested in financing options. Comparing vs. Desert Cooling Co. Warm lead — act fast.\"\n\n─────────────────────────────────────────\nStatus: ✅ Record live in CRM · Task assigned · Reminder set\nTime to complete: 0.0 seconds",
+    calcHrs: function(q) { return q.crmHrs * q.crmPeople; },
+    calcDollars: function(q) { return q.crmHrs * q.crmPeople * HOURLY * 52; },
+    savingsLabel: function(q) { return { hrs: q.crmHrs * q.crmPeople, dollars: q.crmHrs * q.crmPeople * HOURLY * 52, extra: "No more lost leads. No more end-of-day data catch-up. It's done before the call ends." }; }
+  },
+  {
+    num: "04",
+    category: "AI PHONE AGENT",
+    catColor: "#ec4899",
+    title: "AI <em style='color:#ec4899'>Answers Every Call</em><br>24 Hours a Day",
+    hook: "Every missed call is a missed job. Your competitors are answering right now. AI picks up instantly — day, night, weekends — qualifies the caller, gets the details, and books the appointment. Your customer never knows it wasn't a person.",
+    before: "Calls go to voicemail after hours. Customers hang up and call the next company on Google. You lose jobs you never even knew about.",
+    after: "AI answers in 2 rings, 24/7. Asks the right questions, qualifies the job, and books the appointment — all before you wake up.",
+    questions: [
+      { label: "How many calls does your business receive per week?", unit: "calls/week", key: "callsWeek", default: 80 },
+      { label: "What percentage of calls go unanswered or to voicemail?", unit: "%", key: "missedPct", default: 25 }
+    ],
+    output: "📞 AI PHONE AGENT — Apex Home Services\n─────────────────────────────────────────\n\n[INBOUND CALL — Saturday 8:47 PM]\n\nAI Agent: \"Thanks for calling Apex Home Services! I'm the after-hours assistant. What can I help you with tonight?\"\n\nCaller: \"Yeah hi, our AC just went out and it's 95 degrees. We have two kids at home.\"\n\nAI Agent: \"I'm so sorry to hear that — let's get this sorted right away. Can I get your name and address?\"\n\nCaller: \"It's David Romero, 47821 Dune Palm Road, Indio.\"\n\nAI Agent: \"Got it, David. What unit do you have — do you know the brand or model?\"\n\nCaller: \"It's a Lennox, maybe 8 years old. Just stopped blowing cold air.\"\n\nAI Agent: \"Perfect. I'm scheduling an emergency appointment for tomorrow morning at 8 AM with one of our senior techs. You'll get a text confirmation in just a moment. Is that number ending in 4471 the best to reach you?\"\n\nCaller: \"Yes, perfect. Thank you!\"\n\n─────────────────────────────────────────\n✅ Call logged · Appointment booked · Tech notified\n✅ CRM updated · Follow-up reminder set\nJob est. value: $800–$1,400",
+    calcHrs: function(q) { return 4; },
+    calcDollars: function(q) {
+      var missed = Math.round(q.callsWeek * q.missedPct/100);
+      return missed * 800 * 52 * 0.15;
+    },
+    savingsLabel: function(q) {
+      var missed = Math.round(q.callsWeek * q.missedPct/100);
+      return { hrs: 4, dollars: Math.round(missed * 800 * 52 * 0.15), extra: "You're currently missing ~" + missed + " calls/week. At an avg $800/job, that's real money walking away." };
+    }
+  },
+  {
+    num: "05",
+    category: "COLD OUTREACH",
+    catColor: "#00d4ff",
+    title: "AI <em style='color:#00d4ff'>Writes Personalized Emails</em><br>to Every Lead Instantly",
+    hook: "Generic emails get deleted. Personalized outreach gets replies. But writing a custom email for every lead takes forever — so most teams send the same bland blast to everyone. AI writes a unique, relevant email to every single prospect in seconds, using their name, their business, and their specific situation.",
+    before: "Your team sends the same generic email blast to everyone. Open rates are low. Nobody replies. Good leads go cold.",
+    after: "AI writes a personalized outreach email for every lead — their name, their business, their pain point. Sent automatically. Replies come in while you work.",
+    questions: [
+      { label: "How many outreach emails does your team send per week?", unit: "emails/week", key: "emailsWeek", default: 40 },
+      { label: "How many minutes does it take to write and send one email?", unit: "mins each", key: "emailMins", default: 8 }
+    ],
+    output: "📧 AI COLD EMAIL — Apex Home Services\n─────────────────────────────────────────\n\nTO: Karen Ellis <k.ellis@sunriseprop.com>\nSUBJECT: HVAC Maintenance for Sunrise Property's 24 Units\n\nHi Karen,\n\nI noticed Sunrise Property Management handles 24 residential units in the Palm Desert area — which means your HVAC systems are working hard, especially heading into summer.\n\nWe're Apex Home Services, and we specialize in property management HVAC contracts. We currently service 3 other HOAs in your zip code, and we offer priority scheduling, 24-hour emergency response, and a single monthly invoice — which property managers tell us cuts their admin headache significantly.\n\nWould it make sense to jump on a quick 10-minute call this week? I'd love to show you what our property maintenance package looks like and give you a no-obligation quote.\n\nEither way, I'll follow up Thursday in case this got buried.\n\nBest,\nMike Reynolds\nApex Home Services\n(760) 555-0100\n\n─────────────────────────────────────────\n⏱ Written in 3 seconds · Sent automatically\n📊 Personalized for Karen's business, size & location",
+    calcHrs: function(q) { return Math.round(q.emailsWeek * q.emailMins / 60 * 10) / 10; },
+    calcDollars: function(q) { return Math.round(q.emailsWeek * q.emailMins / 60 * HOURLY * 52); },
+    savingsLabel: function(q) {
+      var hrs = Math.round(q.emailsWeek * q.emailMins / 60 * 10) / 10;
+      return { hrs: hrs, dollars: Math.round(hrs * HOURLY * 52), extra: "Every email is personalized. Response rates go up. Your team stops writing and starts closing." };
+    }
+  },
+  {
+    num: "06",
+    category: "PROPOSAL GENERATION",
+    catColor: "#7c3aed",
+    title: "AI <em style='color:#7c3aed'>Writes Your Proposals</em><br>in Under 60 Seconds",
+    hook: "A great proposal wins jobs. But writing them takes time your team doesn't have. AI generates a professional, customized proposal the moment a job is qualified — complete with scope, pricing, and a clear call to action. Your prospect gets it fast. Fast proposals win more.",
+    before: "Proposals take 1–3 hours to write and format. Jobs sit in 'pending' while customers wait. Some never get sent at all.",
+    after: "AI generates a complete, professional proposal in 60 seconds. Customer receives it while you're still on the call. First to propose, first to close.",
+    questions: [
+      { label: "How many proposals do you send per week?", unit: "proposals/week", key: "propsWeek", default: 8 },
+      { label: "How long does it take to build one proposal today?", unit: "hrs each", key: "propHrs", default: 1.5 }
+    ],
+    output: "📄 AI PROPOSAL — Apex Home Services\n─────────────────────────────────────────\n\nPROPOSAL #2024-0412\nPrepared for: Coachella Valley Medical Offices\nDate: April 12, 2025\nPrepared by: Apex Home Services\n\nPROJECT SCOPE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nReplacement of 3 rooftop HVAC units (Carrier, Lennox, Trane)\nUnits: 5-ton commercial grade\nIncludes: Equipment, labor, permits, disposal of old units\nTimeline: 3–5 business days from signed agreement\nWarranty: 2-year parts + labor, 10-year manufacturer\n\nINVESTMENT SUMMARY\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nEquipment (3 units):       $14,400\nInstallation & Labor:        $4,200\nPermits & Disposal:            $600\n─────────────────────────\nTOTAL INVESTMENT:         $19,200\n\nFinancing available: $534/mo — 0% for 36 months\n\nNEXT STEP: Sign and return by April 15 to lock in\ncurrent pricing and secure your summer install slot.\n\n─────────────────────────────────────────\n✅ Sent to s.park@cvmedoffice.com — 58 seconds after call ended",
+    calcHrs: function(q) { return q.propsWeek * q.propHrs; },
+    calcDollars: function(q) { return q.propsWeek * q.propHrs * HOURLY * 52; },
+    savingsLabel: function(q) { return { hrs: q.propsWeek * q.propHrs, dollars: Math.round(q.propsWeek * q.propHrs * HOURLY * 52), extra: "Faster proposals = higher close rates. Customers say yes before they've had time to shop around." }; }
+  },
+  {
+    num: "07",
+    category: "FOLLOW-UP SEQUENCES",
+    catColor: "#10b981",
+    title: "AI <em style='color:#10b981'>Follows Up Automatically</em><br>Until They Say Yes",
+    hook: "80% of sales happen after the 5th follow-up. Most businesses give up after one. AI sends a perfectly timed sequence of follow-up messages — by email or text — to every lead who hasn't responded. Professional, persistent, and completely automatic. You focus on the people who are ready. AI handles everyone else.",
+    before: "Someone says 'let me think about it' and your team moves on. Most of those leads never hear from you again. Money left on the table every week.",
+    after: "AI sends a perfectly timed 5-step follow-up sequence to every non-responder. Most customers convert by message 3. Zero effort from your team.",
+    questions: [
+      { label: "How many leads per week don't respond to your first outreach?", unit: "leads/week", key: "noReply", default: 20 },
+      { label: "How much time does manual follow-up take each week?", unit: "hrs/week", key: "followHrs", default: 4 }
+    ],
+    output: "🔁 AI FOLLOW-UP SEQUENCE — Apex Home Services\n─────────────────────────────────────────\n\nLEAD: Desert Palms HOA — Tom Reyes\nStatus: No reply after initial email\n\n📧 FOLLOW-UP #1 — Day 2\n\"Hi Tom — just circling back on the HVAC proposal for Desert Palms. Happy to answer any questions or adjust the scope. Still have a few spots open before summer.\"\n\n📱 FOLLOW-UP #2 — Day 4 (TEXT)\n\"Hey Tom, Mike from Apex. Sent over a proposal Tuesday — just wanted to make sure it didn't get buried. Reply here or call us anytime: (760) 555-0100\"\n\n📧 FOLLOW-UP #3 — Day 7\n\"Tom — wanted to share something relevant. We just finished a similar project for a Palm Desert HOA last week — saved them $3,200 vs. their previous vendor. Happy to send the comparison if helpful.\"\n\n📧 FOLLOW-UP #4 — Day 12\n\"Final check-in on this one, Tom. We have one installation slot open the week of April 21 — wanted to give Desert Palms first shot before it's gone.\"\n\n📧 FOLLOW-UP #5 — Day 18\n\"Closing the loop on our end, Tom. The offer stands whenever you're ready. Hope to earn your business.\"\n\n─────────────────────────────────────────\n✅ Sequence live · No manual effort required\n📊 Industry avg: 42% of non-responders convert by message 3",
+    calcHrs: function(q) { return q.followHrs; },
+    calcDollars: function(q) {
+      var recovered = Math.round(q.noReply * 0.42 * 800 * 52 * 0.1);
+      return recovered;
+    },
+    savingsLabel: function(q) {
+      var recovered = Math.round(q.noReply * 0.42 * 800);
+      return { hrs: q.followHrs, dollars: recovered * 52 * 0.1, extra: "~42% of your non-responders will convert. That's roughly $" + (recovered).toLocaleString() + " in recovered revenue per week." };
+    }
+  },
+  {
+    num: "08",
+    category: "APPOINTMENT SCHEDULING",
+    catColor: "#f59e0b",
+    title: "AI <em style='color:#f59e0b'>Books Appointments</em><br>Without the Back-and-Forth",
+    hook: "Scheduling a single appointment can take 6–10 emails. 'Does Tuesday work?' 'No, how about Thursday?' AI eliminates all of it. The moment a lead is ready to move forward, AI checks your calendar, offers available times, and books the appointment — confirmed, reminded, and ready to go.",
+    before: "Booking an appointment takes 6–10 emails back and forth. Slots get double-booked. No-shows happen because nobody sent a reminder.",
+    after: "AI books the appointment in one step, sends a confirmation, and fires a reminder 24 hours and 1 hour before. No-shows drop dramatically.",
+    questions: [
+      { label: "How many appointments do you book per week?", unit: "appts/week", key: "apptWeek", default: 15 },
+      { label: "How many minutes does scheduling each one take (calls + emails)?", unit: "mins each", key: "apptMins", default: 12 }
+    ],
+    output: "📅 AI SCHEDULING — Apex Home Services\n─────────────────────────────────────────\n\nNEW APPOINTMENT BOOKED\n\nCustomer: Sandra Park — CV Medical Offices\nService: Commercial HVAC Site Assessment\nDate: Thursday, April 17 at 10:00 AM\nTech Assigned: Carlos M. (Commercial Specialist)\nLocation: 78900 Avenue 47, Indio CA 92201\nEstimated Duration: 90 minutes\n\n✅ CONFIRMATION SENT (email + text)\n\"Hi Sandra! Your appointment with Apex Home Services is confirmed for Thursday April 17 at 10 AM. Carlos will be your tech — he'll call 30 min before arrival. Questions? Reply here or call (760) 555-0100.\"\n\n⏰ REMINDER SENT — Wednesday 10:00 AM (24 hrs before)\n\"Reminder: Apex Home Services tomorrow at 10 AM. Carlos is looking forward to meeting you!\"\n\n⏰ REMINDER SENT — Thursday 9:00 AM (1 hr before)\n\"Carlos from Apex is on his way! ETA approximately 30 minutes.\"\n\n─────────────────────────────────────────\n✅ Booked, confirmed, reminded — zero back and forth\n📊 No-show rate reduction: avg 67% with AI reminders",
+    calcHrs: function(q) { return Math.round(q.apptWeek * q.apptMins / 60 * 10) / 10; },
+    calcDollars: function(q) { return Math.round(q.apptWeek * q.apptMins / 60 * HOURLY * 52); },
+    savingsLabel: function(q) {
+      var hrs = Math.round(q.apptWeek * q.apptMins / 60 * 10) / 10;
+      var noshow = Math.round(q.apptWeek * 0.15 * 800 * 52 * 0.67);
+      return { hrs: hrs, dollars: Math.round(hrs * HOURLY * 52) + noshow, extra: "Saves scheduling time AND cuts no-shows by ~67%. Every completed appointment = revenue." };
+    }
+  },
+  {
+    num: "09",
+    category: "OBJECTION HANDLING",
+    catColor: "#ec4899",
+    title: "AI <em style='color:#ec4899'>Handles Objections</em><br>So Your Team Always Has an Answer",
+    hook: "'It's too expensive.' 'Let me get another quote.' 'I need to think about it.' These objections kill deals every day — not because they can't be handled, but because your team doesn't always have the right response in the moment. AI coaches your team in real time with the exact right thing to say.",
+    before: "Your team hears an objection, freezes, and says 'I'll get back to you.' The customer calls someone else. Deal closed — by your competitor.",
+    after: "AI gives your team the perfect response to any objection instantly — by text, script, or email. Deals that used to die start closing.",
+    questions: [
+      { label: "How many deals per week do you feel are lost to price or hesitation objections?", unit: "deals/week", key: "lostDeals", default: 3 },
+      { label: "What is your average job value?", unit: "$ avg job", key: "avgJob", default: 1200 }
+    ],
+    output: "💬 AI OBJECTION HANDLER — Apex Home Services\n─────────────────────────────────────────\n\nOBJECTION DETECTED: \"Your price is higher than the other quote I got.\"\n\n─────────────────────────────────────────\n\n✅ RECOMMENDED RESPONSE:\n\n\"I completely understand, and I appreciate you being upfront with me. Can I ask — was the other quote for the same equipment and warranty coverage?\n\nThe reason I ask is we see this often. A lot of quotes look lower because they're using builder-grade equipment or leaving out permit costs. Ours includes a 10-year manufacturer warranty, 2-year labor warranty, and we pull all permits ourselves — which protects you if you ever sell the home.\n\nWhen you factor that in, we're actually very competitive. And if it helps, we have a financing option at $0 down that keeps your cash in the business.\n\nWould that make the decision easier?\"\n\n─────────────────────────────────────────\n\nOBJECTION: \"I need to think about it.\"\n✅ RESPONSE: \"Totally fair — what part would be helpful to think through together right now?\"\n\nOBJECTION: \"Can you do better on price?\"\n✅ RESPONSE: \"Let me see what I can do. If I can sharpen the pencil a bit, can we get this signed today?\"\n\n─────────────────────────────────────────\n📊 Teams using AI coaching close 31% more deals on first contact",
+    calcHrs: function(q) { return 2; },
+    calcDollars: function(q) { return Math.round(q.lostDeals * q.avgJob * 0.35 * 52); },
+    savingsLabel: function(q) {
+      var recovered = Math.round(q.lostDeals * q.avgJob * 0.35);
+      return { hrs: 2, dollars: recovered * 52, extra: "If AI helps you recover just 35% of those lost deals, that's $" + recovered.toLocaleString() + "/week in revenue you're currently leaving behind." };
+    }
+  },
+  {
+    num: "10",
+    category: "INVOICING & BILLING",
+    catColor: "#10b981",
+    title: "AI <em style='color:#10b981'>Sends Invoices</em><br>the Second the Job Is Done",
+    hook: "Every day an invoice sits unsent is a day you're not getting paid. Most businesses send invoices hours or days after a job — sometimes they forget entirely. AI generates and sends the invoice the moment your tech marks the job complete. No delay. No chasing. Cash flows faster.",
+    before: "Invoices get sent hours or days after the job. Sometimes they're forgotten entirely. Chasing payment takes more time. Cash flow suffers.",
+    after: "The instant a job is marked complete, AI generates and sends the invoice. Payment reminders go out automatically. Cash hits your account faster.",
+    questions: [
+      { label: "How many invoices do you send per week?", unit: "invoices/week", key: "invWeek", default: 20 },
+      { label: "On average, how many days after a job do you send the invoice?", unit: "days late", key: "invDelay", default: 2 }
+    ],
+    output: "💵 AUTO INVOICE — Apex Home Services\n─────────────────────────────────────────\n\nINVOICE #APX-2025-0847\nDate: April 12, 2025 — 3:22 PM\nJob Completed: 3:20 PM (2 minutes ago)\n\nBILL TO:\nSandra Park\nCoachella Valley Medical Offices\n78900 Avenue 47, Indio CA 92201\n\nSERVICES RENDERED:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n3x Commercial HVAC Units (Replaced)    $14,400\nInstallation & Labor                    $4,200\nPermits & Disposal                        $600\n─────────────────────────────────────\nSubtotal:                              $19,200\nTax (8.75%):                            $1,680\nTOTAL DUE:                            $20,880\n\nPayment Due: April 26, 2025 (Net 14)\nPay online: apex.pay/inv-0847\nAccepted: Credit card, ACH, check\n\n⏰ AUTO-REMINDERS SCHEDULED:\n  → Friendly reminder: April 22 (4 days before due)\n  → Due date notice: April 26\n  → Overdue notice: May 3 (if unpaid)\n\n─────────────────────────────────────────\n✅ Invoice sent · Payment portal live · Reminders set",
+    calcHrs: function(q) { return Math.round(q.invWeek * 0.25 * 10) / 10; },
+    calcDollars: function(q) { return Math.round(q.invWeek * q.invDelay * 150); },
+    savingsLabel: function(q) {
+      return { hrs: Math.round(q.invWeek * 0.25 * 10) / 10, dollars: Math.round(q.invWeek * q.invDelay * 150 * 52), extra: "Faster invoices = faster cash. At " + q.invWeek + " jobs/week delayed by " + q.invDelay + " days, you're floating significant cash unnecessarily." };
+    }
+  },
+  {
+    num: "11",
+    category: "PERFORMANCE DASHBOARD",
+    catColor: "#7c3aed",
+    title: "AI <em style='color:#7c3aed'>Tells You How Your Business Is Doing</em><br>Every Single Morning",
+    hook: "Most business owners run on gut feel because getting real numbers takes too long. AI compiles every metric — leads, calls, proposals, closed jobs, revenue — into a plain-English morning briefing. You wake up knowing exactly where your business stands and what needs your attention today.",
+    before: "You have to dig through 4 different apps to understand how business is going. You're reacting to problems instead of seeing them coming.",
+    after: "Every morning, AI sends you a plain-English summary: what came in, what closed, what needs attention, and what's trending. You run the business. It runs itself.",
+    questions: [
+      { label: "How many hours per week do you spend pulling reports or checking on business performance?", unit: "hrs/week", key: "reportHrs", default: 3 },
+      { label: "How many people on your team spend time on reporting?", unit: "people", key: "reportPeople", default: 2 }
+    ],
+    output: "📊 AI MORNING BRIEFING — Apex Home Services\nThursday, April 12 · 7:00 AM\n─────────────────────────────────────────\n\nGOOD MORNING, MIKE. HERE'S YOUR BUSINESS AT A GLANCE:\n\n📥 LEADS (Last 7 Days)\n  New leads received:         27\n  Qualified (score 85+):       8  ← up 14% vs last week\n  Responded within 5 min:     27  (100%) ✅\n\n📋 PIPELINE\n  Active proposals out:        6\n  Total pipeline value:   $89,400\n  Proposals awaiting reply:    3  ← follow-up recommended\n\n✅ JOBS CLOSED THIS WEEK\n  Jobs won:                    5\n  Revenue closed:         $34,200\n  Avg job value:           $6,840  ← up from $5,100 last week ↑\n\n⚠️  NEEDS YOUR ATTENTION\n  → Desert Palms HOA — no reply in 8 days. Last follow-up sent.\n  → Invoice #0831 — overdue $4,200. Auto-reminder sent yesterday.\n  → 2 techs available Friday afternoon — consider pushing outreach.\n\n📈 30-DAY TREND: Revenue up 18% · Close rate up 11%\n\n─────────────────────────────────────────\nHave a great day. Your AI has already handled 14 tasks since midnight.",
+    calcHrs: function(q) { return q.reportHrs * q.reportPeople; },
+    calcDollars: function(q) { return Math.round(q.reportHrs * q.reportPeople * HOURLY * 52); },
+    savingsLabel: function(q) { return { hrs: q.reportHrs * q.reportPeople, dollars: Math.round(q.reportHrs * q.reportPeople * HOURLY * 52), extra: "You stop guessing and start knowing. Every decision gets sharper because the data is always right in front of you." }; }
+  }
 ];
-var nextId = 9;
 
-var activity = [
-  { icon:"✉", text:"Email sent to Coachella Valley Roofing", time:"Today, 9:14am" },
-  { icon:"📞", text:"Discovery call booked with Desert Glow Med Spa", time:"Today, 8:30am" },
-  { icon:"📋", text:"Proposal sent to Desert Realty Group", time:"Yesterday, 4:02pm" },
-  { icon:"✅", text:"Prestige Auto Detail marked Closed Won", time:"Yesterday, 11:45am" },
-  { icon:"🔍", text:"Scrape returned 8 results for Law Firms, Palm Springs", time:"Yesterday, 10:00am" }
-];
-
-var scrapeResults = [];
-var selectedVertical = null;
-var currentDetailId = null;
-
-// =====================
-// NAVIGATION
-// =====================
-function showPanel(name, el) {
-  var panels = document.querySelectorAll('.panel');
-  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
-  document.getElementById('panel-' + name).classList.add('active');
-
-  var navItems = document.querySelectorAll('.nav-item');
-  for (var j = 0; j < navItems.length; j++) navItems[j].classList.remove('active');
-  if (el) el.classList.add('active');
-
-  var titles = { overview: 'Overview', leads: 'Lead Database', scraping: 'Lead Scraping', pipeline: 'Sales Pipeline', outreach: 'Email Outreach', proposals: 'Proposal Generator', settings: 'Settings & Integrations' };
-  document.getElementById('topbar-title').textContent = titles[name] || name;
-
-  if (name === 'overview') renderOverview();
-  if (name === 'leads') renderLeads();
-  if (name === 'pipeline') renderPipeline();
-  if (name === 'outreach') renderOutreach();
-  if (name === 'proposals') renderProposals();
-  if (name === 'settings') renderSettings();
+function startDemo() {
+  document.getElementById('splash').classList.remove('active');
+  document.getElementById('station-screen').classList.add('active');
+  currentStation = 0;
+  totalHrs = 0;
+  totalDollars = 0;
+  stationDone = [];
+  renderStation(0);
 }
 
-// =====================
-// OVERVIEW
-// =====================
-function renderOverview() {
-  var approved = 0, contacted = 0, replied = 0, won = 0, proposals = 0;
-  for (var i = 0; i < leads.length; i++) {
-    var s = leads[i].status;
-    if (s !== 'Closed Lost') approved++;
-    if (s === 'Contacted' || s === 'Replied' || s === 'Discovery Call' || s === 'Audit Opportunity' || s === 'Proposal Sent') contacted++;
-    if (s === 'Replied') replied++;
-    if (s === 'Closed Won') won++;
-    if (s === 'Proposal Sent') proposals++;
-  }
+function renderStation(idx) {
+  var s = stations[idx];
+  var pct = Math.round(((idx + 1) / 11) * 100);
 
-  var metrics = [
-    { label:'Total Leads', value: leads.length, sub:'In CRM', cls:'' },
-    { label:'Leads Contacted', value: contacted, sub:'Outreach sent', cls:'blue' },
-    { label:'Replies Received', value: replied, sub:'Engaged prospects', cls:'green' },
-    { label:'Proposals Sent', value: proposals, sub:'Active opportunities', cls:'amber' },
-    { label:'Closed Won', value: won, sub:'Clients signed', cls:'purple' },
-    { label:'Open Pipeline', value: leads.length - won, sub:'Active leads', cls:'red' }
-  ];
+  document.getElementById('tb-num').textContent = s.num;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = 'Step ' + (idx + 1) + ' of 11';
+  document.getElementById('btn-next').textContent = idx < 10 ? 'Next Station →' : 'See Your Results →';
 
-  var mg = document.getElementById('metrics-grid');
-  mg.innerHTML = '';
-  for (var m = 0; m < metrics.length; m++) {
-    var mt = metrics[m];
-    mg.innerHTML += '<div class="metric-card ' + mt.cls + '">' +
-      '<div class="metric-label">' + mt.label + '</div>' +
-      '<div class="metric-value">' + mt.value + '</div>' +
-      '<div class="metric-sub">' + mt.sub + '</div>' +
-      '</div>';
-  }
+  var qHTML = '';
+  s.questions.forEach(function(q, qi) {
+    qHTML += '<div class="q-item">' +
+      '<div class="q-label">' + q.label + '</div>' +
+      '<div class="q-input">' +
+      '<input type="number" id="q-' + qi + '" value="' + q.default + '" min="0">' +
+      '<span class="unit">' + q.unit + '</span>' +
+      '</div></div>';
+  });
 
-  var stages = ['New Lead','Approved','Contacted','Replied','Discovery Call','Audit Opportunity','Proposal Sent','Closed Won','Closed Lost'];
-  var colors = ['#3b82f6','#10b981','#f59e0b','#06b6d4','#8b5cf6','#ec4899','#f97316','#16a34a','#ef4444'];
-  var ps = document.getElementById('pipeline-summary');
-  ps.innerHTML = '';
-  for (var si = 0; si < stages.length; si++) {
-    var count = 0;
-    for (var li = 0; li < leads.length; li++) { if (leads[li].status === stages[si]) count++; }
-    if (count > 0) {
-      ps.innerHTML += '<div class="pipeline-stage-row">' +
-        '<span><span class="stage-dot" style="background:' + colors[si] + '"></span>' + stages[si] + '</span>' +
-        '<span class="stage-count">' + count + '</span>' +
-        '</div>';
+  var html = '<div class="station-eyebrow">' +
+    '<span class="station-num-badge">STATION ' + s.num + '</span>' +
+    '<span class="station-category" style="background:rgba(255,255,255,0.05);border:1px solid ' + s.catColor + '33;color:' + s.catColor + '">' + s.category + '</span>' +
+    '</div>' +
+    '<h2 class="station-main-title">' + s.title + '</h2>' +
+    '<p class="station-hook">' + s.hook + '</p>' +
+    '<div class="bva">' +
+    '<div class="bva-card before"><div class="bva-label">❌ Today Without AI</div><div class="bva-text">' + s.before + '</div></div>' +
+    '<div class="bva-card after"><div class="bva-label">✅ With AI in Place</div><div class="bva-text">' + s.after + '</div></div>' +
+    '</div>' +
+    '<div class="questions-block">' +
+    '<div class="qb-title">// Ask them — then enter their numbers below</div>' +
+    qHTML +
+    '</div>' +
+    '<button class="run-demo-btn" onclick="runDemo(' + idx + ')">▶ Run the Demo</button>' +
+    '<div class="output-panel" id="output-panel">' +
+    '<div class="output-header"><span class="dot g"></span><span class="dot y"></span><span class="dot r"></span><span class="oht">AI OUTPUT — LIVE SIMULATION</span></div>' +
+    '<div class="output-body" id="output-body"></div>' +
+    '</div>' +
+    '<div class="savings-card" id="savings-card">' +
+    '<div class="sc-title">// Their Personalized Savings — ' + s.category + '</div>' +
+    '<div class="savings-grid">' +
+    '<div class="saving-stat"><span class="sv" id="sv-hrs">—</span><span class="sl">Hours saved / week</span></div>' +
+    '<div class="saving-stat"><span class="sv" id="sv-dollars">—</span><span class="sl">Dollars saved / year</span></div>' +
+    '<div class="saving-stat"><span class="sv" id="sv-extra">—</span><span class="sl">Running total saved</span></div>' +
+    '</div>' +
+    '<p style="font-size:13px;color:#94a3b8;margin-top:14px;line-height:1.6" id="sv-note"></p>' +
+    '</div>';
+
+  document.getElementById('station-content').innerHTML = html;
+
+  // Scroll to top
+  document.getElementById('station-content').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function runDemo(idx) {
+  var s = stations[idx];
+  var qVals = {};
+  s.questions.forEach(function(q, qi) {
+    var el = document.getElementById('q-' + qi);
+    qVals[q.key] = parseFloat(el ? el.value : q.default) || q.default;
+  });
+
+  // Show output with typing effect
+  var panel = document.getElementById('output-panel');
+  var body = document.getElementById('output-body');
+  panel.classList.add('visible');
+  body.textContent = '';
+
+  var text = s.output;
+  var i = 0;
+  var speed = 8;
+
+  function typeChar() {
+    if (i < text.length) {
+      body.textContent += text[i];
+      i++;
+      // Scroll output as it types
+      panel.scrollTop = panel.scrollHeight;
+      setTimeout(typeChar, speed);
+    } else {
+      showSavings(idx, qVals);
     }
   }
+  typeChar();
+}
 
-  var af = document.getElementById('activity-feed');
-  af.innerHTML = '';
-  for (var ai = 0; ai < activity.length; ai++) {
-    var act = activity[ai];
-    af.innerHTML += '<div class="activity-item">' +
-      '<div class="activity-icon">' + act.icon + '</div>' +
-      '<div><div class="activity-text">' + act.text + '</div><div class="activity-time">' + act.time + '</div></div>' +
-      '</div>';
+function showSavings(idx, qVals) {
+  var s = stations[idx];
+  var result = s.savingsLabel(qVals);
+  var hrs = Math.round(result.hrs * 10) / 10;
+  var dollars = Math.round(result.dollars);
+
+  // Add to running totals
+  if (!stationDone[idx]) {
+    totalHrs += hrs;
+    totalDollars += dollars;
+    stationDone[idx] = true;
   }
+
+  document.getElementById('sv-hrs').textContent = hrs + ' hrs';
+  document.getElementById('sv-dollars').textContent = '$' + dollars.toLocaleString();
+  document.getElementById('sv-extra').textContent = '$' + totalDollars.toLocaleString() + ' total';
+  document.getElementById('sv-note').textContent = result.extra;
+
+  document.getElementById('savings-card').classList.add('visible');
+
+  // Update top bar
+  document.getElementById('tally-hrs').textContent = Math.round(totalHrs * 10) / 10 + ' hrs';
+  document.getElementById('tally-dollars').textContent = '$' + totalDollars.toLocaleString();
 }
 
-// =====================
-// LEADS TABLE
-// =====================
-function statusBadge(s) {
-  var map = { 'New Lead':'badge-new', 'Approved':'badge-approved', 'Contacted':'badge-contacted', 'Replied':'badge-replied', 'Discovery Call':'badge-discovery', 'Audit Opportunity':'badge-audit', 'Proposal Sent':'badge-proposal', 'Closed Won':'badge-won', 'Closed Lost':'badge-lost' };
-  return '<span class="badge ' + (map[s] || '') + '">' + s + '</span>';
-}
-
-function renderLeads(filter, statusFilter) {
-  var tbody = document.getElementById('leads-tbody');
-  tbody.innerHTML = '';
-  var search = filter || (document.getElementById('lead-search') ? document.getElementById('lead-search').value.toLowerCase() : '');
-  var sf = statusFilter || (document.getElementById('status-filter') ? document.getElementById('status-filter').value : '');
-  var shown = 0;
-  for (var i = 0; i < leads.length; i++) {
-    var l = leads[i];
-    if (sf && l.status !== sf) continue;
-    if (search && l.company.toLowerCase().indexOf(search) === -1 && l.industry.toLowerCase().indexOf(search) === -1) continue;
-    shown++;
-    var row = '<tr>' +
-      '<td><strong>' + l.company + '</strong></td>' +
-      '<td><span class="chip">' + l.industry + '</span></td>' +
-      '<td>' + l.location + '</td>' +
-      '<td>' + (l.email ? '<a href="mailto:' + l.email + '" style="color:var(--navy)">' + l.email + '</a>' : '—') + '</td>' +
-      '<td>' + statusBadge(l.status) + '</td>' +
-      '<td>' + l.source + '</td>' +
-      '<td><button class="btn btn-outline btn-sm" onclick="viewLead(' + l.id + ')">View</button></td>' +
-      '</tr>';
-    tbody.innerHTML += row;
-  }
-  if (shown === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-muted);">No leads found.</td></tr>';
-  }
-}
-
-function filterLeads(val) { renderLeads(val.toLowerCase(), null); }
-function filterLeadsByStatus(val) { renderLeads(null, val); }
-
-function viewLead(id) {
-  var l = null;
-  for (var i = 0; i < leads.length; i++) { if (leads[i].id === id) { l = leads[i]; break; } }
-  if (!l) return;
-  currentDetailId = id;
-  document.getElementById('detail-title').textContent = l.company;
-  var body = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">' +
-    '<div><div class="field-label">Industry</div><div class="text-sm mt-4">' + l.industry + '</div></div>' +
-    '<div><div class="field-label">Location</div><div class="text-sm mt-4">' + l.location + '</div></div>' +
-    '<div><div class="field-label">Email</div><div class="text-sm mt-4">' + (l.email || '—') + '</div></div>' +
-    '<div><div class="field-label">Phone</div><div class="text-sm mt-4">' + (l.phone || '—') + '</div></div>' +
-    '<div><div class="field-label">Website</div><div class="text-sm mt-4">' + (l.website || '—') + '</div></div>' +
-    '<div><div class="field-label">Source</div><div class="text-sm mt-4">' + l.source + '</div></div>' +
-    '<div style="grid-column:span 2"><div class="field-label">Status</div><div class="mt-4">' + statusBadge(l.status) + '</div></div>' +
-    '<div style="grid-column:span 2"><div class="field-label">Notes</div><div class="text-sm mt-4">' + (l.notes || '—') + '</div></div>' +
-    '</div>' +
-    '<div class="gold-divider"></div>' +
-    '<div><div class="field-label" style="margin-bottom:8px;">Update Status</div>' +
-    '<div class="flex gap-8" style="flex-wrap:wrap;">' +
-    '<select class="field-select" id="update-status-select" style="flex:1; min-width:160px;">' +
-    '<option value="">Select new status...</option>' +
-    '<option>New Lead</option><option>Approved</option><option>Contacted</option><option>Replied</option><option>Discovery Call</option><option>Audit Opportunity</option><option>Proposal Sent</option><option>Closed Won</option><option>Closed Lost</option>' +
-    '</select>' +
-    '<button class="btn btn-primary btn-sm" onclick="updateLeadStatus(' + id + ')">Update</button>' +
-    '</div></div>';
-  document.getElementById('lead-detail-body').innerHTML = body;
-  document.getElementById('detail-delete-btn').onclick = function() { deleteLead(id); };
-  showModal('lead-detail-modal');
-}
-
-function updateLeadStatus(id) {
-  var sel = document.getElementById('update-status-select');
-  if (!sel.value) return;
-  for (var i = 0; i < leads.length; i++) {
-    if (leads[i].id === id) { leads[i].status = sel.value; break; }
-  }
-  closeModal('lead-detail-modal');
-  renderLeads();
-  showToast('Status updated to ' + sel.value);
-  activity.unshift({ icon:'🔄', text:'Status updated: ' + id + ' → ' + sel.value, time:'Just now' });
-}
-
-function deleteLead(id) {
-  leads = leads.filter(function(l) { return l.id !== id; });
-  closeModal('lead-detail-modal');
-  renderLeads();
-  showToast('Lead removed.');
-}
-
-function addLead() {
-  var company = document.getElementById('new-company').value.trim();
-  if (!company) { showToast('Company name is required.'); return; }
-  var newLead = {
-    id: nextId++,
-    company: company,
-    industry: document.getElementById('new-industry').value || 'Unknown',
-    location: document.getElementById('new-location').value || '',
-    email: document.getElementById('new-email').value || '',
-    phone: document.getElementById('new-phone').value || '',
-    website: document.getElementById('new-website').value || '',
-    status: document.getElementById('new-status').value,
-    source: document.getElementById('new-source').value,
-    notes: document.getElementById('new-notes').value || ''
-  };
-  leads.push(newLead);
-  activity.unshift({ icon:'➕', text:'New lead added: ' + company, time:'Just now' });
-  closeModal('add-lead-modal');
-  var fields = ['new-company','new-industry','new-location','new-email','new-phone','new-website','new-notes'];
-  for (var i = 0; i < fields.length; i++) document.getElementById(fields[i]).value = '';
-  renderLeads();
-  showToast('Lead added: ' + company);
-}
-
-// =====================
-// SCRAPING
-// =====================
-var fakeBizData = {
-  'Med Spa': ['Glow Aesthetics','Desert Bloom Med Spa','Elite Skin Studio','Refresh Wellness','Pure Radiance Spa','Oasis Glow','Lux MedSpa','Balance Beauty Clinic'],
-  'Contractor': ['ProBuild Construction','Summit Roofing','Desert Home Renovations','Peak Builders','Solid Foundation Co','All-Star Remodeling','True Line Contractors','Prime Renovations'],
-  'Law Firm': ['Apex Legal Group','Desert Justice Law','Pacific Rim Attorneys','Precision Law Partners','First Choice Legal','Summit Law Associates','Guardian Legal','Clear Path Law'],
-  'Dental': ['Smile Studio Dental','Desert Tooth Co','Bright Dental Care','White Oak Dentistry','New Day Dental','Peak Smiles','Comfort Dental Group','Oasis Family Dentistry'],
-  'Real Estate': ['Desert Properties LLC','Coachella Valley Homes','Prestige Realty','Sun State Properties','Landmark Real Estate','Prime Valley Realty','Crest Property Group','Valley View Realty'],
-  'Local Service': ['Quick Fix Plumbing','Desert HVAC Pro','All Clear Electrical','Sun Valley Cleaning','Reliable Pest Control','Oasis Lawn Care','Desert Pest Solutions','Premier Pool Service']
-};
-
-function runScrape() {
-  var industry = document.getElementById('scrape-industry').value.trim() || 'Local Service';
-  var location = document.getElementById('scrape-location').value.trim() || 'Palm Desert, CA';
-  var limit = parseInt(document.getElementById('scrape-limit').value) || 10;
-  var key = 'Local Service';
-  for (var k in fakeBizData) {
-    if (industry.toLowerCase().indexOf(k.toLowerCase()) !== -1 || k.toLowerCase().indexOf(industry.toLowerCase()) !== -1) { key = k; break; }
-  }
-  var pool = fakeBizData[key] || fakeBizData['Local Service'];
-  scrapeResults = [];
-  for (var i = 0; i < Math.min(limit, pool.length, 8); i++) {
-    scrapeResults.push({
-      name: pool[i],
-      industry: industry || key,
-      location: location,
-      email: pool[i].toLowerCase().replace(/ /g,'') + '@gmail.com',
-      phone: '(760) 555-' + (1000 + i * 111),
-      approved: null
-    });
-  }
-  renderScrapeResults();
-  showToast('Found ' + scrapeResults.length + ' results for ' + industry + ' in ' + location);
-}
-
-function renderScrapeResults() {
-  var area = document.getElementById('scrape-results-area');
-  if (scrapeResults.length === 0) { area.innerHTML = ''; return; }
-  var pending = scrapeResults.filter(function(r){ return r.approved === null; });
-  var html = '<div class="scrape-results-header">' +
-    '<div class="scrape-results-title">' + scrapeResults.length + ' Results — ' + pending.length + ' Pending Review</div>' +
-    '<button class="btn btn-primary btn-sm" onclick="approveAll()">Approve All</button>' +
-    '</div>';
-  for (var i = 0; i < scrapeResults.length; i++) {
-    var r = scrapeResults[i];
-    var status_html = '';
-    if (r.approved === true) status_html = '<span class="badge badge-approved">Approved</span>';
-    else if (r.approved === false) status_html = '<span class="badge badge-lost">Rejected</span>';
-    else status_html = '<div class="scrape-actions">' +
-      '<button class="btn btn-success btn-sm" onclick="approveScrape(' + i + ')">✓ Approve</button>' +
-      '<button class="btn btn-danger btn-sm" onclick="rejectScrape(' + i + ')">✗ Reject</button>' +
-      '</div>';
-    html += '<div class="scrape-row">' +
-      '<div class="scrape-info">' +
-      '<div class="scrape-name">' + r.name + '</div>' +
-      '<div class="scrape-detail">' + r.industry + ' · ' + r.location + ' · ' + r.email + ' · ' + r.phone + '</div>' +
-      '</div>' + status_html + '</div>';
-  }
-  area.innerHTML = html;
-}
-
-function approveScrape(i) {
-  scrapeResults[i].approved = true;
-  var r = scrapeResults[i];
-  leads.push({ id: nextId++, company: r.name, industry: r.industry, location: r.location, email: r.email, phone: r.phone, website: '', status: 'Approved', source: 'Scrape', notes: '' });
-  activity.unshift({ icon:'✅', text:'Approved from scrape: ' + r.name, time:'Just now' });
-  showToast(r.name + ' added to CRM.');
-  renderScrapeResults();
-}
-
-function rejectScrape(i) {
-  scrapeResults[i].approved = false;
-  renderScrapeResults();
-}
-
-function approveAll() {
-  for (var i = 0; i < scrapeResults.length; i++) {
-    if (scrapeResults[i].approved === null) approveScrape(i);
-  }
-}
-
-// =====================
-// PIPELINE
-// =====================
-var stageColors = {
-  'New Lead':'#3b82f6','Approved':'#10b981','Contacted':'#f59e0b','Replied':'#06b6d4',
-  'Discovery Call':'#8b5cf6','Audit Opportunity':'#ec4899','Proposal Sent':'#f97316',
-  'Closed Won':'#16a34a','Closed Lost':'#ef4444'
-};
-
-function renderPipeline() {
-  var stages = Object.keys(stageColors);
-  var board = document.getElementById('pipeline-board');
-  board.innerHTML = '';
-  for (var si = 0; si < stages.length; si++) {
-    var stage = stages[si];
-    var color = stageColors[stage];
-    var colLeads = leads.filter(function(l) { return l.status === stage; });
-    var cards = '';
-    for (var li = 0; li < colLeads.length; li++) {
-      var l = colLeads[li];
-      cards += '<div class="pipeline-card" onclick="viewLead(' + l.id + ')">' +
-        '<div class="pc-name">' + l.company + '</div>' +
-        '<div class="pc-industry">' + l.industry + '</div>' +
-        '<div class="pc-date">' + l.location + '</div>' +
-        '</div>';
-    }
-    board.innerHTML += '<div class="pipeline-col">' +
-      '<div class="pipeline-col-header" style="color:' + color + '">' +
-      stage + '<span class="pipeline-col-count">' + colLeads.length + '</span>' +
-      '</div>' + (cards || '<div style="text-align:center; padding:16px 0; font-size:12px; color:var(--text-light);">No leads</div>') +
-      '</div>';
-  }
-}
-
-// =====================
-// EMAIL OUTREACH
-// =====================
-var emailTemplates = {
-  'Contractor': {
-    subject: 'Most contractors are losing leads after hours — here\'s why',
-    body: 'Hi [Owner Name],\n\nI came across [Company Name] while researching top contractors in the area — impressive work.\n\nI\'m Dave with Breakout AI Solutions. We specialize in helping contractors stop losing leads after hours by installing AI systems that respond to website inquiries and calls 24/7.\n\nMost of our contractor clients see 15–30% more booked jobs within the first 90 days — without hiring anyone new.\n\nWould it make sense to spend 15 minutes looking at where you might be leaving money on the table?\n\nNo pressure — just a straight audit of what\'s working and what isn\'t.\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  },
-  'Med Spa': {
-    subject: 'Your front desk can\'t book appointments at 11pm — ours can',
-    body: 'Hi [Owner Name],\n\nI noticed [Company Name] has great reviews — your clients clearly love you.\n\nI\'m Dave with Breakout AI Solutions. We help med spas convert more website visitors into booked appointments using AI systems that work around the clock — even when your team is closed.\n\nOne of our med spa clients increased their monthly bookings by 22% in the first 60 days.\n\nI\'d love to do a quick 15-minute walkthrough of what that could look like for your practice.\n\nInterested?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  },
-  'Law Firm': {
-    subject: 'What happens when a potential client calls your firm at 8pm?',
-    body: 'Hi [Name],\n\nLegal clients don\'t wait — they move on to the next firm.\n\nI\'m Dave with Breakout AI Solutions. We build AI intake systems for law firms that qualify leads, answer common questions, and schedule consultations automatically — 24/7.\n\nThe result? Your firm captures more clients without your team working more hours.\n\nI\'d love to share a quick case study from a firm similar to yours. Worth 15 minutes?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  },
-  'Dental': {
-    subject: 'How top dental practices are filling their schedule on autopilot',
-    body: 'Hi [Office Manager / Doctor Name],\n\nI\'ll get straight to the point.\n\nI\'m Dave with Breakout AI Solutions. We help dental practices automate patient intake, appointment reminders, and follow-ups using AI — reducing no-shows and freeing your front desk to focus on in-office care.\n\nOur dental clients typically see a 25–40% reduction in no-shows within the first 90 days.\n\nWould a quick 15-minute walkthrough be worth your time?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  },
-  'Real Estate': {
-    subject: 'AI is changing how top agents handle leads — are you keeping up?',
-    body: 'Hi [Agent / Broker Name],\n\nThe top-producing agents in every market are now using AI to respond to buyer and seller inquiries instantly — before your competition does.\n\nI\'m Dave with Breakout AI Solutions. We build AI systems for real estate teams that qualify leads, answer property questions, and schedule showings automatically.\n\nI\'d love to share how we\'ve helped agents in your area improve their response time and close more deals. Worth a quick call?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  },
-  'Local Service': {
-    subject: 'You\'re probably losing 30% of your leads — here\'s how to fix it',
-    body: 'Hi [Owner Name],\n\nMost local service businesses lose leads because nobody\'s available to respond fast enough.\n\nI\'m Dave with Breakout AI Solutions. We install AI systems that respond to your website visitors, qualify them, and get them booked — in minutes, not hours.\n\nWe\'ve helped businesses like yours stop leaving money on the table without hiring more staff.\n\nWould it be worth a 15-minute call to see what that could look like for [Company Name]?\n\nDave\nBreakout AI Solutions\nbreakoutaisolutions.com'
-  }
-};
-
-var activeEmailTab = 'Contractor';
-
-function renderOutreach() {
-  var tabs = document.getElementById('outreach-tabs');
-  tabs.innerHTML = '';
-  var keys = Object.keys(emailTemplates);
-  for (var i = 0; i < keys.length; i++) {
-    var k = keys[i];
-    var active = k === activeEmailTab ? ' active' : '';
-    tabs.innerHTML += '<div class="template-tab' + active + '" onclick="setEmailTab(\'' + k + '\')">' + k + '</div>';
-  }
-  renderEmailDraft();
-}
-
-function setEmailTab(key) {
-  activeEmailTab = key;
-  renderOutreach();
-}
-
-function renderEmailDraft() {
-  var tmpl = emailTemplates[activeEmailTab];
-  var content = document.getElementById('outreach-content');
-  content.innerHTML = '<div class="email-draft">' +
-    '<div class="email-meta"><div><div class="email-subject">' + tmpl.subject + '</div><div class="email-vertical" style="margin-top:3px;">Vertical: ' + activeEmailTab + '</div></div></div>' +
-    '<div class="email-body">' + tmpl.body.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' +
-    '<div class="email-footer">' +
-    '<button class="btn btn-primary btn-sm" onclick="markEmailSent()">Mark as Sent</button>' +
-    '<button class="btn btn-outline btn-sm" onclick="copyEmail()">Copy Template</button>' +
-    '</div>' +
-    '</div>' +
-    '<div class="card mt-16">' +
-    '<div class="card-title">Outreach Queue</div>' +
-    '<div id="outreach-queue-body"></div>' +
-    '</div>';
-  renderOutreachQueue();
-}
-
-function renderOutreachQueue() {
-  var qb = document.getElementById('outreach-queue-body');
-  if (!qb) return;
-  var contacted = leads.filter(function(l) { return l.status === 'Contacted' || l.status === 'Replied'; });
-  if (contacted.length === 0) { qb.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>No outreach in queue.</p></div>'; return; }
-  var html = '<table><thead><tr><th>Company</th><th>Industry</th><th>Status</th><th>Email</th></tr></thead><tbody>';
-  for (var i = 0; i < contacted.length; i++) {
-    var l = contacted[i];
-    html += '<tr><td><strong>' + l.company + '</strong></td><td>' + l.industry + '</td><td>' + statusBadge(l.status) + '</td><td>' + (l.email || '—') + '</td></tr>';
-  }
-  html += '</tbody></table>';
-  qb.innerHTML = html;
-}
-
-function markEmailSent() {
-  showToast('Email template queued for ' + activeEmailTab + ' leads.');
-  activity.unshift({ icon:'✉', text:'Email template sent to ' + activeEmailTab + ' queue', time:'Just now' });
-}
-
-function copyEmail() {
-  var tmpl = emailTemplates[activeEmailTab];
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(tmpl.body);
-    showToast('Template copied to clipboard!');
+function goNext() {
+  if (currentStation < 10) {
+    currentStation++;
+    renderStation(currentStation);
   } else {
-    showToast('Copy: use Ctrl+A on the template text');
+    showClosing();
   }
 }
 
-// =====================
-// PROPOSALS
-// =====================
-var verticals = [
-  { name:'Contractor', icon:'🔨', desc:'Roofing, remodeling, build' },
-  { name:'Med Spa', icon:'💆', desc:'Aesthetics & wellness' },
-  { name:'Law Firm', icon:'⚖️', desc:'Legal services & intake' },
-  { name:'Dental', icon:'🦷', desc:'Dental practice & patients' },
-  { name:'Real Estate', icon:'🏠', desc:'Agents, brokers & teams' },
-  { name:'Local Service', icon:'🔧', desc:'Plumbing, HVAC, cleaning' }
-];
-
-var proposalContent = {
-  'Contractor': {
-    challenge: 'Most contractors lose 25–40% of inbound leads simply because no one is available to respond quickly enough — especially outside business hours. Manual follow-up is inconsistent, and sales conversations aren\'t being tracked or optimized.',
-    solution: 'Breakout AI Solutions will install a custom AI system that captures every inbound inquiry 24/7, qualifies the lead, and routes it to you or your team instantly. The system also automates follow-up sequences so no lead falls through the cracks.',
-    deliverables: ['24/7 AI lead capture widget on website', 'Automated lead qualification & routing', 'Follow-up sequence automation (text + email)', 'CRM integration for full pipeline visibility', 'Monthly performance reporting & optimization'],
-    roi: 'Our contractor clients typically see 15–30% more booked jobs within 90 days without adding headcount. Based on an average job value of $5,000, capturing 3–5 additional jobs per month represents $15,000–$25,000 in new monthly revenue.'
-  },
-  'Med Spa': {
-    challenge: 'Med spas rely heavily on online presence and word of mouth, but fail to convert website visitors into bookings at scale. Front desk teams can\'t respond to inquiries instantly, and after-hours traffic goes unanswered.',
-    solution: 'We build an AI-powered booking assistant that lives on your website and social media, answering questions about services, capturing contact info, and booking consultations automatically — 24 hours a day.',
-    deliverables: ['AI booking assistant (website + social)', 'Automated appointment reminders & confirmations', 'Post-visit follow-up sequences', 'Review collection automation', 'Monthly analytics dashboard'],
-    roi: 'Med spas using our AI systems see an average 20–35% increase in monthly bookings. At an average service value of $300, that\'s an estimated $6,000–$12,000 in additional monthly revenue from the same traffic.'
-  },
-  'Law Firm': {
-    challenge: 'Legal prospects have high intent but low patience. If your firm doesn\'t respond within minutes, they\'ve already called the next attorney. Most law firms also spend significant staff time on intake tasks that don\'t require human judgment.',
-    solution: 'We build an AI intake system that qualifies prospects, captures case details, and schedules consultations automatically — presenting your firm as responsive, organized, and professional from the first interaction.',
-    deliverables: ['24/7 AI intake bot (website + phone integration)', 'Automated case qualification workflow', 'Consultation scheduling system', 'CRM data capture & segmentation', 'Weekly lead pipeline report'],
-    roi: 'The average law firm captures 2–4 additional retained clients per month after implementing our intake system. At an average retainer value of $3,500, this represents $7,000–$14,000 in new monthly revenue.'
-  },
-  'Dental': {
-    challenge: 'Dental practices lose significant revenue to no-shows, poor recall rates, and staff time spent on manual appointment management. Many patients also go to competitors when questions aren\'t answered quickly.',
-    solution: 'We deploy an AI patient engagement system that handles appointment reminders, new patient intake, recall campaigns, and FAQs automatically — reducing no-shows and freeing your front desk team.',
-    deliverables: ['AI new patient intake automation', 'Appointment confirmation & reminder system', 'Recall campaign automation (6-month, annual)', 'FAQ chatbot for website', 'No-show reduction reporting'],
-    roi: 'Dental practices using our system see a 25–40% reduction in no-shows and a 15–20% increase in recall visit completion. For a practice with 200 patients/month, this can represent $8,000–$15,000 in recovered monthly revenue.'
-  },
-  'Real Estate': {
-    challenge: 'Speed to lead is everything in real estate. Agents who respond within 5 minutes are 100x more likely to make contact than those who respond in 30 minutes. Most teams can\'t maintain that speed manually.',
-    solution: 'We build an AI lead response and nurture system that engages every new lead instantly, qualifies them based on your criteria, and warms them up for your agents — so every conversation starts from a position of strength.',
-    deliverables: ['Instant AI lead response system', 'Automated lead qualification by budget/timeline', 'Showing scheduler integration', 'Long-term nurture sequence automation', 'Pipeline dashboard for team leaders'],
-    roi: 'Real estate teams using our AI see a 2–4x improvement in lead-to-appointment conversion. At an average commission of $10,000, closing just 2 additional deals per month represents $20,000 in added GCI.'
-  },
-  'Local Service': {
-    challenge: 'Local service businesses typically operate on thin margins and small teams, meaning every unanswered call or ignored website visitor is real money lost. Most don\'t have the staff or systems to follow up consistently.',
-    solution: 'We build lightweight AI systems that answer your website visitors, capture contact details, qualify service needs, and trigger immediate follow-up — making your small business feel like a large, responsive operation.',
-    deliverables: ['Website AI lead capture & qualification', 'Automated text + email follow-up sequences', 'Service quote request intake automation', 'Review request automation', 'Simple performance dashboard'],
-    roi: 'Local service businesses typically recover 20–35% more leads after implementing our system. For a business averaging $500/job and receiving 40 leads/month, capturing 8 additional jobs represents $4,000 in recovered monthly revenue.'
+function goBack() {
+  if (currentStation > 0) {
+    currentStation--;
+    renderStation(currentStation);
+  } else {
+    document.getElementById('station-screen').classList.remove('active');
+    document.getElementById('splash').classList.add('active');
   }
-};
-
-function renderProposals() {
-  var grid = document.getElementById('vertical-grid');
-  grid.innerHTML = '';
-  for (var i = 0; i < verticals.length; i++) {
-    var v = verticals[i];
-    var selected = selectedVertical === v.name ? ' selected' : '';
-    grid.innerHTML += '<div class="vertical-card' + selected + '" onclick="selectVertical(\'' + v.name + '\')">' +
-      '<div class="vc-icon">' + v.icon + '</div>' +
-      '<div class="vc-name">' + v.name + '</div>' +
-      '<div class="vc-desc">' + v.desc + '</div>' +
-      '</div>';
-  }
-  if (selectedVertical) renderProposalOutput();
 }
 
-function selectVertical(name) {
-  selectedVertical = name;
-  renderProposals();
-  document.getElementById('proposal-output').style.display = 'block';
-  renderProposalOutput();
+function showClosing() {
+  document.getElementById('station-screen').classList.remove('active');
+  document.getElementById('closing-screen').classList.add('active');
+
+  var daysPerMonth = Math.round(totalHrs * 4.3 / 8);
+  document.getElementById('grand-hrs').textContent = Math.round(totalHrs) + ' hrs';
+  document.getElementById('grand-dollars').textContent = '$' + Math.round(totalDollars / 1000) + 'K+';
+  document.getElementById('grand-days').textContent = daysPerMonth + ' days';
 }
 
-function renderProposalOutput() {
-  var p = proposalContent[selectedVertical];
-  if (!p) return;
-  var v = null;
-  for (var i = 0; i < verticals.length; i++) { if (verticals[i].name === selectedVertical) { v = verticals[i]; break; } }
-  var out = document.getElementById('proposal-output');
-  var delItems = '';
-  for (var d = 0; d < p.deliverables.length; d++) delItems += '<li>' + p.deliverables[d] + '</li>';
-  out.innerHTML = '<div class="proposal-output">' +
-    '<div class="proposal-header">' +
-    '<div style="font-size:32px; margin-bottom:8px;">' + v.icon + '</div>' +
-    '<div class="proposal-title">AI Solutions Proposal for ' + selectedVertical + 's</div>' +
-    '<div class="proposal-sub">Prepared by Breakout AI Solutions · Human-first AI that gets results</div>' +
-    '</div>' +
-    '<div class="proposal-section"><div class="proposal-section-title">The Challenge</div><p>' + p.challenge + '</p></div>' +
-    '<div class="proposal-section"><div class="proposal-section-title">Our Solution</div><p>' + p.solution + '</p></div>' +
-    '<div class="proposal-section"><div class="proposal-section-title">What We Build</div><ul>' + delItems + '</ul></div>' +
-    '<div class="proposal-section"><div class="proposal-section-title">The ROI Case</div><p>' + p.roi + '</p></div>' +
-    '<div class="proposal-section"><div class="proposal-section-title">Our Process</div><p>Free Discovery Call → AI Audit → ROI Presentation → We Build It → You See Results</p></div>' +
-    '<div class="gold-divider"></div>' +
-    '<div style="text-align:center; padding: 8px 0;">' +
-    '<div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Ready to move forward?</div>' +
-    '<button class="btn btn-gold" onclick="showToast(\'Proposal export coming soon — copy from screen for now.\')">Export Proposal</button>' +
-    '</div>' +
-    '</div>';
+function restartDemo() {
+  document.getElementById('closing-screen').classList.remove('active');
+  totalHrs = 0;
+  totalDollars = 0;
+  stationDone = [];
+  currentStation = 0;
+  document.getElementById('splash').classList.add('active');
 }
-
-// =====================
-// SETTINGS
-// =====================
-function renderSettings() {
-  var grid = document.getElementById('settings-grid');
-  grid.innerHTML = '<div class="settings-card">' +
-    '<div class="settings-card-title">Integrations</div>' +
-    '<div class="settings-card-desc">Connect your tools to automate outreach and data sync.</div>' +
-    '<div class="integration-row"><div><div class="integration-name">Gmail</div><div class="integration-status"><span class="status-dot dot-pending"></span>Pending connection</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'Gmail OAuth — coming soon.\')">Connect</button></div>' +
-    '<div class="integration-row"><div><div class="integration-name">Google Business Scraper</div><div class="integration-status"><span class="status-dot dot-connected"></span>Simulated / Active</div></div><button class="btn btn-outline btn-sm">Configure</button></div>' +
-    '<div class="integration-row"><div><div class="integration-name">GoHighLevel CRM</div><div class="integration-status"><span class="status-dot dot-disconnected"></span>Not connected</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'GHL integration — coming soon.\')">Connect</button></div>' +
-    '<div class="integration-row"><div><div class="integration-name">Calendly</div><div class="integration-status"><span class="status-dot dot-disconnected"></span>Not connected</div></div><button class="btn btn-outline btn-sm" onclick="showToast(\'Calendly integration — coming soon.\')">Connect</button></div>' +
-    '</div>' +
-    '<div class="settings-card">' +
-    '<div class="settings-card-title">Notifications</div>' +
-    '<div class="settings-card-desc">Control when and how you receive alerts.</div>' +
-    '<div class="integration-row"><div class="integration-name">New lead approved</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">Email reply received</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">Pipeline stage change</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">Weekly summary report</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
-    '</div>' +
-    '<div class="settings-card">' +
-    '<div class="settings-card-title">Business Profile</div>' +
-    '<div class="settings-card-desc">Your agency details used in proposals and outreach.</div>' +
-    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Business Name</label><input type="text" class="field-input" value="Breakout AI Solutions"></div>' +
-    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Location</label><input type="text" class="field-input" value="Palm Desert, CA"></div>' +
-    '<div class="field-group" style="margin-bottom:12px;"><label class="field-label">Website</label><input type="text" class="field-input" value="breakoutaisolutions.com"></div>' +
-    '<div class="field-group"><label class="field-label">Sender Email</label><input type="email" class="field-input" value="dave@breakoutaisolutions.com"></div>' +
-    '<div class="mt-16"><button class="btn btn-primary btn-sm" onclick="showToast(\'Profile saved.\')">Save Profile</button></div>' +
-    '</div>' +
-    '<div class="settings-card">' +
-    '<div class="settings-card-title">Dashboard Preferences</div>' +
-    '<div class="settings-card-desc">Customize your workspace experience.</div>' +
-    '<div class="integration-row"><div class="integration-name">Dark mode</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">Show closed deals in pipeline</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">Auto-approve scrape results</div><div class="toggle" onclick="toggleSetting(this)"></div></div>' +
-    '<div class="integration-row"><div class="integration-name">AI-assisted proposal copy</div><div class="toggle on" onclick="toggleSetting(this)"></div></div>' +
-    '</div>';
-}
-
-function toggleSetting(el) {
-  if (el.classList.contains('on')) el.classList.remove('on');
-  else el.classList.add('on');
-}
-
-// =====================
-// MODAL & TOAST
-// =====================
-function showModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
-});
-
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(function() { t.style.display = 'none'; }, 3000);
-}
-
-// =====================
-// INIT
-// =====================
-renderOverview();
 </script>
 
 </body>
