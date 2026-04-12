@@ -26,7 +26,6 @@
 –warn: #fbbf24;
 –glass: rgba(255,255,255,0.03);
 –glass-border: rgba(255,255,255,0.07);
-–sidebar-w: 260px;
 }
 
 body {
@@ -34,7 +33,6 @@ font-family: ‘DM Sans’, sans-serif;
 background: var(–navy);
 color: var(–text);
 min-height: 100vh;
-display: flex;
 overflow-x: hidden;
 }
 
@@ -49,39 +47,51 @@ background-size: 44px 44px;
 pointer-events: none; z-index: 0;
 }
 
-/* ── SIDEBAR ── */
-.sidebar {
-width: var(–sidebar-w);
-min-height: 100vh;
-background: var(–navy2);
-border-right: 1px solid var(–glass-border);
-display: flex;
-flex-direction: column;
-position: fixed;
-left: 0; top: 0; bottom: 0;
-z-index: 100;
-overflow-y: auto;
+/* ── BADGES ── */
+.live-badge {
+font-size: 8px; font-weight: 700;
+letter-spacing: 1px; text-transform: uppercase;
+padding: 2px 6px; border-radius: 3px;
+background: rgba(52,211,153,0.12);
+color: var(–success);
+border: 1px solid rgba(52,211,153,0.25);
 }
 
-.sidebar::-webkit-scrollbar { width: 0; }
+.integration-badge {
+font-size: 8px; font-weight: 700;
+letter-spacing: 0.5px;
+padding: 2px 6px; border-radius: 3px;
+background: rgba(251,191,36,0.08);
+color: var(–warn);
+border: 1px solid rgba(251,191,36,0.2);
+}
 
-.brand {
-padding: 24px 20px 20px;
+/* ── TOP NAV BAR ── */
+.topnav {
+position: sticky; top: 0; z-index: 100;
+background: rgba(8,12,24,0.92);
+backdrop-filter: blur(16px);
 border-bottom: 1px solid var(–glass-border);
 }
 
-.brand-logo {
+.topnav-main {
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 24px;
+height: 56px;
+}
+
+.brand-row {
 display: flex; align-items: center; gap: 10px;
-margin-bottom: 4px;
+flex-shrink: 0;
 }
 
 .brand-icon {
-width: 34px; height: 34px;
+width: 32px; height: 32px;
 border-radius: 8px;
 background: linear-gradient(135deg, var(–blue), var(–blue-dim));
-box-shadow: 0 0 20px rgba(59,130,246,0.4);
+box-shadow: 0 0 16px rgba(59,130,246,0.4);
 display: flex; align-items: center; justify-content: center;
-font-size: 16px;
+font-size: 15px;
 }
 
 .brand-name {
@@ -92,150 +102,84 @@ letter-spacing: -0.3px;
 
 .brand-tag {
 font-size: 10px; color: var(–text-dimmer);
-font-weight: 300; letter-spacing: 0.3px;
-padding-left: 44px;
+font-weight: 300; display: none;
 }
 
-.nav-section-label {
-font-size: 9px; font-weight: 700;
-letter-spacing: 2px; text-transform: uppercase;
-color: var(–text-dimmer);
-padding: 18px 20px 8px;
+/* Station tabs — scrollable row */
+.nav-tabs {
+display: flex; align-items: center;
+gap: 2px;
+overflow-x: auto;
+flex: 1;
+padding: 0 16px;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
 }
+.nav-tabs::-webkit-scrollbar { display: none; }
 
-.nav-item {
-display: flex; align-items: center; gap: 10px;
-padding: 9px 20px;
+.nav-tab {
+display: flex; align-items: center; gap: 6px;
+padding: 7px 13px;
+border-radius: 8px;
 cursor: pointer;
+white-space: nowrap;
+font-size: 13px; font-weight: 500;
+color: var(–text-dim);
+border: 1px solid transparent;
 transition: all 0.18s;
-border-left: 2px solid transparent;
-position: relative;
-}
-
-.nav-item:hover { background: var(–glass); }
-
-.nav-item.active {
-background: var(–blue-glow);
-border-left-color: var(–blue);
-}
-
-.nav-icon {
-width: 28px; height: 28px;
-border-radius: 7px;
-display: flex; align-items: center; justify-content: center;
-font-size: 13px;
-background: var(–glass);
-border: 1px solid var(–glass-border);
 flex-shrink: 0;
-transition: all 0.18s;
 }
 
-.nav-item.active .nav-icon {
+.nav-tab:hover { background: var(–glass); color: var(–text); }
+
+.nav-tab.active {
 background: var(–blue-glow);
 border-color: var(–blue-border);
-}
-
-.nav-item.integration .nav-icon {
-opacity: 0.5;
-}
-
-.nav-text { flex: 1; }
-
-.nav-title {
-font-size: 13px; font-weight: 500;
-color: var(–text);
-line-height: 1.2;
-}
-
-.nav-item.active .nav-title { color: var(–blue-bright); }
-.nav-item.integration .nav-title { color: var(–text-dim); }
-
-.nav-sub {
-font-size: 10px; color: var(–text-dimmer);
-font-weight: 300;
-}
-
-.live-badge {
-font-size: 8px; font-weight: 700;
-letter-spacing: 1px; text-transform: uppercase;
-padding: 2px 6px;
-border-radius: 3px;
-background: rgba(52,211,153,0.12);
-color: var(–success);
-border: 1px solid rgba(52,211,153,0.25);
-}
-
-.integration-badge {
-font-size: 8px; font-weight: 700;
-letter-spacing: 0.5px;
-padding: 2px 6px;
-border-radius: 3px;
-background: rgba(251,191,36,0.08);
-color: var(–warn);
-border: 1px solid rgba(251,191,36,0.2);
-}
-
-.sidebar-footer {
-margin-top: auto;
-padding: 16px 20px;
-border-top: 1px solid var(–glass-border);
-font-size: 11px; color: var(–text-dimmer);
-line-height: 1.5;
-}
-
-.sidebar-footer a { color: var(–blue-bright); text-decoration: none; }
-
-/* ── MAIN ── */
-.main {
-margin-left: var(–sidebar-w);
-flex: 1;
-min-height: 100vh;
-position: relative; z-index: 1;
-}
-
-/* ── TOP BAR ── */
-.topbar {
-position: sticky; top: 0; z-index: 50;
-background: rgba(8,12,24,0.85);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid var(–glass-border);
-padding: 14px 36px;
-display: flex; align-items: center; justify-content: space-between;
-}
-
-.topbar-left { display: flex; flex-direction: column; gap: 2px; }
-
-.topbar-station {
-font-size: 10px; font-weight: 700;
-letter-spacing: 1.5px; text-transform: uppercase;
 color: var(–blue-bright);
 }
 
-.topbar-title {
-font-family: ‘Syne’, sans-serif;
-font-size: 18px; font-weight: 800;
-letter-spacing: -0.3px;
+.nav-tab.int-tab { opacity: 0.6; }
+.nav-tab.int-tab.active { opacity: 1; }
+
+.tab-icon { font-size: 14px; }
+
+/* Separator between live and integration tabs */
+.tab-sep {
+width: 1px; height: 20px;
+background: var(–glass-border);
+margin: 0 6px;
+flex-shrink: 0;
 }
 
-.topbar-right { display: flex; align-items: center; gap: 12px; }
+/* Right side of topnav */
+.topnav-right {
+display: flex; align-items: center; gap: 10px;
+flex-shrink: 0;
+}
 
 .status-dot {
 display: flex; align-items: center; gap: 6px;
 font-size: 11px; color: var(–success);
-font-weight: 500;
+font-weight: 500; white-space: nowrap;
 }
 
 .status-dot::before {
 content: ‘’;
 width: 6px; height: 6px;
-background: var(–success);
-border-radius: 50%;
+background: var(–success); border-radius: 50%;
 box-shadow: 0 0 8px var(–success);
 animation: pulse 2s ease infinite;
 }
 
+/* ── MAIN ── */
+.main {
+width: 100%;
+min-height: 100vh;
+position: relative; z-index: 1;
+}
+
 /* ── PANELS ── */
-.panel { display: none; padding: 40px 36px 80px; animation: fadeIn 0.3s ease both; }
+.panel { display: none; padding: 36px 32px 80px; max-width: 960px; margin: 0 auto; animation: fadeIn 0.3s ease both; }
 .panel.active { display: block; }
 
 /* ── SHARED FORM COMPONENTS ── */
@@ -548,172 +492,89 @@ max-height: 600px; overflow-y: auto;
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 /* Responsive */
-@media (max-width: 900px) {
-.sidebar { transform: translateX(-100%); transition: transform 0.3s; }
-.sidebar.open { transform: translateX(0); }
-.main { margin-left: 0; }
-.panel { padding: 24px 18px 60px; }
+@media (max-width: 768px) {
+.panel { padding: 20px 16px 60px; }
+.topnav-main { padding: 0 16px; }
+.brand-name { font-size: 13px; }
+.nav-tab { padding: 6px 10px; font-size: 12px; }
 .stations-grid { grid-template-columns: repeat(2, 1fr); }
 .posts-grid { grid-template-columns: 1fr; }
+.status-dot span { display: none; }
+}
+
+@media (min-width: 1024px) {
+.brand-tag { display: block; }
 }
 </style>
 
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<!-- TOP NAV -->
 
-<nav class="sidebar" id="sidebar">
-  <div class="brand">
-    <div class="brand-logo">
+<div class="topnav">
+  <div class="topnav-main">
+    <div class="brand-row">
       <div class="brand-icon">⚡</div>
       <div class="brand-name">Breakout AI</div>
+      <div class="brand-tag">Human-First AI for Business</div>
     </div>
-    <div class="brand-tag">Human-First AI for Business</div>
+
+```
+<div class="nav-tabs" id="navTabs">
+  <div class="nav-tab active" onclick="showPanel('home')" data-panel="home">
+    <span class="tab-icon">🏠</span> Overview
   </div>
-
-  <div class="nav-section-label">Live AI Agents</div>
-
-  <div class="nav-item active" onclick="showPanel('home')">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-text">
-      <div class="nav-title">Overview</div>
-      <div class="nav-sub">All 12 stations</div>
-    </div>
+  <div class="nav-tab" onclick="showPanel('cold-email')" data-panel="cold-email">
+    <span class="tab-icon">📧</span> Cold Email
   </div>
-
-  <div class="nav-item" onclick="showPanel('cold-email')">
-    <div class="nav-icon">📧</div>
-    <div class="nav-text">
-      <div class="nav-title">Cold Email</div>
-      <div class="nav-sub">3-email sequences</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="nav-tab" onclick="showPanel('proposal')" data-panel="proposal">
+    <span class="tab-icon">📋</span> Proposals
   </div>
-
-  <div class="nav-item" onclick="showPanel('proposal')">
-    <div class="nav-icon">📋</div>
-    <div class="nav-text">
-      <div class="nav-title">Proposals</div>
-      <div class="nav-sub">Discovery → proposal</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="nav-tab" onclick="showPanel('followup')" data-panel="followup">
+    <span class="tab-icon">💬</span> Follow-Up
   </div>
-
-  <div class="nav-item" onclick="showPanel('followup')">
-    <div class="nav-icon">💬</div>
-    <div class="nav-text">
-      <div class="nav-title">Follow-Up + SMS</div>
-      <div class="nav-sub">Deal stage sequences</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="nav-tab" onclick="showPanel('newsletter')" data-panel="newsletter">
+    <span class="tab-icon">✉️</span> Newsletter
   </div>
-
-  <div class="nav-item" onclick="showPanel('newsletter')">
-    <div class="nav-icon">✉️</div>
-    <div class="nav-text">
-      <div class="nav-title">Newsletter</div>
-      <div class="nav-sub">Topic → publish-ready</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="nav-tab" onclick="showPanel('social')" data-panel="social">
+    <span class="tab-icon">📱</span> Social
   </div>
-
-  <div class="nav-item" onclick="showPanel('social')">
-    <div class="nav-icon">📱</div>
-    <div class="nav-text">
-      <div class="nav-title">Social Media</div>
-      <div class="nav-sub">Week of posts</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="nav-tab" onclick="showPanel('seo')" data-panel="seo">
+    <span class="tab-icon">🔍</span> SEO+AEO
   </div>
-
-  <div class="nav-item" onclick="showPanel('seo')">
-    <div class="nav-icon">🔍</div>
-    <div class="nav-text">
-      <div class="nav-title">SEO + AEO</div>
-      <div class="nav-sub">Search + AI citations</div>
-    </div>
-    <span class="live-badge">LIVE</span>
+  <div class="tab-sep"></div>
+  <div class="nav-tab int-tab" onclick="showPanel('lead-scraping')" data-panel="lead-scraping">
+    <span class="tab-icon">🎯</span> Leads
   </div>
-
-  <div class="nav-section-label">Integrations</div>
-
-  <div class="nav-item integration" onclick="showPanel('lead-scraping')">
-    <div class="nav-icon">🎯</div>
-    <div class="nav-text">
-      <div class="nav-title">Lead Scraping</div>
-      <div class="nav-sub">Clay · Apollo</div>
-    </div>
-    <span class="integration-badge">API</span>
+  <div class="nav-tab int-tab" onclick="showPanel('phone-agent')" data-panel="phone-agent">
+    <span class="tab-icon">📞</span> Phone
   </div>
-
-  <div class="nav-item integration" onclick="showPanel('phone-agent')">
-    <div class="nav-icon">📞</div>
-    <div class="nav-text">
-      <div class="nav-title">Phone Agent + CRM</div>
-      <div class="nav-sub">Twilio · HubSpot</div>
-    </div>
-    <span class="integration-badge">API</span>
+  <div class="nav-tab int-tab" onclick="showPanel('contracts')" data-panel="contracts">
+    <span class="tab-icon">✍️</span> Contracts
   </div>
-
-  <div class="nav-item integration" onclick="showPanel('contracts')">
-    <div class="nav-icon">✍️</div>
-    <div class="nav-text">
-      <div class="nav-title">Contracts + Signatures</div>
-      <div class="nav-sub">DocuSign · PandaDoc</div>
-    </div>
-    <span class="integration-badge">API</span>
+  <div class="nav-tab int-tab" onclick="showPanel('scheduling')" data-panel="scheduling">
+    <span class="tab-icon">📅</span> Schedule
   </div>
-
-  <div class="nav-item integration" onclick="showPanel('scheduling')">
-    <div class="nav-icon">📅</div>
-    <div class="nav-text">
-      <div class="nav-title">Scheduling</div>
-      <div class="nav-sub">Calendly · Google Cal</div>
-    </div>
-    <span class="integration-badge">API</span>
+  <div class="nav-tab int-tab" onclick="showPanel('invoicing')" data-panel="invoicing">
+    <span class="tab-icon">💰</span> Invoicing
   </div>
-
-  <div class="nav-item integration" onclick="showPanel('invoicing')">
-    <div class="nav-icon">💰</div>
-    <div class="nav-text">
-      <div class="nav-title">Invoicing</div>
-      <div class="nav-sub">QuickBooks · Stripe</div>
-    </div>
-    <span class="integration-badge">API</span>
+  <div class="nav-tab int-tab" onclick="showPanel('dashboard-station')" data-panel="dashboard-station">
+    <span class="tab-icon">📊</span> Dashboard
   </div>
+</div>
 
-  <div class="nav-item integration" onclick="showPanel('dashboard-station')">
-    <div class="nav-icon">📊</div>
-    <div class="nav-text">
-      <div class="nav-title">Dashboard</div>
-      <div class="nav-sub">Full pipeline view</div>
-    </div>
-    <span class="integration-badge">API</span>
-  </div>
+<div class="topnav-right">
+  <div class="status-dot"><span>AI Online</span></div>
+</div>
+```
 
-  <div class="sidebar-footer">
-    <strong>Breakout AI Solutions</strong><br>
-    <a href="https://breakoutaisolutions.com" target="_blank">breakoutaisolutions.com</a><br>
-    Palm Desert, CA
   </div>
-</nav>
+</div>
 
 <!-- MAIN -->
 
 <div class="main">
-
-  <!-- TOP BAR -->
-
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-station" id="topStation">OVERVIEW</div>
-      <div class="topbar-title" id="topTitle">Breakout AI — Live Demo</div>
-    </div>
-    <div class="topbar-right">
-      <div class="status-dot">AI Engine Online</div>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════════
        HOME
@@ -1275,35 +1136,17 @@ var nlShowingRaw = false;
 function showPanel(id) {
   var panels = document.querySelectorAll('.panel');
   for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
-  var navItems = document.querySelectorAll('.nav-item');
-  for (var j = 0; j < navItems.length; j++) navItems[j].classList.remove('active');
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
 
   document.getElementById('panel-' + id).classList.add('active');
 
-  var labels = {
-    'home': ['OVERVIEW', 'Breakout AI — Live Demo'],
-    'cold-email': ['STATION 3 · LIVE AGENT', 'Cold Email'],
-    'proposal': ['STATION 5 · LIVE AGENT', 'Proposals'],
-    'followup': ['STATION 7 · LIVE AGENT', 'Follow-Up + SMS'],
-    'newsletter': ['STATION 10 · LIVE AGENT', 'Newsletter'],
-    'social': ['STATION 10 · LIVE AGENT', 'Social Media'],
-    'seo': ['STATION 11 · LIVE AGENT', 'SEO + AEO'],
-    'lead-scraping': ['STATION 1 · INTEGRATION', 'Lead Scraping'],
-    'phone-agent': ['STATION 2 · INTEGRATION', 'Phone Agent + CRM'],
-    'contracts': ['STATION 6 · INTEGRATION', 'Contracts + Signatures'],
-    'scheduling': ['STATION 8 · INTEGRATION', 'Scheduling'],
-    'invoicing': ['STATION 9 · INTEGRATION', 'Invoicing'],
-    'dashboard-station': ['STATION 12 · INTEGRATION', 'Dashboard']
-  };
-
-  var lbl = labels[id] || ['', id];
-  document.getElementById('topStation').textContent = lbl[0];
-  document.getElementById('topTitle').textContent = lbl[1];
-
-  // Activate nav item by onclick attr
-  for (var k = 0; k < navItems.length; k++) {
-    if (navItems[k].getAttribute('onclick') && navItems[k].getAttribute('onclick').indexOf("'" + id + "'") !== -1) {
-      navItems[k].classList.add('active');
+  // Activate matching tab
+  for (var k = 0; k < tabs.length; k++) {
+    if (tabs[k].getAttribute('data-panel') === id) {
+      tabs[k].classList.add('active');
+      // Scroll tab into view
+      tabs[k].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   }
 
