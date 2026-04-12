@@ -31,9 +31,9 @@
 –gold:    #f0b400;
 –red:     #ff4560;
 –reddim:  rgba(255,69,96,0.10);
-–text:    #b8cce0;
-–muted:   #3d5570;
-–bright:  #eaf2ff;
+–text:    #ffffff;
+–muted:   #6b7fa8;
+–bright:  #ffffff;
 }
 
 - { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -2705,6 +2705,278 @@ color: #00e5a0;
 font-size: 12px;
 color: #3d5570;
 }
+/* ── SLIDE DECK ───────────────────────── */
+.deck-setup {
+margin-bottom: 14px;
+}
+
+.deck-setup-title {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+letter-spacing: 3px;
+color: var(–blue);
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+
+.deck-setup-fields {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-bottom: 12px;
+}
+
+.deck-field-label {
+display: block;
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–muted);
+text-transform: uppercase;
+margin-bottom: 5px;
+}
+
+.deck-field-input {
+width: 100%;
+background: var(–surface);
+border: 1.5px solid var(–border2);
+border-radius: 8px;
+padding: 10px 12px;
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 15px;
+font-weight: 600;
+color: #ffffff;
+outline: none;
+-webkit-appearance: none;
+transition: border-color 0.2s;
+}
+
+.deck-field-input:focus { border-color: var(–blue); }
+
+.deck-build-btn {
+width: 100%;
+background: linear-gradient(135deg, #a78bfa, #7c3aed);
+border: none;
+border-radius: 9px;
+padding: 13px;
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 16px;
+font-weight: 700;
+color: #ffffff;
+letter-spacing: 1px;
+cursor: pointer;
+-webkit-appearance: none;
+transition: all 0.2s;
+}
+
+.deck-build-btn:active { transform: scale(0.98); }
+
+/* Deck stage */
+.deck-stage {
+position: relative;
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 10px;
+}
+
+.deck-arrow {
+background: rgba(255,255,255,0.06);
+border: 1px solid var(–border2);
+border-radius: 8px;
+width: 36px;
+height: 36px;
+color: #ffffff;
+font-size: 16px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+-webkit-appearance: none;
+transition: all 0.2s;
+}
+
+.deck-arrow:hover { background: rgba(255,255,255,0.12); }
+.deck-arrow:active { transform: scale(0.95); }
+
+.deck-viewport {
+flex: 1;
+height: 260px;
+position: relative;
+overflow: hidden;
+border-radius: 12px;
+border: 1px solid var(–border2);
+}
+
+/* Individual slide */
+.deck-slide {
+position: absolute;
+inset: 0;
+background: #0a0d14;
+display: flex;
+flex-direction: column;
+transition: transform 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.32s ease;
+}
+
+.deck-slide-header {
+padding: 14px 18px 12px;
+display: flex;
+align-items: center;
+gap: 12px;
+flex-shrink: 0;
+}
+
+.deck-slide-num {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 28px;
+font-weight: 700;
+line-height: 1;
+flex-shrink: 0;
+opacity: 0.6;
+}
+
+.deck-slide-titles { flex: 1; min-width: 0; }
+
+.deck-slide-presenter {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 3px;
+color: rgba(255,255,255,0.4);
+margin-bottom: 3px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.deck-slide-title {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 18px;
+font-weight: 700;
+color: #ffffff;
+line-height: 1.15;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.deck-slide-logo {
+width: 36px;
+height: 36px;
+border-radius: 8px;
+background: rgba(255,255,255,0.08);
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 14px;
+font-weight: 700;
+flex-shrink: 0;
+}
+
+.deck-slide-body {
+flex: 1;
+padding: 10px 18px;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+gap: 7px;
+}
+
+.deck-bullet {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+}
+
+.deck-bullet-dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 5px;
+}
+
+.deck-bullet-text {
+font-size: 12px;
+color: rgba(255,255,255,0.82);
+line-height: 1.5;
+}
+
+.deck-slide-footer {
+padding: 8px 18px;
+border-top: 1px solid rgba(255,255,255,0.06);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-shrink: 0;
+}
+
+.deck-slide-footer-l {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 0.5px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 70%;
+}
+
+.deck-slide-footer-r {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: rgba(255,255,255,0.2);
+letter-spacing: 1px;
+}
+
+/* Dots */
+.deck-dots {
+display: flex;
+justify-content: center;
+gap: 6px;
+margin-bottom: 8px;
+}
+
+.deck-dot {
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: var(–border2);
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.deck-dot.active {
+background: #a78bfa;
+transform: scale(1.3);
+}
+
+/* Deck footer */
+.deck-footer-bar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 6px 0;
+}
+
+.deck-footer-co {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: var(–muted);
+letter-spacing: 1px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 75%;
+}
+
+.deck-footer-slide {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: #a78bfa;
+letter-spacing: 1px;
+}
 </style>
 
 </head>
@@ -3401,24 +3673,169 @@ function runDemo() {
 }
 
 //    SLIDES RENDERER                        
+var deckSlides = [];
+var deckCurrent = 0;
+var deckPresenter = '';
+var deckProspect = '';
+
 function renderSlides(v, co) {
   var wrap = document.getElementById('richout');
   wrap.style.display = 'block';
-  var html = '<div class="slide-deck">';
-  for(var i=0;i<v.slides.length;i++){
-    var s = v.slides[i];
-    var bHTML = '';
-    for(var j=0;j<s.b.length;j++) bHTML += '<li>'+s.b[j]+'</li>';
-    html += '<div class="slide-card" style="animation-delay:'+(i*0.12)+'s">'+
-      '<div class="slide-num">0'+(i+1)+'</div>'+
-      '<div class="slide-content">'+
-      '<div class="slide-title">'+s.t+'</div>'+
-      '<ul class="slide-bullets">'+bHTML+'</ul>'+
-      '</div></div>';
+  deckPresenter = co;
+  deckProspect = '';
+  deckSlides = v.slides;
+
+  wrap.innerHTML =
+    '<div class="deck-setup">' +
+    '<div class="deck-setup-title">// Build Your Branded Deck</div>' +
+    '<div class="deck-setup-fields">' +
+    '<div class="deck-field">' +
+    '<label class="deck-field-label">Your Company Name (Presenter)</label>' +
+    '<input class="deck-field-input" id="deck-presenter" value="' + co + '" placeholder="e.g. Breakout AI Solutions">' +
+    '</div>' +
+    '<div class="deck-field">' +
+    '<label class="deck-field-label">Prospect / Client Company Name</label>' +
+    '<input class="deck-field-input" id="deck-prospect" placeholder="e.g. Desert Peak Roofing">' +
+    '</div>' +
+    '</div>' +
+    '<button class="deck-build-btn" onclick="buildDeck()">BUILD PRESENTATION &rarr;</button>' +
+    '</div>' +
+    '<div id="deck-viewer" style="display:none">' +
+    '<div class="deck-stage">' +
+    '<button class="deck-arrow deck-arrow-left" id="deck-prev" onclick="deckNav(-1)">&#8592;</button>' +
+    '<div class="deck-viewport" id="deck-viewport"></div>' +
+    '<button class="deck-arrow deck-arrow-right" id="deck-next" onclick="deckNav(1)">&#8594;</button>' +
+    '</div>' +
+    '<div class="deck-dots" id="deck-dots"></div>' +
+    '<div class="deck-footer-bar">' +
+    '<span class="deck-footer-co" id="deck-footer-co"></span>' +
+    '<span class="deck-footer-slide" id="deck-footer-slide">1 / 5</span>' +
+    '</div>' +
+    '</div>';
+}
+
+function buildDeck() {
+  var presEl = document.getElementById('deck-presenter');
+  var prospEl = document.getElementById('deck-prospect');
+  deckPresenter = presEl ? (presEl.value.trim() || coName) : coName;
+  deckProspect  = prospEl ? (prospEl.value.trim() || 'Your Business') : 'Your Business';
+  deckCurrent = 0;
+
+  var setup = document.querySelector('.deck-setup');
+  var viewer = document.getElementById('deck-viewer');
+  if (setup) setup.style.display = 'none';
+  if (viewer) viewer.style.display = 'block';
+
+  // Build slides from vertical data, injecting names
+  var v = vd();
+  var raw = v.slides;
+  deckSlides = raw.map(function(s, idx) {
+    var title = s.t;
+    var bullets = s.b.slice();
+    // Inject prospect/presenter names into first two slides
+    if (idx === 0) {
+      title = 'About ' + deckPresenter;
+    } else if (idx === 1) {
+      title = deckProspect + ' — What We Are Seeing';
+    } else if (idx === 3) {
+      title = 'Our Investment in ' + deckProspect;
+    }
+    return { t: title, b: bullets };
+  });
+
+  // Build dots
+  var dots = document.getElementById('deck-dots');
+  dots.innerHTML = '';
+  for (var i = 0; i < deckSlides.length; i++) {
+    (function(idx) {
+      var dot = document.createElement('div');
+      dot.className = 'deck-dot' + (idx === 0 ? ' active' : '');
+      dot.id = 'dot-' + idx;
+      dot.onclick = function() { goToSlide(idx); };
+      dots.appendChild(dot);
+    })(i);
   }
-  html += '</div>';
-  wrap.innerHTML = html;
+
+  document.getElementById('deck-footer-co').textContent = deckPresenter + '  |  Prepared for ' + deckProspect;
+  renderSlide(0, 'right');
   showSavings();
+}
+
+function renderSlide(idx, dir) {
+  var slide = deckSlides[idx];
+  var vp = document.getElementById('deck-viewport');
+  if (!vp || !slide) return;
+
+  // Animate out old slide
+  var old = vp.querySelector('.deck-slide');
+  if (old) {
+    old.style.transform = dir === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+    old.style.opacity = '0';
+  }
+
+  var colors = ['#00c2ff','#a78bfa','#00e5a0','#f0b400','#ec4899'];
+  var accent = colors[idx % colors.length];
+
+  var bHTML = '';
+  for (var i = 0; i < slide.b.length; i++) {
+    bHTML += '<div class="deck-bullet"><span class="deck-bullet-dot" style="background:' + accent + '"></span><span class="deck-bullet-text">' + slide.b[i] + '</span></div>';
+  }
+
+  var slideEl = document.createElement('div');
+  slideEl.className = 'deck-slide';
+  slideEl.style.transform = dir === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+  slideEl.style.opacity = '0';
+  slideEl.innerHTML =
+    '<div class="deck-slide-header" style="border-bottom: 3px solid ' + accent + '">' +
+    '<div class="deck-slide-num" style="color:' + accent + '">' + (idx + 1 < 10 ? '0' : '') + (idx + 1) + '</div>' +
+    '<div class="deck-slide-titles">' +
+    '<div class="deck-slide-presenter">' + deckPresenter.toUpperCase() + '</div>' +
+    '<div class="deck-slide-title">' + slide.t + '</div>' +
+    '</div>' +
+    '<div class="deck-slide-logo" style="color:' + accent + '">' + deckPresenter.charAt(0) + deckPresenter.split(' ').slice(-1)[0].charAt(0) + '</div>' +
+    '</div>' +
+    '<div class="deck-slide-body">' +
+    bHTML +
+    '</div>' +
+    '<div class="deck-slide-footer">' +
+    '<span class="deck-slide-footer-l">Prepared for ' + deckProspect + '</span>' +
+    '<span class="deck-slide-footer-r">CONFIDENTIAL</span>' +
+    '</div>';
+
+  if (old) setTimeout(function() { if (old.parentNode) old.parentNode.removeChild(old); }, 320);
+  vp.appendChild(slideEl);
+  setTimeout(function() {
+    slideEl.style.transform = 'translateX(0)';
+    slideEl.style.opacity = '1';
+  }, 30);
+
+  // Update dots
+  for (var d = 0; d < deckSlides.length; d++) {
+    var dot = document.getElementById('dot-' + d);
+    if (dot) dot.className = 'deck-dot' + (d === idx ? ' active' : '');
+  }
+  var footSlide = document.getElementById('deck-footer-slide');
+  if (footSlide) footSlide.textContent = (idx + 1) + ' / ' + deckSlides.length;
+
+  // Update arrows
+  var prev = document.getElementById('deck-prev');
+  var next = document.getElementById('deck-next');
+  if (prev) prev.style.opacity = idx === 0 ? '0.2' : '1';
+  if (next) next.style.opacity = idx === deckSlides.length - 1 ? '0.2' : '1';
+}
+
+function deckNav(dir) {
+  var newIdx = deckCurrent + dir;
+  if (newIdx < 0 || newIdx >= deckSlides.length) return;
+  var slideDir = dir > 0 ? 'right' : 'left';
+  deckCurrent = newIdx;
+  renderSlide(deckCurrent, slideDir);
+}
+
+function goToSlide(idx) {
+  var dir = idx > deckCurrent ? 'right' : 'left';
+  deckCurrent = idx;
+  renderSlide(deckCurrent, dir);
 }
 
 //    SOCIAL RENDERER                        
