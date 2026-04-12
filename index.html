@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -3077,7 +3077,7 @@ letter-spacing: 1px;
   <option value="construction">Contractors / Construction</option>
   <option value="other">Other / General Business</option>
 </select>
-<button class="launch-btn" onclick="launch()">LAUNCH DASHBOARD →</button>
+<button type="button" class="launch-btn" id="launch-btn" onclick="launch()">LAUNCH DASHBOARD →</button>
 
   </div>
 </div>
@@ -3620,6 +3620,10 @@ function fmtMoney(n) {
 function fmtHours(n) {
   return Math.round(n || 0) + ' hrs';
 }
+function pad2(n) {
+  n = String(n);
+  return n.length < 2 ? ('0' + n) : n;
+}
 function calcOpportunityTotals(v) {
   var d = v.d || {};
   var hrs =
@@ -3786,24 +3790,58 @@ function renderCommandCenter() {
 
 //    LAUNCH                                 
 function launch() {
-  var ci = document.getElementById('co-input');
-  var vs = document.getElementById('vert-sel');
-  coName = ci.value.trim();
-  vertKey = vs.value;
-  if (!coName) { ci.style.borderColor='#ff4560'; ci.focus(); return; }
-  if (!vertKey) { vs.style.borderColor='#ff4560'; return; }
-  var v = VERTS[vertKey];
-  document.getElementById('dco').textContent = coName;
-  document.getElementById('dvert').textContent = v.label;
-  document.getElementById('c-co').textContent = coName;
-  totalHrs = 0;
-  totalDollars = 0;
-  done = {};
-  document.getElementById('dprog').style.width = '0%';
-  document.getElementById('res-btn').classList.remove('show');
-  renderCommandCenter();
-  buildGrid();
-  showScreen('dashboard');
+  try {
+    var ci = document.getElementById('co-input');
+    var vs = document.getElementById('vert-sel');
+    if (!ci || !vs) {
+      console.error('Launch failed. Setup inputs were not found.');
+      return;
+    }
+
+    ci.style.borderColor = '';
+    vs.style.borderColor = '';
+
+    coName = (ci.value || '').trim();
+    vertKey = vs.value;
+
+    if (!coName) {
+      ci.style.borderColor = '#ff4560';
+      ci.focus();
+      return;
+    }
+    if (!vertKey) {
+      vs.style.borderColor = '#ff4560';
+      return;
+    }
+
+    var v = VERTS[vertKey] || VERTS.other;
+    if (!v) {
+      console.error('Launch failed. Vertical config missing for key:', vertKey);
+      return;
+    }
+
+    document.getElementById('dco').textContent = coName;
+    document.getElementById('dvert').textContent = v.label;
+    document.getElementById('c-co').textContent = coName;
+
+    totalHrs = 0;
+    totalDollars = 0;
+    done = {};
+    curTool = null;
+    demoRan = false;
+
+    document.getElementById('t-hrs').textContent = '0 hrs';
+    document.getElementById('t-dollars').textContent = '$0';
+    document.getElementById('dprog').style.width = '0%';
+    document.getElementById('res-btn').classList.remove('show');
+
+    showScreen('dashboard');
+
+    try { renderCommandCenter(); } catch (err) { console.error('renderCommandCenter error:', err); }
+    try { buildGrid(); } catch (err) { console.error('buildGrid error:', err); }
+  } catch (err) {
+    console.error('Launch error:', err);
+  }
 }
 //    BUILD GRID                             
 function buildGrid() {
@@ -3814,7 +3852,7 @@ function buildGrid() {
       var el = document.createElement('div');
       el.className = 'tbadge';
       el.id = 'tb-'+t.id;
-      el.innerHTML = '<div class="tcheck">✓</div><div class="tmeta">SYSTEM ' + String(i+1).padStart(2,'0') + '</div><div class="ticon">'+t.icon+'</div><div class="tname">'+t.name+'</div><div class="tsub">'+t.title+'</div>';
+      el.innerHTML = '<div class="tcheck">✓</div><div class="tmeta">SYSTEM ' + pad2(i+1) + '</div><div class="ticon">'+t.icon+'</div><div class="tname">'+t.name+'</div><div class="tsub">'+t.title+'</div>';
       el.onclick = (function(tool){ return function(){ openTool(tool); }; })(t);
       g.appendChild(el);
     })(TOOLS[i]);
@@ -5049,4 +5087,93 @@ function markDone() {
   renderCommandCenter();
   closeModal();
 }
-//    CLOSE M
+//    CLOSE MODAL                           
+function closeModal() {
+  document.getElementById('moverlay').classList.remove('open');
+}
+//    CLOSING SCREEN                        
+function showClosing() {
+  var days = Math.round(totalHrs*4.3/8);
+  showScreen('closing');
+  count('g-hrs', 0, Math.round(totalHrs), ' hrs', 1200);
+  countK('g-dollars', 0, Math.round(totalDollars/1000), 1400);
+  count('g-days', 0, days, '', 1000);
+}
+function count(id, from, to, suf, dur) {
+  var el=document.getElementById(id), s=null;
+  function step(ts){
+    if(!s) s=ts;
+    var p=Math.min((ts-s)/dur,1), v=Math.round(from+(to-from)*easeOut(p));
+    el.textContent=v+suf;
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function countK(id, from, to, dur) {
+  var el=document.getElementById(id), s=null;
+  function step(ts){
+    if(!s) s=ts;
+    var p=Math.min((ts-s)/dur,1), v=Math.round(from+(to-from)*easeOut(p));
+    el.textContent='$'+v+'K+';
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function easeOut(t){ return 1-Math.pow(1-t,3); }
+//    RESTART                               
+function restart() {
+  totalHrs=0; totalDollars=0; done={}; curTool=null; demoRan=false; coName=''; vertKey='';
+  document.getElementById('co-input').value='';
+  document.getElementById('vert-sel').value='';
+  document.getElementById('t-hrs').textContent='0 hrs';
+  document.getElementById('t-dollars').textContent='$0';
+  document.getElementById('dprog').style.width='0%';
+  document.getElementById('res-btn').classList.remove('show');
+  showScreen('setup');
+}
+function initApp() {
+  var moverlay = document.getElementById('moverlay');
+  if (moverlay) {
+    moverlay.addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+  }
+
+  var launchBtn = document.getElementById('launch-btn');
+  if (launchBtn) {
+    launchBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      launch();
+    });
+  }
+
+  var coInput = document.getElementById('co-input');
+  var vertSel = document.getElementById('vert-sel');
+
+  if (coInput) {
+    coInput.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        launch();
+      }
+    });
+    coInput.addEventListener('input', function(){ this.style.borderColor = ''; });
+  }
+
+  if (vertSel) {
+    vertSel.addEventListener('change', function(){ this.style.borderColor = ''; });
+    vertSel.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        launch();
+      }
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>
