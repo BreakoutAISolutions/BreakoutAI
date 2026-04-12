@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2347,6 +2347,711 @@ color: #00e5a0;
 font-size: 12px;
 color: #3d5570;
 }
+
+/* ── NEWSLETTER UI ────────────────────── */
+.news-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.news-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.news-toolbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.news-toolbar-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.news-toolbar-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.news-pill-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.news-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text);
+}
+
+.news-preview {
+  background: #f5f7fb;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.news-brandbar {
+  background: linear-gradient(135deg, #0f1726, #132033 62%, #0a1320);
+  color: #fff;
+  padding: 22px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-brandbar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(0,194,255,0.16), transparent 28%);
+  pointer-events: none;
+}
+
+.news-brand-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.news-brand-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.news-brand-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.news-subject {
+  position: relative;
+  z-index: 1;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 32px;
+  line-height: 1.05;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.news-intro {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.82);
+}
+
+.news-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.66);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.news-body {
+  padding: 22px;
+}
+
+.news-hero {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.news-hero-image,
+.news-side-image {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+}
+
+.news-side-image {
+  min-height: 103px;
+}
+
+.news-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.6));
+}
+
+.news-image-caption {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  color: #fff;
+  z-index: 1;
+}
+
+.news-image-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.78;
+  margin-bottom: 5px;
+}
+
+.news-image-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.news-side-stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 16px;
+}
+
+.news-main-card,
+.news-offer-card,
+.news-stat-card {
+  background: #fff;
+  border: 1px solid #e7ecf3;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.news-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #3b82f6;
+  margin-bottom: 10px;
+}
+
+.news-main-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.news-main-list li {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.news-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e8f2ff;
+  color: #1d4ed8;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-item-copy {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #182435;
+}
+
+.news-item-copy strong {
+  display: block;
+  color: #0f1726;
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+
+.news-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.news-offer-card {
+  background: linear-gradient(180deg, #0f1726, #132033);
+  border-color: #1f334f;
+  color: #fff;
+}
+
+.news-offer-copy {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.86);
+  margin-bottom: 14px;
+}
+
+.news-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--blue), #6fd9ff);
+  color: #08111d;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.news-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.news-stat {
+  background: #f7f9fc;
+  border: 1px solid #e7ecf3;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.news-stat-val {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f1726;
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.news-stat-lbl {
+  font-size: 11px;
+  color: #617086;
+  line-height: 1.4;
+}
+
+.news-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e7ecf3;
+}
+
+.news-footer-copy {
+  font-size: 12px;
+  color: #5a697e;
+  line-height: 1.5;
+}
+
+.news-footer-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #3b82f6;
+}
+
+
+/* ── NEWSLETTER UI V2 ─────────────────── */
+.news-toolbar {
+  align-items: stretch;
+}
+.news-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.news-toggle {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+}
+.news-toggle.active,
+.news-toggle:hover {
+  border-color: rgba(0,194,255,0.35);
+  background: rgba(0,194,255,0.10);
+  color: #dff6ff;
+}
+.news-preview {
+  position: relative;
+}
+.news-preview.news-modern {
+  background: #f5f7fb;
+}
+.news-preview.news-editorial {
+  background: #f7f3eb;
+}
+.news-brandbar {
+  background: linear-gradient(135deg, var(--news-accent, #0f1726), #132033 62%, #0a1320);
+}
+.news-preview.news-editorial .news-brandbar {
+  background:
+    linear-gradient(135deg, rgba(16,18,22,0.96), rgba(43,31,18,0.94)),
+    linear-gradient(135deg, rgba(201,161,90,0.18), rgba(255,255,255,0.02));
+}
+.news-brand-top {
+  align-items: flex-start;
+}
+.news-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.news-brand-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+}
+.news-brand-logo-mark {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+}
+.news-brand-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.news-brand-tagline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.72);
+}
+.news-layout-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.news-content-wrap {
+  padding: 22px;
+}
+.news-body {
+  padding: 0;
+}
+.news-preview.news-editorial .news-content-wrap {
+  padding: 28px;
+}
+.news-lead-strip {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+.news-lead-card,
+.news-quote-card {
+  border-radius: 18px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e7ecf3;
+}
+.news-preview.news-editorial .news-lead-card,
+.news-preview.news-editorial .news-quote-card {
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(84,62,28,0.14);
+}
+.news-lead-label,
+.news-quote-label,
+.news-gallery-label,
+.news-footer-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--news-accent-2, #2563eb);
+  margin-bottom: 10px;
+}
+.news-lead-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #122033;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.news-lead-copy,
+.news-quote-copy {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #516174;
+}
+.news-quote-copy {
+  font-style: italic;
+}
+.news-quote-author {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #22344a;
+  font-weight: 600;
+}
+.news-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+}
+.news-gallery-card {
+  background: #fff;
+  border: 1px solid #e7ecf3;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.news-preview.news-editorial .news-gallery-card {
+  background: rgba(255,255,255,0.76);
+  border-color: rgba(84,62,28,0.14);
+}
+.news-gallery-image {
+  height: 132px;
+  background-size: cover;
+  background-position: center;
+}
+.news-gallery-copy {
+  padding: 12px 13px 14px;
+}
+.news-gallery-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #16263a;
+  margin-bottom: 6px;
+}
+.news-gallery-text {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #5d6c7f;
+}
+.news-bottom-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.news-insights-card,
+.news-campaign-card {
+  background: #fff;
+  border: 1px solid #e7ecf3;
+  border-radius: 18px;
+  padding: 18px;
+}
+.news-preview.news-editorial .news-insights-card,
+.news-preview.news-editorial .news-campaign-card {
+  background: rgba(255,255,255,0.78);
+  border-color: rgba(84,62,28,0.14);
+}
+.news-insights-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.news-insights-list li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+}
+.news-step {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(37,99,235,0.10);
+  color: var(--news-accent-2, #2563eb);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.news-insight-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #16263a;
+  margin-bottom: 4px;
+}
+.news-insight-copy {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #5d6c7f;
+}
+.news-campaign-copy {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #516174;
+  margin-bottom: 14px;
+}
+.news-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.news-kpi {
+  background: rgba(15,23,38,0.04);
+  border: 1px solid rgba(18,32,51,0.08);
+  border-radius: 14px;
+  padding: 12px;
+}
+.news-preview.news-editorial .news-kpi {
+  background: rgba(109,77,29,0.04);
+}
+.news-kpi-val {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #16263a;
+  margin-bottom: 4px;
+}
+.news-kpi-lbl {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #5d6c7f;
+}
+.news-footer-bar {
+  margin-top: 18px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+.news-preview.news-editorial .news-footer-bar {
+  border-color: rgba(84,62,28,0.12);
+}
+.news-footer-left {
+  flex: 1;
+}
+.news-footer-main {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #132033;
+  margin-bottom: 6px;
+}
+.news-footer-sub {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5d6c7f;
+}
+.news-footer-right {
+  min-width: 220px;
+  text-align: right;
+}
+.news-footer-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #71839b;
+  margin-bottom: 10px;
+}
+.news-footer-cta {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--news-accent-2, #2563eb), var(--news-accent-3, #00c2ff));
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(37,99,235,0.18);
+}
+@media (max-width: 900px) {
+  .news-lead-strip,
+  .news-bottom-grid,
+  .news-hero,
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+  .news-gallery {
+    grid-template-columns: 1fr;
+  }
+  .news-footer-bar,
+  .news-brand-top,
+  .news-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .news-footer-right {
+    min-width: 0;
+    text-align: left;
+  }
+}
+
 /* ── SLIDE DECK ───────────────────────── */
 .deck-setup {
 margin-bottom: 14px;
@@ -3566,7 +4271,7 @@ var TOOLS = [
     annual:function(d){return Math.round(d.invWeek*d.invDelay*200*52);},
     note:function(d){return d.invWeek+' invoices/week delayed '+d.invDelay+' days = significant cash you\'re floating. AI sends instantly — every time.';}
   },
-  { id:'news', icon:'[*]', name:'Newsletter', color:'#00c2ff', richUI:false,
+  { id:'news', icon:'[*]', name:'Newsletter', color:'#00c2ff', richUI:'newsletter',
     eyebrow:'STATION 10 — NEWSLETTERS', title:'Stay Top of Mind With Every Client — On Autopilot',
     bb:['Newsletter never gets done — no time to write it','Clients forget you exist between jobs','Inconsistent or zero email communication','Missing repeat business and referrals every month'],
     ab:['AI writes, formats & schedules your newsletter','Industry-relevant content every month automatically','Keeps your name in front of every past client','Drives repeat bookings and referrals on autopilot'],
@@ -3601,6 +4306,14 @@ function showScreen(id) {
   for (var i=0;i<all.length;i++) { all[i].classList.remove('active'); }
   var el = document.getElementById(id);
   el.classList.add('active');
+}
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 function gd(k) {
   var v = VERTS[vertKey] || VERTS['other'];
@@ -3879,65 +4592,528 @@ function openTool(t) {
   }
   qs+='</div>';
   document.getElementById('mbody').innerHTML=
-    '<div class="bva">'+
-    '<div class="bcard bcard-before"><span class="bcard-lbl"> TODAY WITHOUT AI</span>'+bb+'</div>'+
-    '<div class="bcard bcard-after"><span class="bcard-lbl"> WITH AI IN PLACE</span>'+ab+'</div>'+
-    '</div>'+qs+
-    '<button class="runbtn" id="runbtn" onclick="runDemo()">  &nbsp;Run the Demo</button>'+
-    '<div class="outpanel" id="outpanel">'+
-    '<div class="outtop"><div class="dot dg"></div><div class="dot dy"></div><div class="dot dr"></div><span class="outlbl">AI OUTPUT — LIVE SIMULATION</span></div>'+
-    '<div class="outtext" id="outtext"></div></div>'+
-    '<div id="richout" style="display:none;margin-bottom:14px"></div>'+
-    '<div class="savcard" id="savcard">'+
-    '<div class="savtitle">// Their Personalized Savings — '+t.name+'</div>'+
-    '<div class="savrow">'+
-    '<div class="savstat"><span class="sv" id="sv-hrs">—</span><span class="sl">Hours saved / week</span></div>'+
-    '<div class="savstat"><span class="sv" id="sv-mo">—</span><span class="sl">Recovered / month</span></div>'+
-    '<div class="savstat"><span class="sv" id="sv-yr">—</span><span class="sl">Saved / year</span></div>'+
-    '</div><div class="savnote" id="savnote"></div></div>';
-  document.getElementById('moverlay').classList.add('open');
+    '<div class="bva">
+
+function getNewsletterBrand(v, co) {
+  var sets = {
+    home: { accent:'#0f4c81', accent2:'#22c1ff', accent3:'#00a8a8', tone:'Seasonal service intelligence', footer:'Comfort, maintenance, and timely action for every property.', layout:'modern' },
+    legal: { accent:'#1f2937', accent2:'#c9a15a', accent3:'#8b6b39', tone:'Confident counsel for modern clients', footer:'Clear guidance, trust building, and polished client communication.', layout:'editorial' },
+    dental: { accent:'#0f3d56', accent2:'#38bdf8', accent3:'#14b8a6', tone:'Premium patient education and retention', footer:'Helpful, calming communication that keeps care top of mind.', layout:'modern' },
+    realestate: { accent:'#233876', accent2:'#7c3aed', accent3:'#2563eb', tone:'Market presence with polished local authority', footer:'Luxury presentation with practical market confidence.', layout:'editorial' },
+    consulting: { accent:'#132033', accent2:'#00c2ff', accent3:'#2563eb', tone:'Executive level insight delivery', footer:'Thoughtful, strategic messaging designed to build trust and action.', layout:'modern' },
+    agency: { accent:'#3b1f65', accent2:'#ec4899', accent3:'#8b5cf6', tone:'Creative authority with campaign clarity', footer:'Branded storytelling with measurable marketing intent.', layout:'modern' },
+    construction: { accent:'#3b2a18', accent2:'#f59e0b', accent3:'#d97706', tone:'Precision planning and project confidence', footer:'Strong visuals and practical updates that reinforce trust.', layout:'editorial' },
+    other: { accent:'#132033', accent2:'#00c2ff', accent3:'#00e5a0', tone:'Modern business intelligence for clients', footer:'Consistent brand communication that looks sharp and drives response.', layout:'modern' }
+  };
+  var base = sets[vertKey] || sets.other;
+  var out = {};
+  for (var k in base) out[k] = base[k];
+  out.logo = getNewsletterInitials(co);
+  return out;
 }
-//    RUN DEMO                              
-function runDemo() {
-  var rb = document.getElementById('runbtn');
-  rb.disabled = true;
-  var v = vd();
-  if (curTool.richUI === 'slides') {
-    renderSlides(v, coName);
-  } else if (curTool.richUI === 'social') {
-    renderSocial(v, coName);
-  } else if (curTool.richUI === 'seo') {
-    renderSEO(v, coName);
-  } else if (curTool.richUI === 'invoice') {
-    renderInvoice(v, coName);
-  } else if (curTool.richUI === 'phone') {
-    renderPhone(v, coName);
-  } else if (curTool.richUI === 'leads') {
-    renderLeads(v, coName);
-  } else if (curTool.richUI === 'crm') {
-    renderCRM(v, coName);
-  } else {
-    var op = document.getElementById('outpanel');
-    var ot = document.getElementById('outtext');
-    op.classList.add('show');
-    ot.innerHTML = '';
-    var lines = curTool.out(coName).split('\n');
-    var delay = 0;
-    for(var i=0;i<lines.length;i++){
-      (function(line, d){
-        setTimeout(function(){
-          var s = document.createElement('span');
-          s.className = 'ln';
-          s.textContent = line;
-          ot.appendChild(s);
-          op.scrollTop = op.scrollHeight;
-          if(d >= (lines.length-1)*55) showSavings();
-        }, d);
-      })(lines[i], delay);
-      delay += 55;
+function getNewsletterInitials(name) {
+  var cleaned = (name || 'Your Business').replace(/[^A-Za-z0-9 ]/g, ' ').trim();
+  var parts = cleaned.split(/\s+/).filter(Boolean);
+  if (!parts.length) return 'AI';
+  if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+function getNewsletterLayoutName(mode) {
+  return mode === 'editorial' ? 'Editorial Luxury' : 'Modern Executive';
+}
+function getNewsletterProfile(v, co) {
+  var sets = {
+    home: {
+      brandName:'Desert Peak Climate',
+      descriptor:'Premier residential and commercial comfort systems',
+      sender:'Mia Alvarez, Client Care Director',
+      audience:'Homeowners, HOAs, and property managers',
+      subscribers:'1,284 subscribers',
+      signature:'Serving Palm Desert, Indio, La Quinta, and surrounding communities.',
+      cta:'Book a Comfort Review',
+      featureLabel:'Seasonal planning brief',
+      featureTitle:'Your spring AC planning guide before the desert heat arrives',
+      featureCopy:'This issue helps clients prepare early, avoid expensive emergency calls, and see your company as the organized pro who plans ahead.',
+      quote:'Their newsletter reads like a premium homeowner publication. It builds trust before a service call is ever needed.',
+      quoteBy:'Client experience positioning',
+      stats:[
+        {v:'41%', l:'higher open rate'},
+        {v:'18', l:'inspection requests'},
+        {v:'$12.4k', l:'pipeline influenced'}
+      ]
+    },
+    legal: {
+      brandName:'Stonebridge Counsel Group',
+      descriptor:'Private client and business advisory',
+      sender:'Elliot Ward, Managing Partner',
+      audience:'Business owners, families, and referral partners',
+      subscribers:'936 subscribers',
+      signature:'Trusted legal guidance delivered with clarity and discretion.',
+      cta:'Schedule a Private Review',
+      featureLabel:'Client advisory',
+      featureTitle:'A refined legal brief clients will actually read and forward',
+      featureCopy:'The format feels elevated and calm, which is exactly what high trust legal communication should do when clients are making serious decisions.',
+      quote:'This feels more like a private client memo than a marketing email. That is why it strengthens authority.',
+      quoteBy:'Brand and trust positioning',
+      stats:[
+        {v:'36%', l:'higher engagement'},
+        {v:'11', l:'consult requests'},
+        {v:'$28k', l:'matter value influenced'}
+      ]
+    },
+    dental: {
+      brandName:'Desert Bloom Dental Studio',
+      descriptor:'Modern preventive and cosmetic care',
+      sender:'Dr. Serena Blake',
+      audience:'Patients, families, and local referral partners',
+      subscribers:'2,106 subscribers',
+      signature:'Calm, premium communication that keeps your practice top of mind.',
+      cta:'Reserve Your Visit',
+      featureLabel:'Patient education edition',
+      featureTitle:'Patient education that looks polished enough for a luxury health brand',
+      featureCopy:'The visual format keeps patients engaged while the content quietly drives bookings, reactivations, and treatment acceptance.',
+      quote:'This is the kind of newsletter that reassures nervous patients and makes the practice feel highly organized.',
+      quoteBy:'Retention and reactivation positioning',
+      stats:[
+        {v:'47%', l:'higher open rate'},
+        {v:'24', l:'booking clicks'},
+        {v:'$9.8k', l:'treatment value influenced'}
+      ]
+    },
+    realestate: {
+      brandName:'Vantage House Collective',
+      descriptor:'Luxury residential representation and market insight',
+      sender:'Noah Mercer, Principal Broker',
+      audience:'Sellers, buyers, and sphere of influence',
+      subscribers:'1,518 subscribers',
+      signature:'Market confidence, local authority, and elegant presentation.',
+      cta:'Request a Market Review',
+      featureLabel:'Market brief',
+      featureTitle:'An elegant local market note that keeps your name attached to quality',
+      featureCopy:'This version feels like a boutique market report, which helps the brand stay premium while still generating listing and buyer conversations.',
+      quote:'It looks expensive in the best possible way. That matters when the business itself is built on perception and trust.',
+      quoteBy:'Luxury market positioning',
+      stats:[
+        {v:'39%', l:'higher engagement'},
+        {v:'9', l:'seller replies'},
+        {v:'$2.1M', l:'listing volume influenced'}
+      ]
+    },
+    consulting: {
+      brandName:'North Axis Advisory',
+      descriptor:'Operational strategy for growth minded leaders',
+      sender:'Claire Bennett, Founder',
+      audience:'Executives, operators, and strategic partners',
+      subscribers:'842 subscribers',
+      signature:'Executive level messaging designed to build confidence and momentum.',
+      cta:'Book a Strategy Call',
+      featureLabel:'Executive perspective',
+      featureTitle:'Thought leadership that feels useful, current, and worth forwarding',
+      featureCopy:'The layout makes your expertise easier to consume and more memorable, which is exactly how newsletters should support consulting sales.',
+      quote:'This becomes a monthly proof point that the firm sees around corners and communicates with polish.',
+      quoteBy:'Authority building positioning',
+      stats:[
+        {v:'34%', l:'reply lift'},
+        {v:'7', l:'strategy calls'},
+        {v:'$32k', l:'opportunity value influenced'}
+      ]
+    },
+    agency: {
+      brandName:'Velvet Frame Creative',
+      descriptor:'Brand campaigns, content systems, and growth storytelling',
+      sender:'Julian Cross, Creative Director',
+      audience:'Clients, prospects, and collaborators',
+      subscribers:'1,972 subscribers',
+      signature:'A campaign driven newsletter that makes the agency look sharp every single month.',
+      cta:'Plan the Next Campaign',
+      featureLabel:'Campaign story',
+      featureTitle:'A visual newsletter that doubles as proof your agency understands brand',
+      featureCopy:'It does not just share updates. It acts like a portfolio touchpoint that quietly reinforces creative quality and strategic range.',
+      quote:'For agencies, the newsletter itself is part of the brand experience. This version finally feels portfolio worthy.',
+      quoteBy:'Creative authority positioning',
+      stats:[
+        {v:'44%', l:'higher click rate'},
+        {v:'13', l:'inbound replies'},
+        {v:'$18.6k', l:'campaign value influenced'}
+      ]
+    },
+    construction: {
+      brandName:'Summit Ridge Build Co.',
+      descriptor:'Commercial and residential project delivery with precision',
+      sender:'Gavin Holt, Project Executive',
+      audience:'Owners, developers, and referral partners',
+      subscribers:'768 subscribers',
+      signature:'Strong project communication that reassures clients and supports bigger wins.',
+      cta:'Request a Project Review',
+      featureLabel:'Project confidence update',
+      featureTitle:'A project update format that feels credible, organized, and investor ready',
+      featureCopy:'This style helps construction firms look structured and dependable, especially when the goal is reassuring clients during active projects.',
+      quote:'It turns ordinary updates into a trust building asset. That is valuable in any high stakes project business.',
+      quoteBy:'Project confidence positioning',
+      stats:[
+        {v:'31%', l:'response lift'},
+        {v:'6', l:'qualified conversations'},
+        {v:'$84k', l:'bid pipeline influenced'}
+      ]
+    },
+    other: {
+      brandName:'Northstar Business Studio',
+      descriptor:'Smart growth systems for modern companies',
+      sender:'Executive Team',
+      audience:'Clients, leads, and strategic partners',
+      subscribers:'1,104 subscribers',
+      signature:'Consistent communication that keeps your business looking current and capable.',
+      cta:'Activate This Campaign',
+      featureLabel:'Business update',
+      featureTitle:'A polished branded newsletter that keeps your company present in the right inboxes',
+      featureCopy:'The format balances clarity, visuals, and professionalism so your message feels more established the moment it lands.',
+      quote:'Even for a general business, this raises perceived brand value fast because the presentation feels intentional.',
+      quoteBy:'Brand elevation positioning',
+      stats:[
+        {v:'33%', l:'higher engagement'},
+        {v:'8', l:'qualified replies'},
+        {v:'$14.2k', l:'revenue influenced'}
+      ]
     }
-  }
+  };
+  var p = sets[vertKey] || sets.other;
+  var out = {};
+  for (var k in p) out[k] = p[k];
+  out.displayName = co || p.brandName || 'Your Business';
+  return out;
 }
+function getNewsletterImages(v) {
+  var sets = {
+    home: {
+      hero: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Seasonal comfort advice that keeps your brand top of mind',
+      side1Title: 'Beautiful spaces make service recommendations feel relevant',
+      side2Title: 'Helpful maintenance content turns readers into appointments'
+    },
+    legal: {
+      hero: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Refined legal guidance deserves communication that looks this composed',
+      side1Title: 'Private client communication should feel reassuring and elevated',
+      side2Title: 'Polished education builds trust before the consultation'
+    },
+    dental: {
+      hero: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Patient education can still feel calm, premium, and beautifully branded',
+      side1Title: 'Visual warmth makes recall and rebooking easier',
+      side2Title: 'Clean design reinforces trust in care quality'
+    },
+    realestate: {
+      hero: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Local market insight looks stronger when the presentation feels luxury level',
+      side1Title: 'Beautiful listings support prestige and memory',
+      side2Title: 'Editorial style updates keep your brand associated with quality'
+    },
+    consulting: {
+      hero: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Thought leadership lands better when it feels designed for executive attention',
+      side1Title: 'Clear frameworks become more memorable with visual polish',
+      side2Title: 'Your monthly insight can become a recurring trust asset'
+    },
+    agency: {
+      hero: 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Creative firms look strongest when every client touchpoint feels art directed',
+      side1Title: 'Portfolio energy belongs in email too',
+      side2Title: 'Branded stories keep your agency top of mind'
+    },
+    construction: {
+      hero: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Project communication gains authority when it looks organized and deliberate',
+      side1Title: 'Progress visuals reassure clients and investors',
+      side2Title: 'Industry insight supports stronger bid conversations'
+    },
+    other: {
+      hero: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'A premium branded newsletter makes your company feel active and established',
+      side1Title: 'Polished communication strengthens memory and trust',
+      side2Title: 'Consistent contact turns warm leads into future revenue'
+    }
+  };
+  return sets[vertKey] || sets.other;
+}
+var newsletterMode = 'modern';
+function renderNewsletter(v, co) {
+  var wrap = document.getElementById('richout');
+  wrap.style.display = 'block';
+  var brand = getNewsletterBrand(v, co);
+  var profile = getNewsletterProfile(v, co);
+  if (!newsletterMode) newsletterMode = brand.layout || 'modern';
+  var imgs = getNewsletterImages(v);
+  var previewClass = newsletterMode === 'editorial' ? 'news-preview news-editorial' : 'news-preview news-modern';
+  var leadTitle = newsletterMode === 'editorial' ? profile.featureTitle : profile.featureTitle;
+  var quoteCopy = profile.quote;
+  wrap.innerHTML =
+    '<div class="news-shell">' +
+      '<div class="news-toolbar">' +
+        '<div class="news-toolbar-left">' +
+          '<span class="news-toolbar-kicker">// Branded newsletter preview</span>' +
+          '<span class="news-toolbar-sub">AI writes, brands, lays out, and photo builds a polished campaign your team can approve in minutes.</span>' +
+        '</div>' +
+        '<div class="news-toolbar-actions">' +
+          '<div class="news-pill-row">' +
+            '<span class="news-pill">Brand matched</span>' +
+            '<span class="news-pill">Photos integrated</span>' +
+            '<span class="news-pill">Executive polish</span>' +
+          '</div>' +
+          '<button class="news-toggle ' + (newsletterMode === 'modern' ? 'active' : '') + '" onclick="setNewsletterMode(\'modern\')">Modern Executive</button>' +
+          '<button class="news-toggle ' + (newsletterMode === 'editorial' ? 'active' : '') + '" onclick="setNewsletterMode(\'editorial\')">Editorial Luxury</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="' + previewClass + '" style="--news-accent:' + brand.accent + ';--news-accent-2:' + brand.accent2 + ';--news-accent-3:' + brand.accent3 + ';">' +
+        '<div class="news-brandbar">' +
+          '<div class="news-brand-top">' +
+            '<div class="news-brand-lockup">' +
+              '<div class="news-brand-logo"><span class="news-brand-logo-mark">' + esc(brand.logo) + '</span></div>' +
+              '<div class="news-brand-title-wrap">' +
+                '<div class="news-brand-name">' + esc(profile.displayName) + '</div>' +
+                '<div class="news-brand-tagline">' + esc(profile.descriptor || brand.tone) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-layout-badge">' + esc(getNewsletterLayoutName(newsletterMode)) + '</div>' +
+          '</div>' +
+          '<div class="news-subject">' + esc(v.newsSubject) + '</div>' +
+          '<div class="news-intro">Here is what we are seeing right now in ' + esc(v.label) + ' and what it means for ' + esc(profile.audience) + '. Designed to feel premium, visual, and unmistakably on brand.</div>' +
+          '<div class="news-meta">' +
+            '<span>From ' + esc(profile.sender) + '</span>' +
+            '<span>' + esc(profile.subscribers) + '</span>' +
+            '<span>' + esc(v.city) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="news-content-wrap">' +
+          '<div class="news-body">' +
+            '<div class="news-hero">' +
+              '<div class="news-hero-image" style="background-image:url(' + imgs.hero + ')">' +
+                '<div class="news-image-overlay"></div>' +
+                '<div class="news-image-caption">' +
+                  '<div class="news-image-kicker">' + esc(profile.featureLabel) + '</div>' +
+                  '<div class="news-image-title">' + esc(imgs.heroTitle) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="news-side-stack">' +
+                '<div class="news-side-image" style="background-image:url(' + imgs.side1 + ')">' +
+                  '<div class="news-image-overlay"></div>' +
+                  '<div class="news-image-caption">' +
+                    '<div class="news-image-kicker">Brand story</div>' +
+                    '<div class="news-image-title" style="font-size:17px">' + esc(imgs.side1Title) + '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="news-side-image" style="background-image:url(' + imgs.side2 + ')">' +
+                  '<div class="news-image-overlay"></div>' +
+                  '<div class="news-image-caption">' +
+                    '<div class="news-image-kicker">Retention play</div>' +
+                    '<div class="news-image-title" style="font-size:17px">' + esc(imgs.side2Title) + '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-lead-strip">' +
+              '<div class="news-lead-card">' +
+                '<div class="news-lead-label">' + esc(profile.featureLabel) + '</div>' +
+                '<div class="news-lead-title">' + esc(leadTitle) + '</div>' +
+                '<div class="news-lead-copy">' + esc(profile.featureCopy) + '</div>' +
+              '</div>' +
+              '<div class="news-quote-card">' +
+                '<div class="news-quote-label">Brand impression</div>' +
+                '<div class="news-quote-copy">' + esc(quoteCopy) + '</div>' +
+                '<div class="news-quote-author">' + esc(profile.quoteBy) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-gallery-label">Integrated editorial moments</div>' +
+            '<div class="news-gallery-grid">' +
+              '<div class="news-gallery-card"><div class="news-gallery-title">Audience</div><div class="news-gallery-copy">' + esc(profile.audience) + '</div></div>' +
+              '<div class="news-gallery-card"><div class="news-gallery-title">Brand position</div><div class="news-gallery-copy">' + esc(brand.tone) + '</div></div>' +
+              '<div class="news-gallery-card"><div class="news-gallery-title">Signature</div><div class="news-gallery-copy">' + esc(profile.signature) + '</div></div>' +
+            '</div>' +
+            '<div class="news-grid">' +
+              '<div class="news-main-card">' +
+                '<div class="news-section-label">This month in focus</div>' +
+                '<ul class="news-main-list">' +
+                  '<li><span class="news-num">1</span><div class="news-item-copy"><strong>What clients should know</strong>' + esc(v.newsTip1) + '</div></li>' +
+                  '<li><span class="news-num">2</span><div class="news-item-copy"><strong>What smart operators are watching</strong>' + esc(v.newsTip2) + '</div></li>' +
+                  '<li><span class="news-num">3</span><div class="news-item-copy"><strong>What to do next</strong>' + esc(v.newsTip3) + '</div></li>' +
+                '</ul>' +
+                '<div class="news-footer">' +
+                  '<div class="news-footer-copy">Written in your brand voice. Styled like a premium client publication. Delivered without your team spending hours drafting and formatting.</div>' +
+                  '<div class="news-footer-brand">' + esc(profile.displayName) + '  •  ' + esc(brand.footer) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="news-side-col">' +
+                '<div class="news-offer-card">' +
+                  '<div class="news-section-label" style="color:#6fd9ff">Client only offer</div>' +
+                  '<div class="news-offer-copy">' + esc(v.newsOffer) + '</div>' +
+                  '<div class="news-offer-sub">Presented like a service upgrade, not a hard pitch, so it feels aligned with the rest of the brand experience.</div>' +
+                '</div>' +
+                '<div class="news-stat-card">' +
+                  '<div class="news-section-label">Campaign lift</div>' +
+                  '<div class="news-stat-grid">' +
+                    '<div class="news-stat"><span class="news-stat-val">' + esc(profile.stats[0].v) + '</span><span class="news-stat-lbl">' + esc(profile.stats[0].l) + '</span></div>' +
+                    '<div class="news-stat"><span class="news-stat-val">' + esc(profile.stats[1].v) + '</span><span class="news-stat-lbl">' + esc(profile.stats[1].l) + '</span></div>' +
+                    '<div class="news-stat"><span class="news-stat-val">' + esc(profile.stats[2].v) + '</span><span class="news-stat-lbl">' + esc(profile.stats[2].l) + '</span></div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-bottom-band">' +
+              '<div class="news-bottom-copy">' +
+                '<div class="news-bottom-label">Why this works</div>' +
+                '<div class="news-bottom-text">The system takes industry insights, your brand styling, and polished imagery, then turns them into a newsletter people actually want to open. It feels like a high end client publication, not generic marketing.</div>' +
+              '</div>' +
+              '<div class="news-bottom-cta">' +
+                '<div class="news-footer-meta">Email style footer  •  branded  •  photo ready</div>' +
+                '<a class="news-footer-cta">' + esc(profile.cta) + '</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  showSavings();
+}
+
+function setNewsletterMode(mode) {
+  newsletterMode = mode;
+  renderNewsletter(vd(), coName || 'Your Business');
+}
+
+s.unsplash.com/photo-1496171367470-9ed9a91ea931?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Strong creative firms look sharp in every channel they touch',
+      side1Title: 'Campaign recaps become proof that sells for you',
+      side2Title: 'Visual content keeps your agency top of mind'
+    },
+    construction: {
+      hero: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'Project credibility rises when communication looks this polished',
+      side1Title: 'Progress updates reassure clients and partners',
+      side2Title: 'Expert insights help win higher value jobs'
+    },
+    other: {
+      hero: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80',
+      side1: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
+      side2: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80',
+      heroTitle: 'A polished newsletter makes your business feel established and current',
+      side1Title: 'Branded communication builds memory and trust',
+      side2Title: 'Consistent contact turns quiet leads into future revenue'
+    }
+  };
+  return sets[vertKey] || sets.other;
+}
+
+function renderNewsletter(v, co) {
+  var wrap = document.getElementById('richout');
+  wrap.style.display = 'block';
+  var imgs = getNewsletterImages(v);
+  wrap.innerHTML =
+    '<div class="news-shell">' +
+      '<div class="news-toolbar">' +
+        '<div class="news-toolbar-left">' +
+          '<span class="news-toolbar-kicker">// Branded newsletter preview</span>' +
+          '<span class="news-toolbar-sub">AI writes, lays out, brands, and prepares a visually polished campaign for approval.</span>' +
+        '</div>' +
+        '<div class="news-pill-row">' +
+          '<span class="news-pill">Brand matched</span>' +
+          '<span class="news-pill">Photos integrated</span>' +
+          '<span class="news-pill">Ready to schedule</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="news-preview">' +
+        '<div class="news-brandbar">' +
+          '<div class="news-brand-top">' +
+            '<div class="news-brand-name">' + esc(co) + '</div>' +
+            '<div class="news-brand-badge">Monthly Client Brief</div>' +
+          '</div>' +
+          '<div class="news-subject">' + esc(v.newsSubject) + '</div>' +
+          '<div class="news-intro">Here is what we are seeing right now in ' + esc(v.label) + ' and what it means for your clients, referral partners, and past customers. Designed to feel premium, useful, and unmistakably on brand.</div>' +
+          '<div class="news-meta">' +
+            '<span>From ' + esc(co) + '</span>' +
+            '<span>To 847 subscribers</span>' +
+            '<span>' + esc(v.city) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="news-body">' +
+          '<div class="news-hero">' +
+            '<div class="news-hero-image" style="background-image:url(' + imgs.hero + ')">' +
+              '<div class="news-image-overlay"></div>' +
+              '<div class="news-image-caption">' +
+                '<div class="news-image-kicker">Featured insight</div>' +
+                '<div class="news-image-title">' + esc(imgs.heroTitle) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-side-stack">' +
+              '<div class="news-side-image" style="background-image:url(' + imgs.side1 + ')">' +
+                '<div class="news-image-overlay"></div>' +
+                '<div class="news-image-caption">' +
+                  '<div class="news-image-kicker">Brand story</div>' +
+                  '<div class="news-image-title" style="font-size:17px">' + esc(imgs.side1Title) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="news-side-image" style="background-image:url(' + imgs.side2 + ')">' +
+                '<div class="news-image-overlay"></div>' +
+                '<div class="news-image-caption">' +
+                  '<div class="news-image-kicker">Retention play</div>' +
+                  '<div class="news-image-title" style="font-size:17px">' + esc(imgs.side2Title) + '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="news-grid">' +
+            '<div class="news-main-card">' +
+              '<div class="news-section-label">This month in focus</div>' +
+              '<ul class="news-main-list">' +
+                '<li><span class="news-num">1</span><div class="news-item-copy"><strong>What clients should know</strong>' + esc(v.newsTip1) + '</div></li>' +
+                '<li><span class="news-num">2</span><div class="news-item-copy"><strong>What smart operators are watching</strong>' + esc(v.newsTip2) + '</div></li>' +
+                '<li><span class="news-num">3</span><div class="news-item-copy"><strong>What to do next</strong>' + esc(v.newsTip3) + '</div></li>' +
+              '</ul>' +
+              '<div class="news-footer">' +
+                '<div class="news-footer-copy">Written in your brand voice. Styled like a premium client publication. Delivered without your team spending hours drafting and formatting.</div>' +
+                '<div class="news-footer-brand">AI written  •  photo ready  •  branded</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="news-side-col">' +
+              '<div class="news-offer-card">' +
+                '<div class="news-section-label" style="color:#6fd9ff">Client only offer</div>' +
+                '<div class="news-offer-copy">' + esc(v.newsOffer) + '. This call to action is framed elegantly so it feels valuable, not salesy, while still creating urgency.</div>' +
+                '<div class="news-cta">Book Your Priority Slot →</div>' +
+              '</div>' +
+              '<div class="news-stat-card">' +
+                '<div class="news-section-label">Expected campaign lift</div>' +
+                '<div class="news-stat-grid">' +
+                  '<div class="news-stat"><span class="news-stat-val">34%</span><span class="news-stat-lbl">Average open rate with smarter subject lines</span></div>' +
+                  '<div class="news-stat"><span class="news-stat-val">12%</span><span class="news-stat-lbl">Average click through on offer driven campaigns</span></div>' +
+                  '<div class="news-stat"><span class="news-stat-val">1 hr</span><span class="news-stat-lbl">Approximate approval time instead of building from scratch</span></div>' +
+                  '<div class="news-stat"><span class="news-stat-val">Monthly</span><span class="news-stat-lbl">Consistent branded touchpoint with your list</span></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  showSavings();
+}
+
 //    SLIDES RENDERER                        
 var deckSlides = [];
 var deckCurrent = 0;
