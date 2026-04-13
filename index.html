@@ -1261,7 +1261,7 @@ color: var(---text-dim);
  <span class="tab-icon">ð</span> SEO+AEO
  </div>
  <div class="nav-tab" onclick="showPanel('cold-email')" data-panel="cold-email">
- <span class="tab-icon">ð§</span> Cold Email
+ <span class="tab-icon">ð§</span> Smart CRM
  </div>
  <div class="nav-tab" onclick="showPanel('phone-agent')" data-panel="phone-agent">
  <span class="tab-icon">ð</span> Phone Agent
@@ -1409,8 +1409,8 @@ color: var(---text-dim);
  </div>
  <div class="station-tile live-tile" onclick="showPanel('cold-email')">
  <div class="tile-icon">ð§</div>
- <div class="tile-title">Cold Email</div>
- <div class="tile-desc">Personalized 3-touch outreach sequences generated and ready to send</div>
+ <div class="tile-title">Smart CRM</div>
+ <div class="tile-desc">AI builds smart emails and text messages from CRM activity, meetings, and customer context</div>
  <div class="tile-badge"><span class="live-badge">LIVE AGENT</span></div>
  </div>
  <div class="station-tile live-tile" onclick="showPanel('phone-agent')">
@@ -1475,49 +1475,95 @@ color: var(---text-dim);
  COLD EMAIL
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
- <div class="panel" id="panel-cold-email">
+ 
+<div class="panel" id="panel-cold-email">
  <div class="section-hero">
  <div class="section-eyebrow">Station 3 Â· Live Agent</div>
- <div class="section-title">Personalized outreach<br><span>that gets replies.</span></div>
- <div class="section-sub">Enter a prospect's details and get a complete 3-email sequence - personalized, sequenced, and ready to send.</div>
+ <div class="section-title">Smart CRM that writes<br><span>the right message at the right time.</span></div>
+ </div>
+
+ <div class="ls-bullets">
+   <div class="ls-bullet"><span class="ls-bullet-icon">&#129302;</span><span><strong>Turn CRM activity into smart outreach</strong> without writing every message manually</span></div>
+   <div class="ls-bullet"><span class="ls-bullet-icon">&#128231;</span><span><strong>Generate polished emails</strong> from Zoom meetings, notes, and deal stage changes</span></div>
+   <div class="ls-bullet"><span class="ls-bullet-icon">&#128172;</span><span><strong>Create personalized text messages</strong> tied to your CRM and Google numbers workflow</span></div>
+   <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Keep messaging consistent</strong> with your tone, offer, and next step already built in</span></div>
+   <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Move faster after meetings</strong> by sending follow ups in minutes instead of hours</span></div>
  </div>
 
 <div class="card">
- <div class="row2">
- <div class="field"><label>Prospect Name</label><input class="inp" id="ce-name" type="text" placeholder="e.g. Sarah Johnson" /></div>
- <div class="field"><label>Company</label><input class="inp" id="ce-company" type="text" placeholder="e.g. Apex Realty Group" /></div>
- </div>
- <div class="row2">
- <div class="field"><label>Role / Industry</label><input class="inp" id="ce-role" type="text" placeholder="e.g. Owner, Real Estate" /></div>
- <div class="field"><label>Goal</label>
- <select class="sel" id="ce-goal">
- <option value="book a discovery call">Book a Discovery Call</option>
- <option value="start a conversation">Start a Conversation</option>
- <option value="offer a free AI audit">Offer a Free AI Audit</option>
- </select>
- </div>
- </div>
- <div class="field"><label>Context - pain points, recent news, what you know</label>
- <textarea class="inp" id="ce-context" placeholder="e.g. Growing fast but still doing manual follow-ups. Recently hired 3 new agents. Posted about losing deals to faster competitors..."></textarea>
- </div>
- <button class="btn-primary" id="ce-btn" onclick="runColdEmail()">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
- Generate Email Sequence
- </button>
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on CRM follow up and message writing per week</label>
+        <input class="inp" id="crm-hours-input" type="number" min="1" max="40" value="4" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="crm-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" >$50 / hr</option>
+          <option value="75" selected>$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="crm-impact"></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Contact Name</label><input class="inp" id="ce-name" type="text" placeholder="e.g. Sarah Johnson" /></div>
+    <div class="field"><label>Company</label><input class="inp" id="ce-company" type="text" placeholder="e.g. Apex Realty Group" /></div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Role / Industry</label><input class="inp" id="ce-role" type="text" placeholder="e.g. Founder, Home Services" /></div>
+    <div class="field"><label>Message Type</label>
+      <select class="sel" id="ce-goal">
+        <option value="both" selected>Smart Email + Smart Text</option>
+        <option value="email">Smart Email Only</option>
+        <option value="sms">Smart Text Only</option>
+      </select>
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Trigger Source</label>
+      <select class="sel" id="ce-trigger">
+        <option value="zoom">Zoom Meeting Follow Up</option>
+        <option value="postcall">Post Call Follow Up</option>
+        <option value="proposal">Proposal Follow Up</option>
+        <option value="nurture">CRM Nurture Touch</option>
+      </select>
+    </div>
+    <div class="field"><label>Primary Goal</label>
+      <select class="sel" id="ce-goal-detail">
+        <option value="book a call">Book a call</option>
+        <option value="move the deal forward">Move the deal forward</option>
+        <option value="re engage the contact">Re engage the contact</option>
+        <option value="get a quick reply">Get a quick reply</option>
+      </select>
+    </div>
+  </div>
+  <div class="field"><label>Context</label>
+    <textarea class="inp" id="ce-context" placeholder="e.g. We just finished a Zoom demo. She liked the lead scraping and phone agent pieces. Biggest interest was missed calls and follow up. Main concern is team adoption and timing."></textarea>
+  </div>
+  <button class="btn-primary" id="ce-btn" onclick="runColdEmail()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+    Generate Smart Messages
+  </button>
 </div>
 
-<div class="status-bar" id="ce-status"><div class="spinner"></div><span>Writing your personalized sequence...</span></div>
+<div class="status-bar" id="ce-status"><div class="spinner"></div><span>Building smart CRM messages...</span></div>
 <div class="error-bar" id="ce-error"></div>
 
 <div class="out-card" id="ce-out">
- <div class="out-header">
- <div class="out-title">Sequence Ready</div>
- <div class="out-actions">
- <button class="btn-sm" id="ce-copy" onclick="copyRaw('ce')">Copy All</button>
- <button class="btn-sm" onclick="resetOut('ce')">New Sequence</button>
- </div>
- </div>
- <div class="out-body" id="ce-body"></div>
+  <div class="out-header">
+    <div class="out-title">Smart Messages Ready</div>
+    <div class="out-actions">
+      <button class="btn-sm" id="ce-copy" onclick="copyRaw('ce')">Copy All</button>
+      <button class="btn-sm" onclick="resetOut('ce')">New Messages</button>
+    </div>
+  </div>
+  <div class="out-body" id="ce-body"></div>
 </div>
 
  </div>
@@ -1527,13 +1573,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-proposal">
- <div class="section-hero">
- <div class="section-eyebrow">Station 5 Â· Live Agent</div>
- <div class="section-title">Raw notes in.<br><span>Winning proposal out.</span></div>
- <div class="section-sub">Paste call notes, an email thread, or a work order. AI reads it and builds a complete client-ready proposal - ready to approve and send.</div>
- </div>
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 5 Â· Live Agent</div>
+      <div class="section-title">Raw notes in.<br><span>Winning proposal out.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span><strong>Turn rough notes into polished proposals</strong> without starting from scratch</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Keep scope, timeline, and pricing consistent</strong> across every deal</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127970;</span><span><strong>Present your business professionally</strong> with a clean branded proposal</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Respond faster after meetings</strong> while the opportunity is still hot</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Increase close rates</strong> with clearer deliverables and next steps</span></div>
+</div>
 
 <div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on writing proposals and scope docs per week</label>
+        <input class="inp" id="pr-hours-input" type="number" min="1" max="40" value="5" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="pr-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" >$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" selected>$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="pr-impact"></div>
+  </div>
  <div class="row2">
  <div class="field"><label>Client Name</label><input class="inp" id="pr-client" type="text" placeholder="e.g. Marcus Rivera" /></div>
  <div class="field"><label>Business Name</label><input class="inp" id="pr-biz" type="text" placeholder="e.g. Rivera Home Services" /></div>
@@ -1594,13 +1667,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-followup">
- <div class="section-hero">
- <div class="section-eyebrow">Station 8 Â· Live Agent</div>
- <div class="section-title">Smart messages sent<br><span>at exactly the right time.</span></div>
- <div class="section-sub">Pick a trigger - service completed, quote gone quiet, win-back, referral request and more. AI writes personalized SMS and email sequences that feel human.</div>
- </div>
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 8 Â· Live Agent</div>
+      <div class="section-title">Smart follow up that<br><span>keeps deals moving.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128172;</span><span><strong>Keep every lead warm</strong> without manually chasing people down</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Send the right message at the right time</strong> based on deal stage and customer behavior</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9201;</span><span><strong>Save hours every week</strong> on repetitive follow up work</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Recover quiet deals</strong> before they disappear completely</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span><strong>Keep outreach tied to your CRM</strong> so the whole team sees what is happening</span></div>
+</div>
 
 <div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on manual follow up and re engagement per week</label>
+        <input class="inp" id="fu-hours-input" type="number" min="1" max="40" value="4" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="fu-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="fu-impact"></div>
+  </div>
  <div class="row2">
  <div class="field"><label>Prospect Name</label><input class="inp" id="fu-name" type="text" placeholder="e.g. Tom Keller" /></div>
  <div class="field"><label>Business / Industry</label><input class="inp" id="fu-biz" type="text" placeholder="e.g. Plumbing company, Phoenix AZ" /></div>
@@ -1653,12 +1753,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-newsletter">
- <div class="section-hero">
- <div class="section-eyebrow">Station 11 Â· Live Agent</div>
- <div class="section-title">Pick a topic.<br><span>Approve. Schedule. Done.</span></div>
- <div class="section-sub">Answer a few quick questions and AI writes your complete newsletter. Review it, approve, and it goes out on your schedule.</div>
- </div>
- <div class="card">
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 11 Â· Live Agent</div>
+      <div class="section-title">Stay in touch with your list.<br><span>Without writing from scratch.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9993;</span><span><strong>Send newsletters consistently</strong> without blocking off half a day to write them</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span><strong>Turn simple topics into polished campaigns</strong> with a clear hook and CTA</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span><strong>Keep your brand visible</strong> with useful content your audience actually opens</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Nurture leads over time</strong> instead of waiting until they are ready somewhere else</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Move from idea to send ready draft fast</strong> with less manual work</span></div>
+</div>
+
+<div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on newsletter planning and writing per week</label>
+        <input class="inp" id="nl-hours-input" type="number" min="1" max="40" value="4" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="nl-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="nl-impact"></div>
+  </div>
  <div class="field"><label>Topic or Subject</label>
  <input class="inp" id="nl-topic" type="text" placeholder="e.g. '3 ways AI saves businesses 10 hours a week'" />
  </div>
@@ -1733,13 +1861,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-social">
- <div class="section-hero">
- <div class="section-eyebrow">Station 9 Â· Live Agent</div>
- <div class="section-title">One topic.<br><span>A week of posts.</span></div>
- <div class="section-sub">Enter a topic and your audience. Get platform-optimized posts for every channel - ready to schedule.</div>
- </div>
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 9 Â· Live Agent</div>
+      <div class="section-title">One topic.<br><span>A week of posts.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128241;</span><span><strong>Keep your brand active online</strong> without having to invent new ideas every day</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span><strong>Turn one idea into multiple posts</strong> tailored for each platform</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9201;</span><span><strong>Save hours on planning and writing</strong> while staying consistent</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span><strong>Speak to the right audience</strong> with stronger hooks and positioning</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Approve and publish faster</strong> with content that is already structured</span></div>
+</div>
 
 <div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on social planning and content writing per week</label>
+        <input class="inp" id="sm-hours-input" type="number" min="1" max="40" value="5" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="sm-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="sm-impact"></div>
+  </div>
  <div class="field"><label>Topic or Content Idea</label>
  <input class="inp" id="sm-topic" type="text" placeholder="e.g. 'How AI saves small businesses 10 hours a week'" />
  </div>
@@ -1807,6 +1962,26 @@ color: var(---text-dim);
     </div>
 
 <div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on SEO research and content planning per week</label>
+        <input class="inp" id="seo-hours-input" type="number" min="1" max="40" value="4" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="seo-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" >$50 / hr</option>
+          <option value="75" selected>$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="seo-impact"></div>
+  </div>
   <div class="row2">
     <div class="field"><label>Primary Service</label>
       <select class="sel" id="seo-topic">
@@ -1980,6 +2155,26 @@ color: var(---text-dim);
     <div class="ls-bullet"><span class="ls-bullet-icon">&#127970;</span><span><strong>Represent your business professionally</strong> with consistent brand aligned responses</span></div>
     <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Route urgent calls fast</strong> to the right person when immediate action is needed</span></div>
   </div><div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on answering and routing inbound calls per week</label>
+        <input class="inp" id="ph-hours-input" type="number" min="1" max="40" value="6" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="ph-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="ph-impact"></div>
+  </div>
     <div class="row2">
       <div class="field"><label>Business Name</label>
         <input class="inp" id="ph-biz" type="text" value="Rivera Plumbing" />
@@ -2078,12 +2273,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-contracts">
- <div class="section-hero">
- <div class="section-eyebrow">Station 6 Â· Live Agent</div>
- <div class="section-title">Proposal accepted.<br><span>Contract sent in seconds.</span></div>
- <div class="section-sub">The moment a client says yes, AI generates the contract, sends it for e-signature, and notifies your team - zero manual steps.</div>
- </div>
- <div class="card">
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 6 Â· Live Agent</div>
+      <div class="section-title">Proposal accepted.<br><span>Contract sent in seconds.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9997;</span><span><strong>Move from yes to signature fast</strong> before momentum cools off</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Reduce paperwork bottlenecks</strong> with prebuilt contract workflows</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127970;</span><span><strong>Keep contracts clean and professional</strong> with consistent terms and branding</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span><strong>Track signatures automatically</strong> so nothing falls through the cracks</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Help your team close faster</strong> with less manual follow through</span></div>
+</div>
+
+<div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on contract prep and follow through per week</label>
+        <input class="inp" id="ct-hours-input" type="number" min="1" max="40" value="3" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="ct-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" >$50 / hr</option>
+          <option value="75" selected>$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="ct-impact"></div>
+  </div>
  <div class="row2">
  <div class="field"><label>Client Name</label>
  <input class="inp" id="ct-client" type="text" value="Sarah Johnson" />
@@ -2114,12 +2337,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-ads">
- <div class="section-hero">
- <div class="section-eyebrow">Station 10 Â· Live Agent</div>
- <div class="section-title">AI-managed ads that<br><span>actually convert.</span></div>
- <div class="section-sub">Connect your Facebook or Google Ads account. AI writes the copy, sets the targeting, monitors performance, and adjusts spend automatically.</div>
- </div>
- <div class="card">
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 10 Â· Live Agent</div>
+      <div class="section-title">AI managed ads that<br><span>actually convert.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128227;</span><span><strong>Launch campaigns faster</strong> without building every asset by hand</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span><strong>Target the right audience</strong> with clearer offers and positioning</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span><strong>Generate ad copy quickly</strong> for testing across channels</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Improve performance decisions</strong> with faster iteration and optimization</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Reduce manual campaign setup time</strong> so your team can focus on revenue</span></div>
+</div>
+
+<div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on campaign setup and copy work per week</label>
+        <input class="inp" id="ads-hours-input" type="number" min="1" max="40" value="5" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="ads-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" >$50 / hr</option>
+          <option value="75" selected>$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="ads-impact"></div>
+  </div>
  <div class="row2">
  <div class="field"><label>Campaign Goal</label>
  <select class="sel" id="ads-goal">
@@ -2174,12 +2425,40 @@ color: var(---text-dim);
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-invoicing">
- <div class="section-hero">
- <div class="section-eyebrow">Station 7 Â· Live Agent</div>
- <div class="section-title">Contract signed.<br><span>Invoice sent automatically.</span></div>
- <div class="section-sub">The moment a contract is signed, AI asks to generate the invoice. Fill in a few details - it handles the rest.</div>
- </div>
- <div class="card">
+    <div class="section-hero">
+      <div class="section-eyebrow">Station 7 Â· Live Agent</div>
+      <div class="section-title">Contract signed.<br><span>Invoice sent automatically.</span></div>
+    </div>
+
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128176;</span><span><strong>Send invoices immediately</strong> the moment a deal moves forward</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Reduce payment delays</strong> by removing manual invoicing bottlenecks</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127970;</span><span><strong>Keep billing professional</strong> with clean branded invoices and reminders</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span><strong>Connect invoicing to the rest of the workflow</strong> from proposal to payment</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Free up admin time</strong> for work that actually grows the business</span></div>
+</div>
+
+<div class="card">
+<div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on billing and payment follow up per week</label>
+        <input class="inp" id="iv-hours-input" type="number" min="1" max="40" value="3" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="iv-hourly-rate">
+          <option value="25" >$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75" >$75 / hr</option>
+          <option value="100" >$100 / hr</option>
+          <option value="150" >$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="iv-impact"></div>
+  </div>
  <div style="background:var(---blue-glow);border:1px solid var(---blue-border);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
  <div style="font-size:20px">âï¸</div>
  <div>
@@ -2370,58 +2649,101 @@ function getBlock(text, label) {
 function toggleChip(btn) { btn.classList.toggle('active'); }
 
 // ââ COLD EMAIL ââ
+
 function runColdEmail() {
  var name = document.getElementById('ce-name').value.trim();
  var company = document.getElementById('ce-company').value.trim();
- var role = document.getElementById('ce-role').value.trim();
- var goal = document.getElementById('ce-goal').value;
+ var role = document.getElementById('ce-role').value.trim() || 'Business Owner';
+ var channel = document.getElementById('ce-goal').value;
+ var trigger = document.getElementById('ce-trigger').value;
+ var goal = document.getElementById('ce-goal-detail').value;
  var context = document.getElementById('ce-context').value.trim();
 
  if (!name || !company) { document.getElementById('ce-name').focus(); return; }
  showStatus('ce');
 
- var sys = [
- 'You are an expert B2B cold email copywriter for Breakout AI Solutions, a human-first AI consulting firm in Palm Desert, CA.',
- 'Write a 3-email cold email sequence. Goal: ' + goal + '.',
- 'For each email output exactly:',
- 'EMAIL 1',
- 'DELAY: [timing]',
- 'SUBJECT: [subject]',
- 'BODY: [full email body]',
- '(repeat for EMAIL 2 and EMAIL 3)',
- 'RULES: Email 1 = pattern interrupt + specific hook. Email 2 = add value before asking. Email 3 = short breakup, keep door open.',
- 'Each email under 150 words. Sign from Dave at Breakout AI Solutions.',
- 'No "I hope this email finds you well". No "I wanted to reach out".',
- 'Output only the emails. No preamble.'
- ].join('\n');
+ setTimeout(function() {
+   hideStatus('ce');
 
- callAPI(sys, 'Prospect: ' + name + '\nCompany: ' + company + '\nRole: ' + role + '\nContext: ' + (context || 'No context.'), function(text, err) {
- hideStatus('ce');
- if (err) { showError('ce', err); return; }
- rawStore['ce'] = text;
- renderEmails(text, 'ce-body');
- showOut('ce');
- demoComplete('cold-email');
- });
+   var triggerLabelMap = {
+     zoom: 'Zoom Meeting Follow Up',
+     postcall: 'Post Call Follow Up',
+     proposal: 'Proposal Follow Up',
+     nurture: 'CRM Nurture Touch'
+   };
+   var openerMap = {
+     zoom: 'Great meeting you today',
+     postcall: 'Thanks again for the conversation today',
+     proposal: 'Wanted to follow up on the proposal we sent over',
+     nurture: 'Wanted to circle back with a quick idea for ' + company
+   };
+   var smsMap = {
+     zoom: 'Great meeting today. I pulled together the next best step based on what stood out in the demo.',
+     postcall: 'Appreciate the call today. I have one simple next step that would make this easy to move forward.',
+     proposal: 'Quick follow up on the proposal. Happy to tighten scope or timing if that helps.',
+     nurture: 'Quick idea for ' + company + '. I think there is an easy win here if the timing is right.'
+   };
+
+   var emailSubject = company + ' - ' + triggerLabelMap[trigger];
+   var emailBody = openerMap[trigger] + ', ' + name + '.
+
+' +
+     'Based on your role as ' + role + ', and what we know from the CRM, I put together the most relevant next move for you. ' +
+     (context ? 'The main context we are working from is: ' + context + '. ' : '') +
+     'The goal here is to ' + goal + ' without adding more manual work for your team.
+
+' +
+     'If helpful, I can send over a tighter recommendation focused on the exact station that matters most right now.
+
+' +
+     'Dave
+Breakout AI Solutions';
+
+   var smsBody = smsMap[trigger] + ' ' + (goal.charAt(0).toUpperCase() + goal.slice(1)) + ' from there?';
+
+   var html = '';
+   var raw = [];
+
+   if (channel === 'email' || channel === 'both') {
+     html += '<div class="email-card">';
+     html += '<div class="email-hd"><span class="email-num">Smart Email</span><span class="email-delay">Send now</span></div>';
+     html += '<div class="email-subj">Subject: ' + esc(emailSubject) + '</div>';
+     html += '<div class="email-body">' + esc(emailBody) + '</div>';
+     html += '</div>';
+     raw.push('SMART EMAIL
+SUBJECT: ' + emailSubject + '
+BODY:
+' + emailBody);
+   }
+
+   if (channel === 'sms' || channel === 'both') {
+     html += '<div class="touch-card">';
+     html += '<div class="touch-hd"><div class="touch-left"><span class="touch-num">Smart Text</span><span class="type-badge sms">SMS</span></div><span class="touch-delay">Send now</span></div>';
+     html += '<div class="touch-subj">To: ' + esc(name) + ' at ' + esc(company) + '</div>';
+     html += '<div class="touch-body">' + esc(smsBody) + '</div>';
+     html += '<div class="touch-chars">' + smsBody.length + ' characters</div>';
+     html += '</div>';
+     raw.push('SMART TEXT
+BODY:
+' + smsBody);
+   }
+
+   html += '<div class="divider"></div>';
+   html += '<div class="crm-field"><div class="crm-key">Trigger Source</div><div class="crm-val">' + esc(triggerLabelMap[trigger]) + '</div></div>';
+   html += '<div class="crm-field"><div class="crm-key">Primary Goal</div><div class="crm-val">' + esc(goal) + '</div></div>';
+   html += '<div class="crm-field"><div class="crm-key">CRM Action</div><div class="crm-val"><span class="crm-val tag qualified">Ready to log and send</span></div></div>';
+
+   rawStore['ce'] = raw.join('
+
+');
+   document.getElementById('ce-body').innerHTML = html;
+   showOut('ce');
+   demoComplete('cold-email');
+ }, 900);
 }
 
 function renderEmails(text, bodyId) {
- var parts = text.split(/EMAIL \d+/);
- if (parts[0].trim() === '') parts.shift();
- var html = '';
- for (var i = 0; i < parts.length; i++) {
- var p = parts[i];
- var delay = getLine(p, 'DELAY');
- var subj = getLine(p, 'SUBJECT');
- var body = getBlock(p, 'BODY');
- if (!body) continue;
- html += '<div class="email-card">';
- html += '<div class="email-hd"><span class="email-num">Email ' + (i+1) + '</span><span class="email-delay">' + esc(delay) + '</span></div>';
- if (subj) html += '<div class="email-subj">Subject: ' + esc(subj) + '</div>';
- html += '<div class="email-body">' + esc(body) + '</div>';
- html += '</div>';
- }
- document.getElementById(bodyId).innerHTML = html || '<p style="color:var(---text-dim);padding:12px">Could not parse output. Raw text copied.</p>';
+ document.getElementById(bodyId).innerHTML = text;
 }
 
 // ââ PROPOSAL ââ
@@ -3952,7 +4274,7 @@ function importToCRM() {
  '<div class="crm-field"><div class="crm-key">Records Imported</div><div class="crm-val">' + leads + ' leads</div></div>' +
  '<div class="crm-field"><div class="crm-key">Destination</div><div class="crm-val">HubSpot CRM - Leads Pipeline</div></div>' +
  '<div class="crm-field"><div class="crm-key">Tags Applied</div><div class="crm-val">AI-Sourced, Needs Outreach</div></div>' +
- '<div class="crm-field"><div class="crm-key">Follow-Up Sequence</div><div class="crm-val"><span class="crm-val tag qualified">â Cold Email Sequence Triggered</span></div></div>' +
+ '<div class="crm-field"><div class="crm-key">Follow-Up Sequence</div><div class="crm-val"><span class="crm-val tag qualified">â Smart CRM Sequence Triggered</span></div></div>' +
  '<div class="crm-field"><div class="crm-key">Assigned To</div><div class="crm-val">Dave - Breakout AI Solutions</div></div>' +
  '</div>';
  document.getElementById('ls-crm-confirm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -4271,7 +4593,7 @@ function refreshDash() {
  { icon:'&#128269;', label:'SEO + AEO', color:'purple', panel:'seo',
  items:[{dot:'green',text:'3 pages ranking page 1'},{dot:'blue',text:'Cited by AI 12x this week'},{dot:'yellow',text:'2 new opportunities'}],
  footer:{text:'Organic traffic +31%',color:'green'}},
- { icon:'&#128231;', label:'Cold Email', color:'blue', panel:'cold-email',
+ { icon:'&#128231;', label:'Smart CRM', color:'blue', panel:'cold-email',
  items:[{dot:'green',text:'3 sequences active'},{dot:'blue',text:'47 sent Â· 22% open rate'},{dot:'yellow',text:'4 replies - 2 hot leads'}],
  footer:{text:'Reply rate: 8.5%',color:'green'}},
  { icon:'&#128222;', label:'Phone Agent', color:'green', panel:'phone-agent',
@@ -4356,6 +4678,44 @@ document.addEventListener('keydown', function(e) {
  var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
  if (map[id]) map[id]();
 });
+
+function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
+  var hoursEl = document.getElementById(hoursId);
+  var rateEl = document.getElementById(rateId);
+  var impactEl = document.getElementById(impactId);
+  if (!hoursEl || !rateEl || !impactEl) return;
+  var hours = parseFloat(hoursEl.value || '0') || 0;
+  var rate = parseFloat(rateEl.value || '0') || 0;
+  var weekly = Math.round(hours * rate);
+  var annual = Math.round(weekly * 52);
+  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
+}
+
+function setupTaskCalculators() {
+  var calculators = [
+    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
+    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
+    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
+    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
+    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
+    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
+    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
+    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
+    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
+    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing']
+  ];
+  calculators.forEach(function(cfg) {
+    var hoursEl = document.getElementById(cfg[0]);
+    var rateEl = document.getElementById(cfg[1]);
+    if (!hoursEl || !rateEl) return;
+    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
+    hoursEl.addEventListener('input', fn);
+    rateEl.addEventListener('change', fn);
+    fn();
+  });
+}
+
+setupTaskCalculators();
 </script>
 
 </body>
