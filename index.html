@@ -1943,7 +1943,7 @@ color: var(--text-dim);
     <div class="task-impact" id="sm-impact"></div>
   </div>
  <div class="field"><label>Topic or Content Idea</label>
- <input class="inp" id="sm-topic" type="text" placeholder="e.g. 'How AI saves small businesses 10 hours a week'" />
+ <input class="inp" id="sm-topic" type="text" value="Spring HVAC tune up and fast AC repair" placeholder="e.g. 'How AI saves small businesses 10 hours a week'" />
  </div>
  <div class="row2" style="margin-top:12px">
  <div class="field"><label>Voice</label>
@@ -1955,17 +1955,17 @@ color: var(--text-dim);
  </select>
  </div>
  <div class="field"><label>Audience</label>
- <input class="inp" id="sm-audience" type="text" placeholder="e.g. Small business owners in the trades" />
+ <input class="inp" id="sm-audience" type="text" value="Palm Desert homeowners and local business owners" placeholder="e.g. Small business owners in the trades" />
  </div>
  </div>
  <div style="margin-top:12px">
  <div class="field"><label style="margin-bottom:8px">Platforms</label></div>
  <div class="platform-row">
- <button class="p-chip active" onclick="toggleChip(this)" data-p="LinkedIn">LinkedIn</button>
- <button class="p-chip active" onclick="toggleChip(this)" data-p="Facebook">Facebook</button>
- <button class="p-chip active" onclick="toggleChip(this)" data-p="Instagram">Instagram</button>
- <button class="p-chip" onclick="toggleChip(this)" data-p="Twitter/X">Twitter/X</button>
- <button class="p-chip" onclick="toggleChip(this)" data-p="TikTok">TikTok</button>
+ <button type="button" class="p-chip active" onclick="toggleChip(this)" data-p="LinkedIn">LinkedIn</button>
+ <button type="button" class="p-chip active" onclick="toggleChip(this)" data-p="Facebook">Facebook</button>
+ <button type="button" class="p-chip active" onclick="toggleChip(this)" data-p="Instagram">Instagram</button>
+ <button type="button" class="p-chip" onclick="toggleChip(this)" data-p="Twitter/X">Twitter/X</button>
+ <button type="button" class="p-chip" onclick="toggleChip(this)" data-p="TikTok">TikTok</button>
  </div>
  </div>
  <button class="btn-primary" id="sm-btn" onclick="runSocial()">
@@ -2833,20 +2833,47 @@ function buildCannedNewsletterText(topic, tone, industry, sections) {
 }
 
 function buildCannedSocialText(topic, voice, audience, platforms) {
- var dayMap = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
- var copy = {
-   linkedin: 'PLATFORM: LinkedIn\nDAY: Monday\nPOST: Most HVAC companies do not need more leads first. They need faster follow-up, cleaner proposals, and less admin drag once demand already exists. For Palm Desert AC Services, a tighter system means local SEO pages, better estimate follow-up, faster approvals, and less paperwork slowing the team down. The businesses that feel easiest to buy from usually win more often. What is the biggest workflow bottleneck your team would fix first?\nHASHTAGS: #HVAC #LocalSEO #ServiceBusiness #AI',
-   facebook: 'PLATFORM: Facebook\nDAY: Tuesday\nPOST: Palm Desert HVAC companies lose good jobs when estimates go out but follow-up gets delayed. A cleaner system fixes proposals, contracts, invoicing, and customer communication so the team can move faster without feeling buried in admin. Want to see what that looks like in one demo?\nHASHTAGS: #PalmDesert #HVAC #SmallBusiness',
-   instagram: 'PLATFORM: Instagram\nDAY: Wednesday\nPOST: Better HVAC growth is not always about more leads. Sometimes it is faster follow-up, cleaner proposals, and a smoother customer journey from quote to invoice. Palm Desert teams can win more just by tightening the gaps. ð¥âï¸\nHASHTAGS: #HVACLife #PalmDesertBusiness #ServiceGrowth',
-   'twitter/x': 'PLATFORM: Twitter/X\nDAY: Thursday\nPOST: HVAC growth tip. Faster estimate follow-up usually beats more complicated marketing. Clean local pages, quick proposals, and simple customer follow-up can move revenue faster in Palm Desert.\nHASHTAGS: #HVAC #SEO #Ops',
-   tiktok: 'PLATFORM: TikTok\nDAY: Friday\nPOST: Hook: HVAC companies are losing jobs after the estimate and not even realizing it.\nBreakdown: Show the gap between the quote, the follow-up, the contract, and the invoice. Then show how one cleaner system makes the whole customer experience feel faster and more premium.\nHASHTAGS: #HVACTok #BusinessSystems #PalmDesert'
+ var service = topic || 'HVAC growth tips';
+ var audienceLabel = audience || 'Palm Desert homeowners and local business owners';
+ var posts = {
+   'LinkedIn': {
+     day: 'Monday',
+     post: 'Most HVAC companies do not need more leads first. They need faster follow up, cleaner proposals, and less admin drag once demand already exists. For Palm Desert AC Services, a tighter system around ' + service.toLowerCase() + ' means faster replies, cleaner approvals, and a more premium customer experience from first inquiry to paid invoice. What is the first bottleneck you would fix in your workflow?',
+     tags: '#HVAC #LocalSEO #ServiceBusiness #PalmDesert'
+   },
+   'Facebook': {
+     day: 'Tuesday',
+     post: 'Palm Desert homeowners want fast answers when cooling issues hit. A stronger HVAC workflow helps your team respond faster, send better proposals, and stay on top of follow up without getting buried in admin. This is the kind of back end cleanup that makes the front end feel premium.',
+     tags: '#PalmDesert #HVAC #HomeServices'
+   },
+   'Instagram': {
+     day: 'Wednesday',
+     post: 'Better HVAC growth is not always about more leads. Sometimes it is tighter follow up, smoother proposals, and a cleaner customer journey from quote to invoice. Palm Desert AC Services can win more just by removing friction in the handoff points.',
+     tags: '#HVACLife #PalmDesertBusiness #ServiceGrowth'
+   },
+   'Twitter/X': {
+     day: 'Thursday',
+     post: 'HVAC growth tip. Faster estimate follow up usually beats more complicated marketing. Clean city pages, quick proposals, and simple customer follow up can move revenue faster in Palm Desert.',
+     tags: '#HVAC #SEO #Operations'
+   },
+   'TikTok': {
+     day: 'Friday',
+     post: 'Hook. HVAC companies are losing jobs after the estimate and not even realizing it. Show the gap between the quote, the follow up, the contract, and the invoice. Then show how one cleaner system makes the whole experience feel faster and more premium for ' + audienceLabel + '.',
+     tags: '#HVACTok #BusinessSystems #PalmDesert'
+   }
  };
  var blocks = [];
  for (var i = 0; i < platforms.length; i++) {
-   var key = platforms[i].toLowerCase();
-   if (copy[key]) blocks.push(copy[key]);
+   var name = platforms[i];
+   if (!posts[name]) continue;
+   blocks.push('PLATFORM: ' + name + '
+DAY: ' + posts[name].day + '
+POST: ' + posts[name].post + '
+HASHTAGS: ' + posts[name].tags);
  }
- return blocks.join('\n---\n');
+ return blocks.join('
+---
+');
 }
 function getField(text, label) {
  var m = text.match(new RegExp('^' + label + ':\\s*([\\s\\S]*?)(?=\\n[A-Z][A-Z0-9 ]+:|$)', 'im'));
@@ -3278,27 +3305,41 @@ function toggleNlRaw() {
 
 // ââ SOCIAL ââ
 function runSocial() {
- var topic = document.getElementById('sm-topic').value.trim();
- var voice = document.getElementById('sm-voice').value;
- var audience = document.getElementById('sm-audience').value.trim();
-
- if (!topic) { document.getElementById('sm-topic').focus(); return; }
-
+ var topicEl = document.getElementById('sm-topic');
+ var voiceEl = document.getElementById('sm-voice');
+ var audienceEl = document.getElementById('sm-audience');
+ var bodyEl = document.getElementById('sm-body');
+ if (!topicEl || !voiceEl || !audienceEl || !bodyEl) {
+   showError('sm', 'Social station is missing a required field.');
+   return;
+ }
+ var topic = topicEl.value.trim() || 'Spring HVAC tune up and fast AC repair';
+ var voice = voiceEl.value || 'authoritative but approachable';
+ var audience = audienceEl.value.trim() || 'Palm Desert homeowners and local business owners';
  var chips = document.querySelectorAll('#panel-social .p-chip.active');
  var platforms = [];
- for (var i = 0; i < chips.length; i++) platforms.push(chips[i].getAttribute('data-p'));
- if (platforms.length === 0) { showError('sm', 'Select at least one platform.'); return; }
-
+ for (var i = 0; i < chips.length; i++) {
+   var p = chips[i].getAttribute('data-p');
+   if (p) platforms.push(p);
+ }
+ if (!platforms.length) {
+   platforms = ['LinkedIn', 'Facebook', 'Instagram'];
+ }
+ hideError('sm');
  showStatus('sm');
-
  setTimeout(function() {
-   hideStatus('sm');
-   var text = buildCannedSocialText(topic, voice, audience, platforms);
-   rawStore['sm'] = text;
-   renderPosts(text, 'sm-body');
-   showOut('sm');
-   demoComplete('social');
- }, 900);
+   try {
+     var text = buildCannedSocialText(topic, voice, audience, platforms);
+     rawStore['sm'] = text;
+     renderPosts(text, 'sm-body');
+     hideStatus('sm');
+     showOut('sm');
+     demoComplete('social');
+   } catch (err) {
+     hideStatus('sm');
+     showError('sm', err && err.message ? err.message : 'Social posts could not be built.');
+   }
+ }, 800);
 }
 
 function renderPosts(text, bodyId) {
@@ -4995,4 +5036,100 @@ function refreshDash() {
  footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
  ];
 
- var htm
+ var html = '';
+ for (var i = 0; i < tiles.length; i++) {
+ var t = tiles[i];
+ var done = completedDemos[t.panel];
+ var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
+ html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
+ if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
+ html += '<div class="dash-tile-icon">' + t.icon + '</div>';
+ html += '<div class="dash-tile-label">' + t.label + '</div>';
+ html += '<div class="dash-tile-items">';
+ for (var j = 0; j < t.items.length; j++) {
+ html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
+ }
+ html += '</div>';
+ html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
+ html += '</div>';
+ }
+ document.getElementById('dashGrid').innerHTML = html;
+
+ var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
+ var existAct = document.getElementById('dashActivity');
+ if (existAct) existAct.remove();
+ var actDiv = document.createElement('div');
+ actDiv.id = 'dashActivity';
+ actDiv.className = 'dash-activity';
+ var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
+ for (var k = 0; k < combined.length; k++) {
+ var a = combined[k];
+ actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
+ }
+ actDiv.innerHTML = actHtml;
+ document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
+}
+
+var dashInited = false;
+var _sp = showPanel;
+showPanel = function(id) {
+ _sp(id);
+ if (id === 'dashboard-station') {
+ if (!dashInited) { dashInited = true; }
+ refreshDash();
+ demoComplete('dashboard-station');
+ }
+};
+
+document.addEventListener('keydown', function(e) {
+ if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
+ var active = document.querySelector('.panel.active');
+ if (!active) return;
+ var id = active.id.replace('panel-','');
+ var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
+ if (map[id]) map[id]();
+});
+
+function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
+  var hoursEl = document.getElementById(hoursId);
+  var rateEl = document.getElementById(rateId);
+  var impactEl = document.getElementById(impactId);
+  if (!hoursEl || !rateEl || !impactEl) return;
+  var hours = parseFloat(hoursEl.value || '0') || 0;
+  var rate = parseFloat(rateEl.value || '0') || 0;
+  var weekly = Math.round(hours * rate);
+  var annual = Math.round(weekly * 52);
+  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
+}
+
+function setupTaskCalculators() {
+  var calculators = [
+    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
+    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
+    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
+    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
+    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
+    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
+    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
+    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
+    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
+    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
+    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
+    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
+  ];
+  calculators.forEach(function(cfg) {
+    var hoursEl = document.getElementById(cfg[0]);
+    var rateEl = document.getElementById(cfg[1]);
+    if (!hoursEl || !rateEl) return;
+    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
+    hoursEl.addEventListener('input', fn);
+    rateEl.addEventListener('change', fn);
+    fn();
+  });
+}
+
+setupTaskCalculators();
+</script>
+
+</body>
+</html>
