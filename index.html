@@ -57,6 +57,14 @@ color: var(--success);
 border: 1px solid rgba(52,211,153,0.25);
 }
 
+.live-badge.is-active {
+background: rgba(255,59,48,0.10);
+color: #ff6b63;
+border: 1px solid rgba(255,59,48,0.78);
+box-shadow: 0 0 0 1px rgba(255,59,48,0.22), 0 0 12px rgba(255,59,48,0.35), inset 0 0 10px rgba(255,59,48,0.08);
+text-shadow: 0 0 8px rgba(255,59,48,0.28);
+}
+
 .integration-badge {
 font-size: 8px; font-weight: 700;
 letter-spacing: 0.5px;
@@ -4716,9 +4724,10 @@ function demoComplete(stationId) {
  var liveBadge = tile.querySelector('.live-badge');
  if (liveBadge) {
  liveBadge.textContent = 'ACTIVE';
- liveBadge.style.background = 'rgba(52,211,153,0.12)';
- liveBadge.style.color = '#34d399';
- liveBadge.style.borderColor = 'rgba(52,211,153,0.25)';
+ liveBadge.classList.add('is-active');
+ liveBadge.style.background = '';
+ liveBadge.style.color = '';
+ liveBadge.style.borderColor = '';
  }
  }
  }
