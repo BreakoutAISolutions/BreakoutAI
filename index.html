@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+=<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -2893,14 +2893,9 @@ function buildCannedSocialText(topic, voice, audience, platforms) {
  for (var i = 0; i < platforms.length; i++) {
    var name = platforms[i];
    if (!posts[name]) continue;
-   blocks.push('PLATFORM: ' + name + '
-DAY: ' + posts[name].day + '
-POST: ' + posts[name].post + '
-HASHTAGS: ' + posts[name].tags);
+   blocks.push('PLATFORM: ' + name + '\nDAY: ' + posts[name].day + '\nPOST: ' + posts[name].post + '\nHASHTAGS: ' + posts[name].tags);
  }
- return blocks.join('
----
-');
+ return blocks.join('\n---\n');
 }
 function getField(text, label) {
  var m = text.match(new RegExp('^' + label + ':\\s*([\\s\\S]*?)(?=\\n[A-Z][A-Z0-9 ]+:|$)', 'im'));
@@ -5156,104 +5151,4 @@ function refreshDash() {
  items:[{dot:'green',text:'847 subscribers Â· 38% open'},{dot:'blue',text:'Next: Monday 9AM'},{dot:'yellow',text:'1 draft awaiting approval'}],
  footer:{text:'+24 new subs this week',color:'green'}},
  { icon:'&#9201;', label:'Hours Saved', color:'yellow', panel:'home',
- items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blue',text:'~$'+(28*hours).toLocaleString()+' in labor cost'},{dot:'yellow',text:demoStats.demosRun+' of 12 stations active'}],
- footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
- ];
-
- var html = '';
- for (var i = 0; i < tiles.length; i++) {
- var t = tiles[i];
- var done = completedDemos[t.panel];
- var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
- html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
- if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
- html += '<div class="dash-tile-icon">' + t.icon + '</div>';
- html += '<div class="dash-tile-label">' + t.label + '</div>';
- html += '<div class="dash-tile-items">';
- for (var j = 0; j < t.items.length; j++) {
- html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
- }
- html += '</div>';
- html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
- html += '</div>';
- }
- document.getElementById('dashGrid').innerHTML = html;
-
- var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
- var existAct = document.getElementById('dashActivity');
- if (existAct) existAct.remove();
- var actDiv = document.createElement('div');
- actDiv.id = 'dashActivity';
- actDiv.className = 'dash-activity';
- var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
- for (var k = 0; k < combined.length; k++) {
- var a = combined[k];
- actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
- }
- actDiv.innerHTML = actHtml;
- document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
-}
-
-var dashInited = false;
-var _sp = showPanel;
-showPanel = function(id) {
- _sp(id);
- if (id === 'dashboard-station') {
- if (!dashInited) { dashInited = true; }
- refreshDash();
- demoComplete('dashboard-station');
- }
-};
-
-document.addEventListener('keydown', function(e) {
- if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
- var active = document.querySelector('.panel.active');
- if (!active) return;
- var id = active.id.replace('panel-','');
- var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
- if (map[id]) map[id]();
-});
-
-function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
-  var hoursEl = document.getElementById(hoursId);
-  var rateEl = document.getElementById(rateId);
-  var impactEl = document.getElementById(impactId);
-  if (!hoursEl || !rateEl || !impactEl) return;
-  var hours = parseFloat(hoursEl.value || '0') || 0;
-  var rate = parseFloat(rateEl.value || '0') || 0;
-  var weekly = Math.round(hours * rate);
-  var annual = Math.round(weekly * 52);
-  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
-}
-
-function setupTaskCalculators() {
-  var calculators = [
-    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
-    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
-    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
-    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
-    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
-    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
-    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
-    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
-    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
-    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
-    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
-    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
-  ];
-  calculators.forEach(function(cfg) {
-    var hoursEl = document.getElementById(cfg[0]);
-    var rateEl = document.getElementById(cfg[1]);
-    if (!hoursEl || !rateEl) return;
-    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
-    hoursEl.addEventListener('input', fn);
-    rateEl.addEventListener('change', fn);
-    fn();
-  });
-}
-
-setupTaskCalculators();
-</script>
-
-</body>
-</html>
+ items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blu
