@@ -4611,10 +4611,23 @@ function buildSavingsSummaryCard(stationId, title) {
  return '' +
  '<div class="content-block" style="margin-bottom:16px;border-color:rgba(52,211,153,0.22);background:rgba(52,211,153,0.04)">' +
  '<div class="seo-lbl" style="color:var(--success)">Task Cost Snapshot</div>' +
- '<h3 style="margin-bottom:8px">' + esc(title || 'Estimated savings from this workflow') + '</h3>' +
- '<p><strong style="color:var(--text)">Hours saved per week:</strong> ' + (Math.round(s.hours * 10) / 10) + '</p>' +
- '<p><strong style="color:var(--text)">Labor savings per week:</strong> $' + s.weekly.toLocaleString() + '</p>' +
- '<p><strong style="color:var(--text)">Annualized labor savings:</strong> $' + s.annual.toLocaleString() + '</p>' +
+ '<h3 style="margin-bottom:12px">' + esc(title || 'Estimated savings from this workflow') + '</h3>' +
+ '<div class="savings-bar" style="margin-bottom:0">' +
+ '<div class="savings-stat">' +
+ '<div class="savings-num">' + (Math.round(s.hours * 10) / 10) + '</div>' +
+ '<div class="savings-lbl">hrs saved / week</div>' +
+ '</div>' +
+ '<div class="savings-divider"></div>' +
+ '<div class="savings-stat">' +
+ '<div class="savings-num">$' + s.weekly.toLocaleString() + '</div>' +
+ '<div class="savings-lbl">labor cost saved / week</div>' +
+ '</div>' +
+ '<div class="savings-divider"></div>' +
+ '<div class="savings-stat">' +
+ '<div class="savings-num">$' + s.annual.toLocaleString() + '</div>' +
+ '<div class="savings-lbl">saved annually</div>' +
+ '</div>' +
+ '</div>' +
  '</div>';
 }
 
@@ -4728,7 +4741,7 @@ function countUp(elId, target, prefix, suffix, duration) {
  if (current === target) return;
 
  var startTime = null;
- var isFloat = (suffix === 'x' && target < 10);
+ var isFloat = (suffix === 'x' && target < 10) || (Math.abs(target % 1) > 0.001);
 
  function step(ts) {
  if (!startTime) startTime = ts;
@@ -4871,6 +4884,7 @@ function runLeadScan() {
  document.getElementById('ls-savings').style.display = 'flex';
  countUp('ls-time-saved', hoursSaved, '', '', 900);
  countUp('ls-money-saved', moneySaved, '$', '', 1100);
+ countUp('ls-money-annual', moneySaved * 52, '$', '', 1200);
  countUp('ls-leads-found', leads.length, '', '', 800);
  countUp('ls-hot-count', hot, '', '', 700);
 
