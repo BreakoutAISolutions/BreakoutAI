@@ -727,8 +727,8 @@ gap: 16px;
 align-items: stretch;
 }
 .phone-sim-call {
-background: var(---navy3);
-border: 1px solid var(---glass-border);
+background: var(--navy3);
+border: 1px solid var(--glass-border);
 border-radius: 16px;
 padding: 18px;
 display: flex;
@@ -750,21 +750,21 @@ padding: 5px 10px;
 border-radius: 999px;
 font-size: 11px;
 font-weight: 600;
-background: var(---blue-glow);
-border: 1px solid var(---blue-border);
-color: var(---blue-bright);
+background: var(--blue-glow);
+border: 1px solid var(--blue-border);
+color: var(--blue-bright);
 }
 .phone-stage.live::before {
 content: '';
 width: 7px;
 height: 7px;
 border-radius: 50%;
-background: var(---success);
-box-shadow: 0 0 8px var(---success);
+background: var(--success);
+box-shadow: 0 0 8px var(--success);
 }
 .phone-caller-card {
 background: linear-gradient(180deg, rgba(59,130,246,0.08), rgba(255,255,255,0.02));
-border: 1px solid var(---glass-border);
+border: 1px solid var(--glass-border);
 border-radius: 14px;
 padding: 18px 16px;
 text-align: center;
@@ -778,7 +778,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 margin: 0 auto 10px;
-background: linear-gradient(135deg, var(---blue), var(---blue-dim));
+background: linear-gradient(135deg, var(--blue), var(--blue-dim));
 font-size: 28px;
 box-shadow: 0 0 20px rgba(59,130,246,0.35);
 }
@@ -790,7 +790,7 @@ margin-bottom: 4px;
 }
 .phone-caller-sub {
 font-size: 12px;
-color: var(---text-dim);
+color: var(--text-dim);
 line-height: 1.5;
 }
 .phone-transcript {
@@ -803,7 +803,7 @@ padding-right: 4px;
 margin-bottom: 14px;
 }
 .phone-transcript::-webkit-scrollbar { width: 3px; }
-.phone-transcript::-webkit-scrollbar-thumb { background: var(---blue-border); border-radius: 2px; }
+.phone-transcript::-webkit-scrollbar-thumb { background: var(--blue-border); border-radius: 2px; }
 .phone-controls {
 display: flex;
 gap: 10px;
@@ -815,9 +815,9 @@ flex: 1;
 min-width: 120px;
 padding: 11px 14px;
 border-radius: 10px;
-border: 1px solid var(---glass-border);
+border: 1px solid var(--glass-border);
 background: transparent;
-color: var(---text);
+color: var(--text);
 font-family: 'DM Sans', sans-serif;
 font-size: 13px;
 font-weight: 600;
@@ -825,13 +825,13 @@ cursor: pointer;
 transition: all 0.18s;
 }
 .phone-btn:hover {
-border-color: var(---blue-border);
-background: var(---blue-glow);
+border-color: var(--blue-border);
+background: var(--blue-glow);
 }
 .phone-btn.accept {
 background: rgba(52,211,153,0.12);
 border-color: rgba(52,211,153,0.3);
-color: var(---success);
+color: var(--success);
 }
 .phone-btn.decline {
 background: rgba(239,68,68,0.08);
@@ -839,8 +839,8 @@ border-color: rgba(239,68,68,0.2);
 color: #fca5a5;
 }
 .phone-choice-card {
-background: var(---navy3);
-border: 1px solid var(---glass-border);
+background: var(--navy3);
+border: 1px solid var(--glass-border);
 border-radius: 16px;
 padding: 18px;
 display: flex;
@@ -859,11 +859,11 @@ flex-wrap: wrap;
 font-family: 'Syne', sans-serif;
 font-size: 14px;
 font-weight: 700;
-color: var(---text);
+color: var(--text);
 }
 .phone-choice-sub {
 font-size: 12px;
-color: var(---text-dimmer);
+color: var(--text-dimmer);
 }
 .phone-choice-grid {
 display: grid;
@@ -874,9 +874,9 @@ margin-bottom: 14px;
 .phone-choice-btn {
 padding: 12px 14px;
 border-radius: 12px;
-border: 1px solid var(---glass-border);
-background: var(---navy2);
-color: var(---text-dim);
+border: 1px solid var(--glass-border);
+background: var(--navy2);
+color: var(--text-dim);
 font-size: 13px;
 font-weight: 500;
 text-align: left;
@@ -885,19 +885,19 @@ transition: all 0.18s;
 line-height: 1.45;
 }
 .phone-choice-btn:hover {
-border-color: var(---blue-border);
-background: var(---blue-glow);
-color: var(---text);
+border-color: var(--blue-border);
+background: var(--blue-glow);
+color: var(--text);
 transform: translateY(-1px);
 }
 .phone-helper {
 background: rgba(255,255,255,0.02);
-border: 1px solid var(---glass-border);
+border: 1px solid var(--glass-border);
 border-radius: 12px;
 padding: 14px;
 font-size: 12px;
 line-height: 1.6;
-color: var(---text-dim);
+color: var(--text-dim);
 margin-top: auto;
 }
 .phone-helper strong {
@@ -905,12 +905,12 @@ display: block;
 font-size: 10px;
 letter-spacing: 1px;
 text-transform: uppercase;
-color: var(---blue-bright);
+color: var(--blue-bright);
 margin-bottom: 6px;
 }
 .phone-voice-note {
 font-size: 11px;
-color: var(---text-dimmer);
+color: var(--text-dimmer);
 margin-top: 10px;
 }
 .phone-summary {
@@ -922,10 +922,10 @@ border-radius: 12px;
 padding: 14px;
 font-size: 13px;
 line-height: 1.65;
-color: var(---text-dim);
+color: var(--text-dim);
 }
 .phone-summary strong {
-color: var(---success);
+color: var(--success);
 }
 @media (max-width: 768px) {
 .phone-sim-grid { grid-template-columns: 1fr; }
@@ -1134,8 +1134,8 @@ position: relative;
 z-index: 2;
 }
 .criteria-card {
-background: var(---navy2);
-border: 1px solid var(---glass-border);
+background: var(--navy2);
+border: 1px solid var(--glass-border);
 border-radius: 16px;
 padding: 18px 20px;
 margin-bottom: 14px;
@@ -1145,7 +1145,7 @@ overflow: hidden;
 .criteria-card::before {
 content: '';
 position: absolute; top: 0; left: 0; right: 0; height: 1px;
-background: linear-gradient(90deg, transparent, var(---blue), transparent);
+background: linear-gradient(90deg, transparent, var(--blue), transparent);
 opacity: 0.45;
 }
 .criteria-head {
@@ -1154,10 +1154,10 @@ margin-bottom: 12px; flex-wrap: wrap;
 }
 .criteria-title {
 font-family: 'Syne', sans-serif;
-font-size: 14px; font-weight: 700; color: var(---text);
+font-size: 14px; font-weight: 700; color: var(--text);
 }
 .criteria-sub {
-font-size: 12px; color: var(---text-dimmer);
+font-size: 12px; color: var(--text-dimmer);
 }
 .criteria-grid {
 display: grid;
@@ -1167,9 +1167,9 @@ gap: 10px;
 .criteria-note {
 margin-top: 10px;
 font-size: 12px;
-color: var(---text-dim);
+color: var(--text-dim);
 }
-.criteria-note strong { color: var(---blue-bright); }
+.criteria-note strong { color: var(--blue-bright); }
 
 @media (max-width: 768px) {
 .criteria-wrap { padding: 0 16px; }
@@ -1647,7 +1647,7 @@ color: var(---text-dim);
  <div class="out-header">
  <div class="out-title">Proposal Ready</div>
  <div class="out-actions">
- <button class="btn-sm" style="background:var(---blue-glow);border-color:var(---blue-border);color:var(---blue-bright)" onclick="approveProposal()">&#10003; Approve &amp; Send</button>
+ <button class="btn-sm" style="background:var(--blue-glow);border-color:var(--blue-border);color:var(--blue-bright)" onclick="approveProposal()">&#10003; Approve &amp; Send</button>
  <button class="btn-sm" id="pr-copy" onclick="copyRaw('pr')">Copy Text</button>
  <button class="btn-sm" onclick="resetOut('pr')">New Proposal</button>
  </div>
@@ -1821,7 +1821,7 @@ color: var(---text-dim);
  </div>
  </div>
  <div style="margin-top:14px">
- <div style="font-size:11px;font-weight:500;color:var(---text-dim);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Quick selections</div>
+ <div style="font-size:11px;font-weight:500;color:var(--text-dim);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Quick selections</div>
  <div style="display:flex;flex-wrap:wrap;gap:8px">
  <label class="nl-toggle"><input type="checkbox" id="nl-include-tip" checked> Include quick win tip</label>
  <label class="nl-toggle"><input type="checkbox" id="nl-include-cta" checked> Include CTA button</label>
@@ -1842,12 +1842,12 @@ color: var(---text-dim);
  <div class="out-actions">
  <button class="btn-sm" id="nl-raw-btn" onclick="toggleNlRaw()">View Raw</button>
  <button class="btn-sm" id="nl-copy" onclick="copyRaw('nl')">Copy</button>
- <button class="btn-sm" style="background:var(---blue-glow);border-color:var(---blue-border);color:var(---blue-bright)" onclick="scheduleNewsletter()">&#128197; Schedule Send</button>
+ <button class="btn-sm" style="background:var(--blue-glow);border-color:var(--blue-border);color:var(--blue-bright)" onclick="scheduleNewsletter()">&#128197; Schedule Send</button>
  <button class="btn-sm" onclick="resetOut('nl')">New</button>
  </div>
  </div>
  <div class="out-body" id="nl-body"></div>
- <div id="nl-raw" style="display:none;padding:24px 32px;font-size:12px;line-height:1.9;color:var(---text-dim);white-space:pre-wrap;font-family:monospace;border-top:1px solid var(---glass-border);max-height:400px;overflow-y:auto"></div>
+ <div id="nl-raw" style="display:none;padding:24px 32px;font-size:12px;line-height:1.9;color:var(--text-dim);white-space:pre-wrap;font-family:monospace;border-top:1px solid var(--glass-border);max-height:400px;overflow-y:auto"></div>
  <div class="meta-strip" id="nl-meta"></div>
  </div>
  <div class="out-card" id="nl-scheduled" style="display:none;margin-top:12px">
@@ -2046,102 +2046,136 @@ color: var(---text-dim);
  <div class="section-hero">
  <div class="section-eyebrow">Station 1 Â· Live AI Agent</div>
  <div class="section-title">Find your perfect leads<br><span>while you sleep.</span></div>
- <div class="section-sub">AI scans multiple sources simultaneously - Clay, Apollo, Google Maps, LinkedIn and more - returning verified, enriched, scored leads ready for outreach.</div>
  </div>
+
+ <div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span><strong>Scan multiple lead sources at once</strong> instead of researching one by one</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128231;</span><span><strong>Pull available contact data</strong> like email, phone, owner name, and source</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Score lead quality fast</strong> using reviews, source quality, and business signals</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Turn hours of manual research into minutes</strong> so outreach starts faster</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span><strong>Push results into your CRM workflow</strong> so the next station can act on them immediately</span></div>
+ </div>
+
  <div class="card">
- <div class="row2">
- <div class="field"><label>Business Type to Target</label>
- <select class="sel" id="ls-type">
- <option value="HVAC companies">HVAC Companies</option>
- <option value="Real Estate Agents">Real Estate Agents</option>
- <option value="Med Spas">Med Spas</option>
- <option value="Law Firms">Law Firms</option>
- <option value="Restaurants">Restaurants</option>
- <option value="Contractors">Contractors</option>
- </select>
- </div>
- <div class="field"><label>Location</label>
- <select class="sel" id="ls-location">
- <option value="Palm Desert, CA">Palm Desert, CA</option>
- <option value="Phoenix, AZ">Phoenix, AZ</option>
- <option value="Las Vegas, NV">Las Vegas, NV</option>
- <option value="Dallas, TX">Dallas, TX</option>
- <option value="Los Angeles, CA">Los Angeles, CA</option>
- <option value="San Diego, CA">San Diego, CA</option>
- </select>
- </div>
- </div>
- <div class="field" style="margin-bottom:0">
- <label>Sources <span style="color:var(---text-dimmer);font-weight:300;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
- <div class="source-chips" id="sourceChips">
- <button class="source-chip active" data-s="Clay.com">Clay.com</button>
- <button class="source-chip active" data-s="Apollo.io">Apollo.io</button>
- <button class="source-chip active" data-s="Google Maps">Google Maps</button>
- <button class="source-chip active" data-s="LinkedIn">LinkedIn</button>
- <button class="source-chip" data-s="Hunter.io">Hunter.io</button>
- <button class="source-chip" data-s="ZoomInfo">ZoomInfo</button>
- <button class="source-chip" data-s="Yelp">Yelp</button>
- <button class="source-chip" data-s="Clutch.co">Clutch.co</button>
- </div>
- </div>
- <button class="btn-primary" id="ls-btn" onclick="runLeadScan()" style="margin-top:18px">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
- Scan All Sources
- </button>
+  <div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on lead research per week</label>
+        <input class="inp" id="ls-hours-input" type="number" min="1" max="40" value="5" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="ls-hourly-rate">
+          <option value="25">$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75">$75 / hr</option>
+          <option value="100">$100 / hr</option>
+          <option value="150">$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="ls-impact"></div>
+  </div>
+
+  <div class="lead-top-row">
+    <div class="field type-field"><label>Business Type to Target</label>
+      <select class="sel" id="ls-type">
+        <option value="HVAC companies">HVAC Companies</option>
+        <option value="Real Estate Agents">Real Estate Agents</option>
+        <option value="Med Spas">Med Spas</option>
+        <option value="Law Firms">Law Firms</option>
+        <option value="Restaurants">Restaurants</option>
+        <option value="Contractors">Contractors</option>
+      </select>
+    </div>
+    <div class="field location-field"><label>Location</label>
+      <select class="sel" id="ls-location">
+        <option value="Palm Desert, CA">Palm Desert, CA</option>
+        <option value="Phoenix, AZ">Phoenix, AZ</option>
+        <option value="Las Vegas, NV">Las Vegas, NV</option>
+        <option value="Dallas, TX">Dallas, TX</option>
+        <option value="Los Angeles, CA">Los Angeles, CA</option>
+        <option value="San Diego, CA">San Diego, CA</option>
+      </select>
+    </div>
+    <div class="field radius-field"><label>Radius</label>
+      <select class="sel" id="ls-radius">
+        <option value="25">25 mi</option>
+        <option value="50" selected>50 mi</option>
+        <option value="100">100 mi</option>
+        <option value="150">150 mi</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:12px">
+    <label>Sources <span style="color:var(--text-dimmer);font-weight:300;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
+    <div class="source-chips" id="sourceChips">
+      <button class="source-chip active" data-s="Clay.com">Clay.com</button>
+      <button class="source-chip active" data-s="Apollo.io">Apollo.io</button>
+      <button class="source-chip active" data-s="Google Maps">Google Maps</button>
+      <button class="source-chip active" data-s="LinkedIn">LinkedIn</button>
+      <button class="source-chip" data-s="Hunter.io">Hunter.io</button>
+      <button class="source-chip" data-s="ZoomInfo">ZoomInfo</button>
+      <button class="source-chip" data-s="Yelp">Yelp</button>
+      <button class="source-chip" data-s="Clutch.co">Clutch.co</button>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="ls-btn" onclick="runLeadScan()" style="margin-top:16px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    Scan Market & Generate Leads
+  </button>
  </div>
 
-<!-- Time savings calculator -->
-<div class="savings-bar" id="ls-savings" style="display:none">
- <div class="savings-stat">
- <div class="savings-num" id="ls-time-saved">0</div>
- <div class="savings-lbl">hrs saved</div>
- </div>
- <div class="savings-divider"></div>
- <div class="savings-stat">
- <div class="savings-num" id="ls-money-saved">$0</div>
- <div class="savings-lbl">labor cost saved</div>
- </div>
- <div class="savings-divider"></div>
- <div class="savings-stat">
- <div class="savings-num" id="ls-leads-found">0</div>
- <div class="savings-lbl">leads found</div>
- </div>
- <div class="savings-divider"></div>
- <div class="savings-stat">
- <div class="savings-num" id="ls-hot-count">0</div>
- <div class="savings-lbl">hot prospects</div>
- </div>
-</div>
-
-<div class="status-bar" id="ls-status"><div class="spinner"></div><span id="ls-status-text">Initializing scan...</span></div>
-
-<div class="out-card" id="ls-out">
- <div class="out-header">
- <div class="out-title">Leads Ready</div>
- <div class="out-actions">
- <div id="ls-count" style="font-size:11px;color:var(---success);font-weight:600"></div>
- <button class="btn-sm" id="ls-crm-btn" onclick="importToCRM()" style="background:var(---blue-glow);border-color:var(---blue-border);color:var(---blue-bright)">&#8594; Import to CRM</button>
- <button class="btn-sm" onclick="runLeadScan()">Scan Again</button>
- </div>
- </div>
- <div id="ls-body" style="padding:0;overflow-x:auto"></div>
-</div>
-
-<!-- CRM import confirmation -->
-<div class="out-card" id="ls-crm-confirm" style="display:none;margin-top:12px">
- <div class="out-header">
- <div class="out-title">Imported to CRM</div>
- </div>
- <div class="out-body" id="ls-crm-body"></div>
-</div>
-
+ <div class="savings-bar" id="ls-savings" style="display:none">
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-time-saved">0</div>
+    <div class="savings-lbl">hrs saved / week</div>
+  </div>
+  <div class="savings-divider"></div>
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-money-saved">$0</div>
+    <div class="savings-lbl">labor cost saved / week</div>
+  </div>
+  <div class="savings-divider"></div>
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-money-annual">$0</div>
+    <div class="savings-lbl">saved annually</div>
+  </div>
+  <div class="savings-divider"></div>
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-leads-found">0</div>
+    <div class="savings-lbl">leads found</div>
+  </div>
+  <div class="savings-divider"></div>
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-hot-count">0</div>
+    <div class="savings-lbl">hot prospects</div>
+  </div>
  </div>
 
- <!-- ââââââââââââââââââââââââââââââââââââââââââ
- PHONE AGENT DEMO
- ââââââââââââââââââââââââââââââââââââââââââ -->
+ <div class="status-bar" id="ls-status"><div class="spinner"></div><span id="ls-status-text">Initializing scan...</span></div>
 
- 
+ <div class="out-card" id="ls-out">
+  <div class="out-header">
+    <div class="out-title">Leads Ready</div>
+    <div class="out-actions">
+      <div id="ls-count" style="font-size:11px;color:var(--success);font-weight:600"></div>
+      <button class="btn-sm" id="ls-crm-btn" onclick="importToCRM()" style="background:var(--blue-glow);border-color:var(--blue-border);color:var(--blue-bright)">&#8594; Import to CRM</button>
+      <button class="btn-sm" onclick="runLeadScan()">Scan Again</button>
+    </div>
+  </div>
+  <div id="ls-body" style="padding:0;overflow-x:auto"></div>
+ </div>
+
+ <div class="out-card" id="ls-crm-confirm" style="display:none;margin-top:12px">
+  <div class="out-header"><div class="out-title">Imported to CRM</div></div>
+  <div class="out-body" id="ls-crm-body"></div>
+ </div>
+
+ </div>
 <div class="panel" id="panel-phone-agent">
   <div class="section-hero">
     <div class="section-eyebrow">Station 4 Â· Live Agent</div>
@@ -2211,7 +2245,7 @@ color: var(---text-dim);
     <div class="out-header">
       <div class="out-title" id="ph-call-status">Incoming Call</div>
       <div class="out-actions">
-        <div id="ph-timer" style="font-family:'Syne',sans-serif;font-size:13px;color:var(---text-dim)">0:00</div>
+        <div id="ph-timer" style="font-family:'Syne',sans-serif;font-size:13px;color:var(--text-dim)">0:00</div>
       </div>
     </div>
     <div class="out-body" style="padding:20px 24px">
@@ -2219,7 +2253,7 @@ color: var(---text-dim);
         <div class="phone-sim-call">
           <div class="phone-sim-top">
             <div class="phone-stage live" id="ph-stage">Incoming Call</div>
-            <div style="font-size:11px;color:var(---text-dimmer)">Voice Demo</div>
+            <div style="font-size:11px;color:var(--text-dimmer)">Voice Demo</div>
           </div>
 
           <div class="phone-caller-card">
@@ -2230,7 +2264,7 @@ color: var(---text-dim);
 
           <div class="phone-transcript" id="ph-transcript"></div>
 
-          <div id="ph-typing" style="display:none;padding:10px 14px;background:var(---navy2);border-radius:10px;border:1px solid var(---glass-border);font-size:13px;color:var(---text-dimmer);font-style:italic;margin-bottom:10px">AI is speaking...</div>
+          <div id="ph-typing" style="display:none;padding:10px 14px;background:var(--navy2);border-radius:10px;border:1px solid var(--glass-border);font-size:13px;color:var(--text-dimmer);font-style:italic;margin-bottom:10px">AI is speaking...</div>
 
           <div class="phone-controls">
             <button class="phone-btn accept" id="ph-accept-btn" onclick="acceptVoiceCall()">Accept</button>
@@ -2256,8 +2290,8 @@ color: var(---text-dim);
 
           <div class="phone-summary" id="ph-summary"></div>
 
-          <div id="ph-crm" style="display:none;border-top:1px solid var(---glass-border);padding-top:14px;margin-top:14px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(---blue-bright);margin-bottom:12px">CRM Entry Logged Automatically</div>
+          <div id="ph-crm" style="display:none;border-top:1px solid var(--glass-border);padding-top:14px;margin-top:14px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:12px">CRM Entry Logged Automatically</div>
             <div id="ph-crm-body"></div>
           </div>
 
@@ -2459,14 +2493,14 @@ color: var(---text-dim);
     </div>
     <div class="task-impact" id="iv-impact"></div>
   </div>
- <div style="background:var(---blue-glow);border:1px solid var(---blue-border);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+ <div style="background:var(--blue-glow);border:1px solid var(--blue-border);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
  <div style="font-size:20px">âï¸</div>
  <div>
- <div style="font-size:13px;font-weight:600;color:var(---text)" id="inv-trigger-text">Contract signed by Rivera Home Services</div>
- <div style="font-size:11px;color:var(---text-dim);margin-top:2px">Would you like to initiate invoice sending?</div>
+ <div style="font-size:13px;font-weight:600;color:var(--text)" id="inv-trigger-text">Contract signed by Rivera Home Services</div>
+ <div style="font-size:11px;color:var(--text-dim);margin-top:2px">Would you like to initiate invoice sending?</div>
  </div>
  <div style="margin-left:auto;display:flex;gap:8px">
- <button class="btn-sm" style="background:var(---blue-glow);border-color:var(---blue-border);color:var(---blue-bright)" onclick="showInvForm()">Yes, Generate</button>
+ <button class="btn-sm" style="background:var(--blue-glow);border-color:var(--blue-border);color:var(--blue-bright)" onclick="showInvForm()">Yes, Generate</button>
  <button class="btn-sm" onclick="dismissInv()">Not Now</button>
  </div>
  </div>
@@ -2520,17 +2554,46 @@ color: var(---text-dim);
  <div class="section-hero">
  <div class="section-eyebrow">Station 12 Â· Live Agent</div>
  <div class="section-title">Your entire business.<br><span>One live dashboard.</span></div>
- <div class="section-sub">Every station at a glance. Tap any tile to drill in. This is what your team sees every morning.</div>
- </div>
- <div class="dash-grid" id="dashGrid"></div>
- <div style="text-align:center;margin-top:16px">
- <button class="btn-primary" style="width:auto;padding:12px 32px;display:inline-flex" onclick="refreshDash()">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
- Refresh Live Data
- </button>
- </div>
  </div>
 
+ <div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128202;</span><span><strong>See the whole operation in one place</strong> instead of bouncing between tools</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span><strong>Track what each AI station is doing</strong> from lead flow to billing activity</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span><strong>Catch issues faster</strong> because activity, outcomes, and tasks are visible in real time</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127970;</span><span><strong>Give your team one operating view</strong> they can rely on every day</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span><strong>Turn visibility into better decisions</strong> with a cleaner pulse on performance</span></div>
+ </div>
+
+ <div class="card">
+  <div class="task-calc">
+    <div class="task-calc-head">&#9201; Task Cost Snapshot</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent gathering updates and checking systems per week</label>
+        <input class="inp" id="db-hours-input" type="number" min="1" max="40" value="3" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate</label>
+        <select class="sel" id="db-hourly-rate">
+          <option value="25">$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75">$75 / hr</option>
+          <option value="100">$100 / hr</option>
+          <option value="150">$150 / hr</option>
+        </select>
+      </div>
+    </div>
+    <div class="task-impact" id="db-impact"></div>
+  </div>
+
+  <div class="dash-grid" id="dashGrid"></div>
+  <div style="text-align:center;margin-top:16px">
+   <button class="btn-primary" style="width:auto;padding:12px 32px;display:inline-flex" onclick="refreshDash()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+    Refresh Live Data
+   </button>
+  </div>
+ </div>
 </div><!-- end .main -->
 
 <script>
@@ -2976,7 +3039,7 @@ function renderSequence(text, bodyId) {
  if (isSMS) html += '<div class="touch-chars">' + touchBody.length + ' / 160 chars</div>';
  html += '</div>';
  }
- document.getElementById(bodyId).innerHTML = html || '<p style="color:var(---text-dim);padding:12px">Parsing issue - use Copy All for raw text.</p>';
+ document.getElementById(bodyId).innerHTML = html || '<p style="color:var(--text-dim);padding:12px">Parsing issue - use Copy All for raw text.</p>';
 }
 
 // ââ NEWSLETTER ââ
@@ -3103,7 +3166,7 @@ function renderNewsletter(text, bodyId) {
  if (tip) { html += '<div class="divider"></div><div class="nl-tip"><div class="nl-tip-lbl">Quick Win</div>' + esc(tip) + '</div>'; }
  if (ctaText || ctaLabel) {
  html += '<div style="margin-bottom:22px">';
- if (ctaText) html += '<div style="font-size:14px;color:var(---text-dim);line-height:1.6;margin-bottom:10px">' + esc(ctaText) + '</div>';
+ if (ctaText) html += '<div style="font-size:14px;color:var(--text-dim);line-height:1.6;margin-bottom:10px">' + esc(ctaText) + '</div>';
  if (ctaLabel) html += '<span class="nl-cta-btn">' + esc(ctaLabel) + '</span>';
  html += '</div>';
  }
@@ -3179,7 +3242,7 @@ function renderPosts(text, bodyId) {
  count++;
  }
  html += '</div>';
- document.getElementById(bodyId).innerHTML = count > 0 ? html : '<p style="color:var(---text-dim);padding:12px">Parsing issue - use Copy All.</p>';
+ document.getElementById(bodyId).innerHTML = count > 0 ? html : '<p style="color:var(--text-dim);padding:12px">Parsing issue - use Copy All.</p>';
 }
 
 // ââ SEO ââ
@@ -3253,9 +3316,9 @@ function renderSEO(text, bodyId, biz) {
   var briefItems = (brief || '').split(';').map(function(x){ return x.trim(); }).filter(Boolean);
 
   var html = '';
-  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(biz)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(---text)">' + esc(biz) + ' SEO + AEO Package</div><div style="font-size:12px;color:var(---text-dimmer);margin-top:4px">Landing page system ready for publishing</div></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(biz)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(biz) + ' SEO + AEO Package</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">Landing page system ready for publishing</div></div></div>';
   html += '<div class="content-block" style="margin-bottom:18px"><div class="seo-lbl">Landing Page Hero</div><h3 style="margin-bottom:6px">' + esc(hero || primaryKw || 'Landing Page') + '</h3><p>' + esc(subhead || '') + '</p>';
-  if (cta) html += '<p style="color:var(---blue-bright);font-weight:600;margin-top:12px">' + esc(cta) + '</p>';
+  if (cta) html += '<p style="color:var(--blue-bright);font-weight:600;margin-top:12px">' + esc(cta) + '</p>';
   html += '</div>';
   html += '<div style="margin-bottom:18px"><div class="seo-lbl">Keyword Cluster</div><div class="kw-grid">';
   if (primaryKw) html += '<span class="kw-chip primary">' + esc(primaryKw) + '</span>';
@@ -4047,7 +4110,7 @@ function demoComplete(stationId) {
  var resultEl = document.getElementById('roiResult');
  if (resultEl) {
  if (demoStats.demosRun === 0) {
- resultEl.innerHTML = '<span style="color:var(---text-dimmer)">Run the demos above - each one adds real numbers here.</span>';
+ resultEl.innerHTML = '<span style="color:var(--text-dimmer)">Run the demos above - each one adds real numbers here.</span>';
  } else {
  resultEl.innerHTML =
  'Across <strong>' + demoStats.demosRun + ' station' + (demoStats.demosRun > 1 ? 's' : '') + '</strong> demonstrated so far, this system saves ' +
@@ -4096,7 +4159,7 @@ function initROI() {
  document.getElementById('statRevenue').textContent = '$0';
  document.getElementById('statLeads').textContent = '0';
  document.getElementById('statROI').textContent = '0x';
- document.getElementById('roiResult').innerHTML = '<span style="color:var(---text-dimmer)">Run any demo above - each station adds real numbers here as you go.</span>';
+ document.getElementById('roiResult').innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above - each station adds real numbers here as you go.</span>';
 }
 
 // Trigger ROI initialization once the app loads
@@ -4203,16 +4266,16 @@ function runLeadScan() {
 
  document.getElementById('ls-count').textContent = leads.length + ' leads - ' + hot + ' hot, ' + warm + ' warm - ' + radius + ' mi radius';
 
- // Time savings: 1 person Ã 1 hr/day Ã $100/hr = $100/hr baseline
- // Manual lead research: ~5 min per lead = leads.length * 5 min
- var minutesSaved = leads.length * 5;
- var hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
- var moneySaved = Math.round(hoursSaved * 100);
+ var hoursInput = parseFloat((document.getElementById('ls-hours-input') || {}).value || '0') || 0;
+ var hourlyRate = parseFloat((document.getElementById('ls-hourly-rate') || {}).value || '0') || 0;
+ var hoursSaved = Math.round(hoursInput * 10) / 10;
+ var moneySaved = Math.round(hoursSaved * hourlyRate);
+ var annualSaved = Math.round(moneySaved * 52);
 
- // Animate savings bar
  document.getElementById('ls-savings').style.display = 'flex';
  countUp('ls-time-saved', hoursSaved, '', '', 900);
  countUp('ls-money-saved', moneySaved, '$', '', 1100);
+ countUp('ls-money-annual', annualSaved, '$', '', 1250);
  countUp('ls-leads-found', leads.length, '', '', 800);
  countUp('ls-hot-count', hot, '', '', 700);
 
@@ -4227,9 +4290,9 @@ function runLeadScan() {
  '<td><span class="lead-name">' + esc(l.name) + '</span></td>' +
  '<td>' + esc(l.owner) + '</td>' +
  '<td>' + esc(l.phone) + '</td>' +
- '<td style="color:var(---blue-bright)">' + esc(l.email) + '</td>' +
- '<td style="color:var(---text-dimmer);font-size:11px">' + esc(src) + '</td>' +
- '<td>' + l.rating + ' <span style="color:var(---text-dimmer);font-size:11px">(' + l.reviews + ')</span></td>' +
+ '<td style="color:var(--blue-bright)">' + esc(l.email) + '</td>' +
+ '<td style="color:var(--text-dimmer);font-size:11px">' + esc(src) + '</td>' +
+ '<td>' + l.rating + ' <span style="color:var(--text-dimmer);font-size:11px">(' + l.reviews + ')</span></td>' +
  '<td><span class="lead-score ' + l.score + '">' + l.score.toUpperCase() + '</span></td>' +
  '</tr>';
  }
@@ -4350,9 +4413,9 @@ function playLines(lines, idx, name, biz) {
  tc.id = 'ph-transfer-card';
  tc.style.cssText = 'margin-top:12px;padding:12px 14px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.28);border-radius:10px';
  var fn = name.split(' ')[0];
- tc.innerHTML = '<div style="font-size:13px;color:var(---text-dim);margin-bottom:10px">&#127881; <strong style="color:var(---text)">' + esc(fn) + ' said yes</strong> - transfer to Dave or schedule?</div>' +
+ tc.innerHTML = '<div style="font-size:13px;color:var(--text-dim);margin-bottom:10px">&#127881; <strong style="color:var(--text)">' + esc(fn) + ' said yes</strong> - transfer to Dave or schedule?</div>' +
  '<div style="display:flex;gap:8px">' +
- '<button class="btn-sm" style="background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);color:var(---success)" onclick="doLiveTransfer(this,\'' + fn + '\')">&#9654; Live Transfer Now</button>' +
+ '<button class="btn-sm" style="background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);color:var(--success)" onclick="doLiveTransfer(this,\'' + fn + '\')">&#9654; Live Transfer Now</button>' +
  '<button class="btn-sm" onclick="skipTransfer(this,\'' + fn + '\')">&#128197; Schedule Meeting</button>' +
  '</div>';
  transcript.appendChild(tc);
@@ -4380,16 +4443,16 @@ function playLines(lines, idx, name, biz) {
 
 function doLiveTransfer(btn, name) {
  var card = document.getElementById('ph-transfer-card');
- if (card) card.innerHTML = '<div style="font-size:13px;color:var(---text-dim)">&#128222; Transferring <strong style="color:var(---text)">' + esc(name) + '</strong> to Dave... <span style="color:var(---text-dimmer)">(ringing)</span></div>';
+ if (card) card.innerHTML = '<div style="font-size:13px;color:var(--text-dim)">&#128222; Transferring <strong style="color:var(--text)">' + esc(name) + '</strong> to Dave... <span style="color:var(--text-dimmer)">(ringing)</span></div>';
  setTimeout(function() {
- if (card) card.innerHTML = '<div style="font-size:13px;color:var(---success)">&#10003; Live transfer complete - Dave is now on the call with ' + esc(name) + '</div>';
+ if (card) card.innerHTML = '<div style="font-size:13px;color:var(--success)">&#10003; Live transfer complete - Dave is now on the call with ' + esc(name) + '</div>';
  liveActivityFeed.unshift({ dot:'green', text:'Live transfer - ' + name + ' connected to Dave', time:'just now' });
  }, 2200);
 }
 
 function skipTransfer(btn, name) {
  var card = document.getElementById('ph-transfer-card');
- if (card) card.innerHTML = '<div style="font-size:13px;color:var(---text-dim)">&#128197; Meeting scheduled - Calendly link sent to ' + esc(name) + '</div>';
+ if (card) card.innerHTML = '<div style="font-size:13px;color:var(--text-dim)">&#128197; Meeting scheduled - Calendly link sent to ' + esc(name) + '</div>';
  liveActivityFeed.unshift({ dot:'blue', text:'Meeting scheduled - ' + name + ' booked via Calendly', time:'just now' });
 }
 
@@ -4422,26 +4485,26 @@ function runContract() {
  var amtMatch = service.match(/\$[\d,]+/);
  var amount = amtMatch ? amtMatch[0] : '$2,500';
 
- var html = '<div style="background:var(---navy3);border:1px solid var(---glass-border);border-radius:12px;padding:24px;margin-bottom:14px">';
+ var html = '<div style="background:var(--navy3);border:1px solid var(--glass-border);border-radius:12px;padding:24px;margin-bottom:14px">';
  html += '<div style="text-align:center;margin-bottom:18px">';
- html += '<div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(---text-dimmer);margin-bottom:6px">SERVICE AGREEMENT</div>';
- html += '<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(---text)">Breakout AI Solutions</div>';
- html += '<div style="font-size:12px;color:var(---text-dimmer);margin-top:3px">breakoutaisolutions.com &middot; Palm Desert, CA</div>';
+ html += '<div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:6px">SERVICE AGREEMENT</div>';
+ html += '<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Breakout AI Solutions</div>';
+ html += '<div style="font-size:12px;color:var(--text-dimmer);margin-top:3px">breakoutaisolutions.com &middot; Palm Desert, CA</div>';
  html += '</div>';
- html += '<div style="height:1px;background:var(---glass-border);margin-bottom:16px"></div>';
+ html += '<div style="height:1px;background:var(--glass-border);margin-bottom:16px"></div>';
  html += '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">';
  html += '<div class="crm-field"><div class="crm-key">Date</div><div class="crm-val">' + today + '</div></div>';
  html += '<div class="crm-field"><div class="crm-key">Client</div><div class="crm-val">' + esc(client) + '</div></div>';
  html += '<div class="crm-field"><div class="crm-key">Service</div><div class="crm-val">' + esc(service) + '</div></div>';
- html += '<div class="crm-field"><div class="crm-key">Investment</div><div class="crm-val" style="color:var(---blue-bright);font-weight:600">' + amount + '</div></div>';
+ html += '<div class="crm-field"><div class="crm-key">Investment</div><div class="crm-val" style="color:var(--blue-bright);font-weight:600">' + amount + '</div></div>';
  html += '<div class="crm-field"><div class="crm-key">Terms</div><div class="crm-val">Due on execution &middot; Monthly thereafter if retainer</div></div>';
  html += '</div>';
- html += '<div style="background:var(---navy2);border-radius:8px;padding:12px;font-size:12px;color:var(---text-dimmer);line-height:1.7;margin-bottom:16px">';
+ html += '<div style="background:var(--navy2);border-radius:8px;padding:12px;font-size:12px;color:var(--text-dimmer);line-height:1.7;margin-bottom:16px">';
  html += 'Breakout AI Solutions agrees to provide the services outlined above. Client agrees to payment terms as specified. All deliverables are owned by the client upon receipt of full payment.';
  html += '</div>';
  html += '<div style="display:flex;justify-content:space-between;gap:20px;margin-bottom:0">';
- html += '<div style="flex:1;border-top:1px solid var(---glass-border);padding-top:10px"><div style="font-size:10px;color:var(---text-dimmer)">Breakout AI Solutions</div><div style="font-size:12px;color:var(---text-dim);margin-top:4px;font-style:italic">Dave &middot; Authorized Signatory</div></div>';
- html += '<div style="flex:1;border-top:1px solid var(---glass-border);padding-top:10px"><div style="font-size:10px;color:var(---text-dimmer)">Client</div><div style="font-size:12px;color:var(---text-dim);margin-top:4px;font-style:italic">' + esc(client) + ' &middot; Awaiting Signature</div></div>';
+ html += '<div style="flex:1;border-top:1px solid var(--glass-border);padding-top:10px"><div style="font-size:10px;color:var(--text-dimmer)">Breakout AI Solutions</div><div style="font-size:12px;color:var(--text-dim);margin-top:4px;font-style:italic">Dave &middot; Authorized Signatory</div></div>';
+ html += '<div style="flex:1;border-top:1px solid var(--glass-border);padding-top:10px"><div style="font-size:10px;color:var(--text-dimmer)">Client</div><div style="font-size:12px;color:var(--text-dim);margin-top:4px;font-style:italic">' + esc(client) + ' &middot; Awaiting Signature</div></div>';
  html += '</div></div>';
  html += '<button class="btn-primary" style="margin-top:0" onclick="sendContractForSigning()">&#9993; Approve &amp; Send for E-Signature via DocuSign</button>';
 
@@ -4486,11 +4549,11 @@ function runInvoicing() {
   var amountMatch = amountLabel.match(/\$[\d,]+/);
   var amount = amountMatch ? amountMatch[0] : '$2,500';
   var html = '';
-  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(client)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(---text)">Invoice Ready</div><div style="font-size:12px;color:var(---text-dimmer);margin-top:4px">' + esc(client) + ' - ' + esc(invNo) + '</div></div></div>';
-  html += '<div style="background:var(---navy3);border:1px solid var(---glass-border);border-radius:12px;padding:20px;margin-bottom:16px">';
+  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(client)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Invoice Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(client) + ' - ' + esc(invNo) + '</div></div></div>';
+  html += '<div style="background:var(--navy3);border:1px solid var(--glass-border);border-radius:12px;padding:20px;margin-bottom:16px">';
   html += '<div class="crm-field"><div class="crm-key">Bill To</div><div class="crm-val">' + esc(client) + '</div></div>';
   html += '<div class="crm-field"><div class="crm-key">Service</div><div class="crm-val">' + esc(amountLabel.replace(/\s+-\s+\$[\d,]+/, '')) + '</div></div>';
-  html += '<div class="crm-field"><div class="crm-key">Amount</div><div class="crm-val" style="color:var(---blue-bright);font-weight:700">' + amount + '</div></div>';
+  html += '<div class="crm-field"><div class="crm-key">Amount</div><div class="crm-val" style="color:var(--blue-bright);font-weight:700">' + amount + '</div></div>';
   html += '<div class="crm-field"><div class="crm-key">Terms</div><div class="crm-val">' + esc(terms) + '</div></div>';
   html += '<div class="crm-field"><div class="crm-key">Due Date</div><div class="crm-val">' + esc(due) + '</div></div>';
   html += '<div class="crm-field"><div class="crm-key">Delivery</div><div class="crm-val">' + esc(via) + '</div></div>';
@@ -4515,10 +4578,10 @@ function runAdCampaign() {
   setTimeout(function() {
     hideStatus('ads');
     var html = '';
-    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(prospect.company || 'Breakout')) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(---text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(---text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
-    html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(---text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(---text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(---text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
+    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(prospect.company || 'Breakout')) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
+    html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(--text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(--text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(--text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
     html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block"><div class="seo-lbl">Offer Angle</div><p>Free audit, fast response, and a clear next step that gets prospects into the pipeline immediately.</p></div></div>';
-    html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(---blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
+    html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(--blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
     document.getElementById('ads-body').innerHTML = html;
     document.getElementById('ads-out').style.display = 'block';
     document.getElementById('ads-out').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -4612,92 +4675,11 @@ function refreshDash() {
  var done = completedDemos[t.panel];
  var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
  html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
- if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(---success)">&#10003; DONE</div>';
+ if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
  html += '<div class="dash-tile-icon">' + t.icon + '</div>';
  html += '<div class="dash-tile-label">' + t.label + '</div>';
  html += '<div class="dash-tile-items">';
  for (var j = 0; j < t.items.length; j++) {
  html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
  }
- html += '</div>';
- html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
- html += '</div>';
- }
- document.getElementById('dashGrid').innerHTML = html;
-
- var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
- var existAct = document.getElementById('dashActivity');
- if (existAct) existAct.remove();
- var actDiv = document.createElement('div');
- actDiv.id = 'dashActivity';
- actDiv.className = 'dash-activity';
- var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
- for (var k = 0; k < combined.length; k++) {
- var a = combined[k];
- actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
- }
- actDiv.innerHTML = actHtml;
- document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
-}
-
-var dashInited = false;
-var _sp = showPanel;
-showPanel = function(id) {
- _sp(id);
- if (id === 'dashboard-station') {
- if (!dashInited) { dashInited = true; }
- refreshDash();
- demoComplete('dashboard-station');
- }
-};
-
-document.addEventListener('keydown', function(e) {
- if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
- var active = document.querySelector('.panel.active');
- if (!active) return;
- var id = active.id.replace('panel-','');
- var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
- if (map[id]) map[id]();
-});
-
-function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
-  var hoursEl = document.getElementById(hoursId);
-  var rateEl = document.getElementById(rateId);
-  var impactEl = document.getElementById(impactId);
-  if (!hoursEl || !rateEl || !impactEl) return;
-  var hours = parseFloat(hoursEl.value || '0') || 0;
-  var rate = parseFloat(rateEl.value || '0') || 0;
-  var weekly = Math.round(hours * rate);
-  var annual = Math.round(weekly * 52);
-  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
-}
-
-function setupTaskCalculators() {
-  var calculators = [
-    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
-    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
-    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
-    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
-    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
-    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
-    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
-    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
-    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
-    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing']
-  ];
-  calculators.forEach(function(cfg) {
-    var hoursEl = document.getElementById(cfg[0]);
-    var rateEl = document.getElementById(cfg[1]);
-    if (!hoursEl || !rateEl) return;
-    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
-    hoursEl.addEventListener('input', fn);
-    rateEl.addEventListener('change', fn);
-    fn();
-  });
-}
-
-setupTaskCalculators();
-</script>
-
-</body>
-</html>
+ html +=
