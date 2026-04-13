@@ -476,6 +476,12 @@ max-height: 600px; overflow-y: auto;
 .nl-toggle:hover { border-color: var(–blue-border); color: var(–text); }
 .nl-toggle input[type=“checkbox”] { accent-color: var(–blue); cursor: pointer; margin: 0; }
 
+/* Find Leads bullets */
+.ls-bullets { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.ls-bullet { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(–text-dim); line-height: 1.5; font-weight: 300; }
+.ls-bullet-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.ls-bullet strong { color: var(–text); font-weight: 600; }
+
 /* Source chips */
 .source-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
 .source-chip { padding: 6px 13px; border-radius: 16px; border: 1px solid var(–glass-border); background: transparent; color: var(–text-dim); font-family: ‘DM Sans’, sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.18s; }
@@ -1562,59 +1568,118 @@ transition: opacity 0.4s ease;
       <div class="section-title">Find your perfect leads<br><span>while you sleep.</span></div>
       <div class="section-sub">AI scans multiple sources simultaneously — Clay, Apollo, Google Maps, LinkedIn and more — returning verified, enriched, scored leads ready for outreach.</div>
     </div>
-    <div class="card">
-      <div class="row2">
-        <div class="field"><label>Business Type to Target</label>
-          <select class="sel" id="ls-type">
-            <option value="HVAC companies">HVAC Companies</option>
-            <option value="Real Estate Agents">Real Estate Agents</option>
-            <option value="Med Spas">Med Spas</option>
-            <option value="Law Firms">Law Firms</option>
-            <option value="Restaurants">Restaurants</option>
-            <option value="Contractors">Contractors</option>
-          </select>
-        </div>
-        <div class="field"><label>Location</label>
-          <select class="sel" id="ls-location">
-            <option value="Palm Desert, CA">Palm Desert, CA</option>
-            <option value="Phoenix, AZ">Phoenix, AZ</option>
-            <option value="Las Vegas, NV">Las Vegas, NV</option>
-            <option value="Dallas, TX">Dallas, TX</option>
-            <option value="Los Angeles, CA">Los Angeles, CA</option>
-            <option value="San Diego, CA">San Diego, CA</option>
-          </select>
-        </div>
-      </div>
-      <div class="field" style="margin-bottom:0">
-        <label>Sources <span style="color:var(--text-dimmer);font-weight:300;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
-        <div class="source-chips" id="sourceChips">
-          <button class="source-chip active" data-s="Clay.com">Clay.com</button>
-          <button class="source-chip active" data-s="Apollo.io">Apollo.io</button>
-          <button class="source-chip active" data-s="Google Maps">Google Maps</button>
-          <button class="source-chip active" data-s="LinkedIn">LinkedIn</button>
-          <button class="source-chip" data-s="Hunter.io">Hunter.io</button>
-          <button class="source-chip" data-s="ZoomInfo">ZoomInfo</button>
-          <button class="source-chip" data-s="Yelp">Yelp</button>
-          <button class="source-chip" data-s="Clutch.co">Clutch.co</button>
-        </div>
-      </div>
-      <button class="btn-primary" id="ls-btn" onclick="runLeadScan()" style="margin-top:18px">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        Scan All Sources
-      </button>
-    </div>
 
 ```
-<!-- Time savings calculator -->
+<!-- What AI does for you -->
+<div class="ls-bullets">
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span>Scans Clay, Apollo, Google Maps, LinkedIn and more <strong>simultaneously</strong> — no manual searching</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span>Verifies contact info including <strong>direct email and phone</strong> for each lead</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span>Scores every lead HOT / WARM / COLD based on <strong>reviews, engagement, and business signals</strong></span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span>Delivers a <strong>ready-to-outreach list</strong> in seconds — what used to take hours of manual research</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>One click <strong>imports directly to your CRM</strong> and triggers your cold email sequence automatically</span></div>
+</div>
+
+<div class="card">
+  <div class="row2">
+    <div class="field"><label>Business Type to Target</label>
+      <select class="sel" id="ls-type">
+        <option value="HVAC companies">HVAC Companies</option>
+        <option value="Real Estate Agents">Real Estate Agents</option>
+        <option value="Med Spas">Med Spas</option>
+        <option value="Law Firms">Law Firms</option>
+        <option value="Restaurants">Restaurants</option>
+        <option value="Contractors">Contractors</option>
+      </select>
+    </div>
+    <div class="field"><label>Location</label>
+      <select class="sel" id="ls-location">
+        <option value="Palm Desert, CA">Palm Desert, CA</option>
+        <option value="Phoenix, AZ">Phoenix, AZ</option>
+        <option value="Las Vegas, NV">Las Vegas, NV</option>
+        <option value="Dallas, TX">Dallas, TX</option>
+        <option value="Los Angeles, CA">Los Angeles, CA</option>
+        <option value="San Diego, CA">San Diego, CA</option>
+      </select>
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Employee Size</label>
+      <select class="sel" id="ls-employees">
+        <option value="any">Any Size</option>
+        <option value="1-5">1–5 employees (Solo / Micro)</option>
+        <option value="6-20" selected>6–20 employees (Small)</option>
+        <option value="21-50">21–50 employees (Mid-size)</option>
+        <option value="51-200">51–200 employees (Growth)</option>
+        <option value="200+">200+ employees (Enterprise)</option>
+      </select>
+    </div>
+    <div class="field"><label>Est. Annual Revenue</label>
+      <select class="sel" id="ls-revenue">
+        <option value="any">Any Revenue</option>
+        <option value="under250k">Under $250k</option>
+        <option value="250k-1m" selected>$250k – $1M</option>
+        <option value="1m-5m">$1M – $5M</option>
+        <option value="5m-20m">$5M – $20M</option>
+        <option value="20m+">$20M+</option>
+      </select>
+    </div>
+  </div>
+  <div class="field" style="margin-bottom:12px">
+    <label>Sources <span style="color:var(--text-dimmer);font-weight:300;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
+    <div class="source-chips" id="sourceChips">
+      <button class="source-chip active" data-s="Clay.com">Clay.com</button>
+      <button class="source-chip active" data-s="Apollo.io">Apollo.io</button>
+      <button class="source-chip active" data-s="Google Maps">Google Maps</button>
+      <button class="source-chip active" data-s="LinkedIn">LinkedIn</button>
+      <button class="source-chip" data-s="Hunter.io">Hunter.io</button>
+      <button class="source-chip" data-s="ZoomInfo">ZoomInfo</button>
+      <button class="source-chip" data-s="Yelp">Yelp</button>
+      <button class="source-chip" data-s="Clutch.co">Clutch.co</button>
+    </div>
+  </div>
+
+  <!-- Hours input for savings calc -->
+  <div style="background:var(--navy3);border:1px solid var(--glass-border);border-radius:10px;padding:14px 16px;margin-bottom:0">
+    <div style="font-size:11px;font-weight:600;color:var(--blue-bright);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">&#9201; Your Time Cost</div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Hours spent on lead research per week</label>
+        <input class="inp" id="ls-hours-input" type="number" min="1" max="40" value="5" style="font-size:16px;font-weight:600;color:var(--blue-bright)" />
+      </div>
+      <div class="field">
+        <label>Your hourly rate (labor cost)</label>
+        <select class="sel" id="ls-hourly-rate">
+          <option value="25">$25 / hr</option>
+          <option value="50" selected>$50 / hr</option>
+          <option value="75">$75 / hr</option>
+          <option value="100">$100 / hr</option>
+          <option value="150">$150 / hr</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="ls-btn" onclick="runLeadScan()" style="margin-top:16px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    Scan All Sources
+  </button>
+</div>
+
+<!-- Time savings calculator — shown after scan -->
 <div class="savings-bar" id="ls-savings" style="display:none">
   <div class="savings-stat">
     <div class="savings-num" id="ls-time-saved">0</div>
-    <div class="savings-lbl">hrs saved</div>
+    <div class="savings-lbl">hrs saved / week</div>
   </div>
   <div class="savings-divider"></div>
   <div class="savings-stat">
     <div class="savings-num" id="ls-money-saved">$0</div>
-    <div class="savings-lbl">labor cost saved</div>
+    <div class="savings-lbl">labor cost saved / week</div>
+  </div>
+  <div class="savings-divider"></div>
+  <div class="savings-stat">
+    <div class="savings-num" id="ls-money-annual">$0</div>
+    <div class="savings-lbl">saved annually</div>
   </div>
   <div class="savings-divider"></div>
   <div class="savings-stat">
@@ -1642,11 +1707,8 @@ transition: opacity 0.4s ease;
   <div id="ls-body" style="padding:0;overflow-x:auto"></div>
 </div>
 
-<!-- CRM import confirmation -->
 <div class="out-card" id="ls-crm-confirm" style="display:none;margin-top:12px">
-  <div class="out-header">
-    <div class="out-title">Imported to CRM</div>
-  </div>
+  <div class="out-header"><div class="out-title">Imported to CRM</div></div>
   <div class="out-body" id="ls-crm-body"></div>
 </div>
 ```
@@ -3100,18 +3162,23 @@ function runLeadScan() {
     var hot = leads.filter(function(l) { return l.score === 'hot'; }).length;
     var warm = leads.filter(function(l) { return l.score === 'warm'; }).length;
 
-    document.getElementById('ls-count').textContent = leads.length + ' leads — ' + hot + ' hot, ' + warm + ' warm';
+    // Read user's time cost inputs
+    var hoursPerWeek = parseFloat(document.getElementById('ls-hours-input').value) || 5;
+    var hourlyRate = parseFloat(document.getElementById('ls-hourly-rate').value) || 50;
 
-    // Time savings: 1 person × 1 hr/day × $100/hr = $100/hr baseline
-    // Manual lead research: ~5 min per lead = leads.length * 5 min
-    var minutesSaved = leads.length * 5;
-    var hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
-    var moneySaved = Math.round(hoursSaved * 100);
+    // Savings calculation: they enter how many hours/week they spend on lead research
+    // AI does it in minutes — so they save essentially all of those hours
+    var weeklySaved = Math.round(hoursPerWeek * 10) / 10;
+    var weeklyMoneySaved = Math.round(hoursPerWeek * hourlyRate);
+    var annualMoneySaved = weeklyMoneySaved * 52;
+
+    document.getElementById('ls-count').textContent = leads.length + ' leads — ' + hot + ' hot, ' + warm + ' warm';
 
     // Animate savings bar
     document.getElementById('ls-savings').style.display = 'flex';
-    countUp('ls-time-saved', hoursSaved, '', '', 900);
-    countUp('ls-money-saved', moneySaved, '$', '', 1100);
+    countUp('ls-time-saved', weeklySaved, '', '', 900);
+    countUp('ls-money-saved', weeklyMoneySaved, '$', '', 1000);
+    countUp('ls-money-annual', annualMoneySaved, '$', '', 1200);
     countUp('ls-leads-found', leads.length, '', '', 800);
     countUp('ls-hot-count', hot, '', '', 700);
 
