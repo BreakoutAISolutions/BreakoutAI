@@ -1380,23 +1380,23 @@ color: var(--text-dim);
 <!-- ROI STATS BAR -->
 <div class="roi-bar" id="roiBar">
  <div class="roi-stat">
- <div class="roi-num" id="statHours">0</div>
+ <div class="roi-num" id="statWeeklyHours">0</div>
+ <div class="roi-label">hrs saved / week</div>
+ </div>
+ <div class="roi-divider"></div>
+ <div class="roi-stat">
+ <div class="roi-num" id="statWeeklyRevenue">$0</div>
+ <div class="roi-label">saved / week</div>
+ </div>
+ <div class="roi-divider"></div>
+ <div class="roi-stat">
+ <div class="roi-num" id="statAnnualHours">0</div>
  <div class="roi-label">hrs saved / year</div>
  </div>
  <div class="roi-divider"></div>
  <div class="roi-stat">
- <div class="roi-num" id="statRevenue">$0</div>
- <div class="roi-label">revenue potential / mo</div>
- </div>
- <div class="roi-divider"></div>
- <div class="roi-stat">
- <div class="roi-num" id="statLeads">0</div>
- <div class="roi-label">more leads / month</div>
- </div>
- <div class="roi-divider"></div>
- <div class="roi-stat">
- <div class="roi-num" id="statROI">0x</div>
- <div class="roi-label">ROI on investment</div>
+ <div class="roi-num" id="statAnnualRevenue">$0</div>
+ <div class="roi-label">saved / year</div>
  </div>
 </div>
 
@@ -4646,28 +4646,31 @@ function recomputeOverviewTotals() {
    if (!completedDemos[stationId]) continue;
    var contrib = demoContributions[stationId];
    if (!contrib) continue;
-   demoStats.hoursSaved += getConfiguredHoursForStation(stationId);
-   demoStats.revenue += contrib.revenue;
+   var stationSavings = getConfiguredSavingsForStation(stationId);
+   demoStats.hoursSaved += stationSavings.hours;
+   demoStats.revenue += stationSavings.weekly;
    demoStats.leads += contrib.leads;
    demoStats.demosRun++;
  }
- var annualHoursSaved = Math.round(demoStats.hoursSaved * 52 * 10) / 10;
- var roi = demoStats.demosRun > 0 ? Math.round((demoStats.revenue / (demoStats.demosRun * 1500)) * 10) / 10 : 0;
- if (roi < 1) roi = demoStats.demosRun > 0 ? 1.5 : 0;
- countUp('statHours', annualHoursSaved, '', '', 900);
- countUp('statRevenue', demoStats.revenue, '$', '', 1100);
- countUp('statLeads', demoStats.leads, '', '', 800);
- countUp('statROI', roi, '', 'x', 1000);
+ var weeklyHoursSaved = Math.round(demoStats.hoursSaved * 10) / 10;
+ var weeklyRevenueSaved = Math.round(demoStats.revenue);
+ var annualHoursSaved = Math.round(weeklyHoursSaved * 52 * 10) / 10;
+ var annualRevenueSaved = Math.round(weeklyRevenueSaved * 52);
+ countUp('statWeeklyHours', weeklyHoursSaved, '', '', 900);
+ countUp('statWeeklyRevenue', weeklyRevenueSaved, '$', '', 1000);
+ countUp('statAnnualHours', annualHoursSaved, '', '', 1100);
+ countUp('statAnnualRevenue', annualRevenueSaved, '$', '', 1200);
  var resultEl = document.getElementById('roiResult');
  if (resultEl) {
    if (demoStats.demosRun === 0) {
-     resultEl.innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above. Each station adds real numbers here as you go.</span>';
+     resultEl.innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above. Each completed station rolls up weekly and annual labor savings here.</span>';
    } else {
      resultEl.innerHTML =
-      'Across <strong>' + demoStats.demosRun + ' station' + (demoStats.demosRun > 1 ? 's' : '') + '</strong> demonstrated so far, this system saves ' +
-      '<span class="roi-highlight">' + annualHoursSaved + ' hours annually</span> based on weekly workflow inputs, ' +
-      'generates <span class="roi-highlight">$' + demoStats.revenue.toLocaleString() + ' in monthly revenue potential</span>, ' +
-      'and surfaces <span class="roi-highlight">' + demoStats.leads + ' new leads</span> automatically.';
+      'Across <strong>' + demoStats.demosRun + ' station' + (demoStats.demosRun > 1 ? 's' : '') + '</strong> demonstrated so far, this system shows ' +
+      '<span class="roi-highlight">' + weeklyHoursSaved + ' hours saved per week</span>, ' +
+      '<span class="roi-highlight">$' + weeklyRevenueSaved.toLocaleString() + ' saved per week</span>, ' +
+      '<span class="roi-highlight">' + annualHoursSaved + ' hours saved per year</span>, and ' +
+      '<span class="roi-highlight">$' + annualRevenueSaved.toLocaleString() + ' saved per year</span> based on the task snapshot inputs.';
    }
  }
  if (dashInited) refreshDash();
@@ -4763,11 +4766,11 @@ function countUp(elId, target, prefix, suffix, duration) {
 }
 
 function initROI() {
- document.getElementById('statHours').textContent = '0';
- document.getElementById('statRevenue').textContent = '$0';
- document.getElementById('statLeads').textContent = '0';
- document.getElementById('statROI').textContent = '0x';
- document.getElementById('roiResult').innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above - each station adds real numbers here as you go.</span>';
+ document.getElementById('statWeeklyHours').textContent = '0';
+ document.getElementById('statWeeklyRevenue').textContent = '$0';
+ document.getElementById('statAnnualHours').textContent = '0';
+ document.getElementById('statAnnualRevenue').textContent = '$0';
+ document.getElementById('roiResult').innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above. Each completed station rolls up weekly and annual labor savings here.</span>';
 }
 
 // Trigger ROI initialization once the app loads
@@ -5209,299 +5212,4 @@ function renderPipeline(bodyId, steps, doneCb) {
     if (s.time) html += '<div class="pipe-time">' + esc(s.time) + '</div>';
     html += '</div></div>';
   }
-  html += '</div>';
-  document.getElementById(bodyId).innerHTML = html;
-  if (doneCb) setTimeout(doneCb, 600);
-}
-
-// =============================================
-// DASHBOARD - station summary tiles
-// =============================================
-var dashActivities = [
- { dot:'green', text:'Lead found - Desert Air HVAC (HOT) Â· Clay.com', time:'2 min ago' },
- { dot:'blue', text:'AI call completed - Marcus Rivera qualified', time:'8 min ago' },
- { dot:'green', text:'Contract signed - Sarah Johnson ($2,500)', time:'14 min ago' },
- { dot:'blue', text:'Meeting booked - Tom Keller, Tuesday 10:30 AM', time:'22 min ago' },
- { dot:'green', text:'Invoice paid - Rivera Home Services ($6,500)', time:'1 hr ago' },
- { dot:'yellow', text:'Follow-up SMS - 3 prospects (Day 4 trigger)', time:'2 hrs ago' },
- { dot:'blue', text:'Newsletter scheduled - 847 subscribers', time:'3 hrs ago' },
- { dot:'green', text:'Ad campaign live - Facebook + Instagram $1k/mo', time:'4 hrs ago' }
-];
-
-function refreshDash() {
- var leads = demoStats.leads > 0 ? demoStats.leads + 18 : 24 + Math.floor(Math.random()*8);
- var calls = completedDemos['phone-agent'] ? 12 + Math.floor(Math.random()*4) : 8 + Math.floor(Math.random()*5);
- var revenue = demoStats.revenue > 0 ? demoStats.revenue + 9400 : 18400 + Math.floor(Math.random()*4200);
- var proposals = completedDemos['proposal'] ? 8 + Math.floor(Math.random()*3) : 6 + Math.floor(Math.random()*4);
- var signed = completedDemos['contracts'] ? Math.floor(proposals*0.55) : Math.floor(proposals*0.4);
- var hours = demoStats.hoursSaved > 0 ? demoStats.hoursSaved + 14 : 31 + Math.floor(Math.random()*7);
- var hotLeads = Math.floor(leads*0.4);
- var invPending = 2 + Math.floor(Math.random()*3);
- var smsToday = 8 + Math.floor(Math.random()*12);
- var adSpend = 1000 + Math.floor(Math.random()*2000);
-
- var tiles = [
- { icon:'&#127919;', label:'Find Leads', color:'blue', panel:'find-leads',
- items:[{dot:'green',text:leads+' leads this week'},{dot:'blue',text:hotLeads+' marked HOT'},{dot:'yellow',text:'Clay Â· Apollo Â· Google Maps'}],
- footer:{text:'+'+(2+Math.floor(Math.random()*4))+' new since yesterday',color:'green'}},
- { icon:'&#128269;', label:'SEO + AEO', color:'purple', panel:'seo',
- items:[{dot:'green',text:'3 pages ranking page 1'},{dot:'blue',text:'Cited by AI 12x this week'},{dot:'yellow',text:'2 new opportunities'}],
- footer:{text:'Organic traffic +31%',color:'green'}},
- { icon:'&#128231;', label:'Smart CRM', color:'blue', panel:'cold-email',
- items:[{dot:'green',text:'3 sequences active'},{dot:'blue',text:'47 sent Â· 22% open rate'},{dot:'yellow',text:'4 replies - 2 hot leads'}],
- footer:{text:'Reply rate: 8.5%',color:'green'}},
- { icon:'&#128222;', label:'Phone Agent', color:'green', panel:'phone-agent',
- items:[{dot:'green',text:calls+' calls today'},{dot:'blue',text:Math.floor(calls*0.7)+' qualified'},{dot:'yellow',text:'2 transfers pending'}],
- footer:{text:'Avg call: 3:42',color:'blue'}},
- { icon:'&#128203;', label:'Proposals', color:'blue', panel:'proposal',
- items:[{dot:'blue',text:proposals+' sent this week'},{dot:'green',text:Math.floor(proposals*0.6)+' opened'},{dot:'yellow',text:(proposals-Math.floor(proposals*0.6))+' unseen'}],
- footer:{text:'Avg value: $3,200',color:'blue'}},
- { icon:'&#9997;', label:'Contracts', color:'green', panel:'contracts',
- items:[{dot:'green',text:signed+' signed this week'},{dot:'yellow',text:'2 awaiting signature'},{dot:'blue',text:'1 invoice triggered'}],
- footer:{text:'$'+(signed*2800).toLocaleString()+' locked in',color:'green'}},
- { icon:'&#128176;', label:'Invoicing', color:'green', panel:'invoicing',
- items:[{dot:'green',text:'$'+revenue.toLocaleString()+' collected'},{dot:'yellow',text:invPending+' pending payment'},{dot:'red',text:'1 overdue - Day 7 reminder'}],
- footer:{text:'â 23% vs last month',color:'green'}},
- { icon:'&#128172;', label:'Follow-Up SMS', color:'yellow', panel:'followup',
- items:[{dot:'green',text:smsToday+' messages today'},{dot:'blue',text:'3 triggers active'},{dot:'yellow',text:'2 replies need response'}],
- footer:{text:'94% delivery rate',color:'green'}},
- { icon:'&#128241;', label:'Social Media', color:'purple', panel:'social',
- items:[{dot:'green',text:'5 posts scheduled'},{dot:'blue',text:'Instagram Â· Facebook Â· LinkedIn'},{dot:'yellow',text:'1 pending approval'}],
- footer:{text:'Reach +18% this week',color:'green'}},
- { icon:'&#128226;', label:'Ad Campaigns', color:'blue', panel:'ads',
- items:[{dot:'green',text:'$'+adSpend.toLocaleString()+'/mo Â· 2 live'},{dot:'blue',text:'CTR: 3.2% Â· CPL: $'+(18+Math.floor(Math.random()*14))},{dot:'yellow',text:'Budget 68% spent'}],
- footer:{text:'ROAS: 3.8x this month',color:'green'}},
- { icon:'&#9993;', label:'Newsletter', color:'blue', panel:'newsletter',
- items:[{dot:'green',text:'847 subscribers Â· 38% open'},{dot:'blue',text:'Next: Monday 9AM'},{dot:'yellow',text:'1 draft awaiting approval'}],
- footer:{text:'+24 new subs this week',color:'green'}},
- { icon:'&#9201;', label:'Hours Saved', color:'yellow', panel:'home',
- items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blue',text:'~$'+(28*hours).toLocaleString()+' in labor cost'},{dot:'yellow',text:demoStats.demosRun+' of 12 stations active'}],
- footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
- ];
-
- var html = '';
- for (var i = 0; i < tiles.length; i++) {
- var t = tiles[i];
- var done = completedDemos[t.panel];
- var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
- html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
- if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
- html += '<div class="dash-tile-icon">' + t.icon + '</div>';
- html += '<div class="dash-tile-label">' + t.label + '</div>';
- html += '<div class="dash-tile-items">';
- for (var j = 0; j < t.items.length; j++) {
- html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
- }
- html += '</div>';
- html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
- html += '</div>';
- }
- document.getElementById('dashGrid').innerHTML = html;
-
- var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
- var existAct = document.getElementById('dashActivity');
- if (existAct) existAct.remove();
- var actDiv = document.createElement('div');
- actDiv.id = 'dashActivity';
- actDiv.className = 'dash-activity';
- var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
- for (var k = 0; k < combined.length; k++) {
- var a = combined[k];
- actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
- }
- actDiv.innerHTML = actHtml;
- document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
-}
-
-var dashInited = false;
-var _sp = showPanel;
-showPanel = function(id) {
- _sp(id);
- if (id === 'dashboard-station') {
- if (!dashInited) { dashInited = true; }
- refreshDash();
- demoComplete('dashboard-station');
- }
-};
-
-document.addEventListener('keydown', function(e) {
- if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
- var active = document.querySelector('.panel.active');
- if (!active) return;
- var id = active.id.replace('panel-','');
- var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
- if (map[id]) map[id]();
-});
-
-function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
-  var hoursEl = document.getElementById(hoursId);
-  var rateEl = document.getElementById(rateId);
-  var impactEl = document.getElementById(impactId);
-  if (!hoursEl || !rateEl || !impactEl) return;
-  var hours = parseFloat(hoursEl.value || '0') || 0;
-  var rate = parseFloat(rateEl.value || '0') || 0;
-  var weekly = Math.round(hours * rate);
-  var annual = Math.round(weekly * 52);
-  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
-}
-
-function setupTaskCalculators() {
-  var calculators = [
-    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
-    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
-    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
-    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
-    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
-    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
-    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
-    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
-    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
-    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
-    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
-    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
-  ];
-  calculators.forEach(function(cfg) {
-    var hoursEl = document.getElementById(cfg[0]);
-    var rateEl = document.getElementById(cfg[1]);
-    if (!hoursEl || !rateEl) return;
-    var fn = function(){
-      updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]);
-      var stationByHours = {
-        'ls-hours-input':'find-leads',
-        'seo-hours-input':'seo',
-        'crm-hours-input':'cold-email',
-        'ph-hours-input':'phone-agent',
-        'pr-hours-input':'proposal',
-        'ct-hours-input':'contracts',
-        'iv-hours-input':'invoicing',
-        'fu-hours-input':'followup',
-        'sm-hours-input':'social',
-        'ads-hours-input':'ads',
-        'nl-hours-input':'newsletter',
-        'db-hours-input':'dashboard-station'
-      };
-      var stationId = stationByHours[cfg[0]];
-      if (stationId && completedDemos[stationId]) recomputeOverviewTotals();
-    };
-    hoursEl.addEventListener('input', fn);
-    rateEl.addEventListener('change', fn);
-    fn();
-  });
-}
-
-setupTaskCalculators();
-</script>
-
-
-<script>
-(function(){
-  var defaults = {
-    contact: 'Kelly',
-    company: 'Palm Desert AC Services',
-    vertical: 'homeservices',
-    teamSize: 'small'
-  };
-
-  function byId(id){ return document.getElementById(id); }
-  function setIfPossible(id, value){ var el = byId(id); if (el) el.value = value; }
-  function setText(sel, value){ var el = typeof sel === 'string' ? document.querySelector(sel) : sel; if (el) el.textContent = value; }
-
-  function applyDefaults(){
-    setIfPossible('crit-contact', defaults.contact);
-    setIfPossible('crit-company', defaults.company);
-    setIfPossible('crit-vertical', defaults.vertical);
-    setIfPossible('crit-teamsize', defaults.teamSize);
-
-    var summary = byId('criteria-summary');
-    if (summary) summary.textContent = defaults.company + ' â¢ HVAC';
-
-    var hero = document.querySelector('#panel-home .home-hero p');
-    if (hero) hero.textContent = '12 AI stations customized for ' + defaults.company + ' (HVAC). Select a station below to see it live.';
-
-    var badge = byId('prospectBadge');
-    var badgeText = byId('prospectBadgeText');
-    if (badge) badge.style.display = 'flex';
-    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
-
-    if (typeof window.prospect === 'object' && window.prospect) {
-      window.prospect.contact = defaults.contact;
-      window.prospect.company = defaults.company;
-      window.prospect.vertical = defaults.vertical;
-      window.prospect.teamSize = defaults.teamSize;
-    }
-
-    if (typeof window.applyVerticalDefaults === 'function') {
-      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
-    }
-    if (typeof window.updateCriteriaSummary === 'function') {
-      try { window.updateCriteriaSummary(); } catch (e) {}
-    }
-  }
-
-  function activatePanel(id){
-    if (!id) return false;
-    var panel = byId('panel-' + id);
-    if (!panel) return false;
-
-    var panels = document.querySelectorAll('.panel');
-    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
-
-    var tabs = document.querySelectorAll('.nav-tab');
-    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
-
-    panel.classList.add('active');
-
-    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
-    if (activeTab) activeTab.classList.add('active');
-
-    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
-    return true;
-  }
-
-  window.showPanel = activatePanel;
-
-  function inferPanelName(el){
-    if (!el) return '';
-    var direct = el.getAttribute('data-panel');
-    if (direct) return direct;
-    var onclickAttr = el.getAttribute('onclick') || '';
-    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
-    return m ? m[1] : '';
-  }
-
-  function bindStations(){
-    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
-    for (var i = 0; i < nodes.length; i++) {
-      (function(node){
-        var panelId = inferPanelName(node);
-        if (!panelId) return;
-        node.style.cursor = 'pointer';
-        node.addEventListener('click', function(ev){
-          ev.preventDefault();
-          ev.stopPropagation();
-          activatePanel(panelId);
-        }, true);
-      })(nodes[i]);
-    }
-  }
-
-  function boot(){
-    applyDefaults();
-    bindStations();
-    activatePanel('home');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-
-  setTimeout(boot, 50);
-  setTimeout(boot, 250);
-  setTimeout(boot, 750);
-})();
-</script>
-
-</body>
-</html>
+  html += 
