@@ -976,7 +976,7 @@ transition: opacity 0.4s ease;
         <option value="restaurant">Restaurant &amp; Hospitality</option>
         <option value="ecommerce">E-Commerce</option>
         <option value="services">Professional Services</option>
-        <option value="consulting-sales">Consulting &amp; Sales</option>
+        <option value="consulting">Consulting &amp; Sales</option>
         <option value="legal">Legal</option>
         <option value="fitness">Fitness &amp; Wellness</option>
       </select>
@@ -1114,7 +1114,7 @@ transition: opacity 0.4s ease;
   <div class="station-tile live-tile" onclick="showPanel('find-leads')">
     <div class="tile-icon">🎯</div>
     <div class="tile-title">Find Leads</div>
-    <div class="tile-desc">AI scans Clay, Apollo, Google Maps + more — scored leads delivered instantly</div>
+    <div class="tile-desc">AI scans Clay, Apollo, Google Maps + more — ready-to-work leads delivered instantly</div>
     <div class="tile-badge"><span class="live-badge">LIVE AGENT</span></div>
   </div>
   <div class="station-tile live-tile" onclick="showPanel('seo')">
@@ -1508,105 +1508,47 @@ transition: opacity 0.4s ease;
        SEO + AEO
   ══════════════════════════════════════════ -->
 
-
   <div class="panel" id="panel-seo">
     <div class="section-hero">
-      <div class="section-eyebrow">Station 2 · Live AI Agent</div>
+      <div class="section-eyebrow">Station 2 · Live Agent</div>
       <div class="section-title">Get found on Google.<br><span>Get cited by AI.</span></div>
+      <div class="section-sub">Keywords, meta tags, FAQ schema, and optimized content — built for both search engines and AI answer tools.</div>
     </div>
-
-<div class="ls-bullets">
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#128269;</span><span>Searches high intent keywords by <strong>service, city, and audience</strong></span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span>Builds <strong>SEO page outlines, metadata, and FAQ sections</strong> in seconds</span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#129302;</span><span>Creates <strong>AEO ready answers</strong> designed for AI search and answer engines</span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>Maps <strong>internal linking and content clusters</strong> for stronger authority</span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#128640;</span><span>Generates <strong>draft landing pages and content briefs</strong> ready for publishing</span></div>
-</div>
 
 <div class="card">
   <div class="row2">
-    <div class="field">
-      <label>Business Type</label>
-      <select class="sel" id="seo-biz-type">
-        <option value="hvac" selected>HVAC Companies</option>
-        <option value="plumber">Plumbers</option>
-        <option value="medspa">Med Spas</option>
-        <option value="law">Law Firms</option>
-        <option value="realestate">Real Estate</option>
-        <option value="contractor">Contractors</option>
-        <option value="restaurant">Restaurants</option>
-        <option value="consulting">Consulting &amp; Sales</option>
-      </select>
+    <div class="field"><label>Topic / Target Keyword</label>
+      <input class="inp" id="seo-topic" type="text" placeholder="e.g. AI automation for HVAC companies" />
     </div>
-    <div class="field">
-      <label>Primary Service</label>
-      <select class="sel" id="seo-service">
-        <option value="ac-repair" selected>AC Repair</option>
-        <option value="hvac-installation">HVAC Installation</option>
-        <option value="emergency-service">Emergency Service</option>
-        <option value="maintenance-plans">Maintenance Plans</option>
-        <option value="duct-cleaning">Duct Cleaning</option>
-      </select>
+    <div class="field"><label>Business Type</label>
+      <input class="inp" id="seo-biz" type="text" placeholder="e.g. HVAC company, Palm Desert CA" />
     </div>
   </div>
-
   <div class="row2" style="margin-top:4px">
-    <div class="field">
-      <label>Target Location</label>
-      <select class="sel" id="seo-location">
-        <option value="Palm Desert, CA" selected>Palm Desert, CA</option>
-        <option value="Phoenix, AZ">Phoenix, AZ</option>
-        <option value="Las Vegas, NV">Las Vegas, NV</option>
-        <option value="Dallas, TX">Dallas, TX</option>
-        <option value="Los Angeles, CA">Los Angeles, CA</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Content Goal</label>
+    <div class="field"><label>Content Goal</label>
       <select class="sel" id="seo-goal">
-        <option value="leadgen" selected>Local Lead Generation</option>
-        <option value="service-pages">Service Page Creation</option>
-        <option value="location-pages">Location Page Creation</option>
-        <option value="aeo">FAQ and Answer Engine Visibility</option>
-        <option value="clusters">Topic Cluster Buildout</option>
+        <option value="rank locally and attract leads">Local Lead Generation</option>
+        <option value="establish authority in the industry">Thought Leadership</option>
+        <option value="answer buyer questions and drive conversions">Buyer Education</option>
+        <option value="rank for informational queries">Informational / Blog</option>
       </select>
+    </div>
+    <div class="field"><label>Location (optional)</label>
+      <input class="inp" id="seo-location" type="text" placeholder="e.g. Palm Desert, CA" />
     </div>
   </div>
-
-  <div class="row2" style="margin-top:4px">
-    <div class="field">
-      <label>Content Volume</label>
-      <select class="sel" id="seo-volume">
-        <option value="1">1 Page</option>
-        <option value="5">5 Pages</option>
-        <option value="10" selected>10 Pages</option>
-        <option value="25">25 Pages</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Tone</label>
-      <select class="sel" id="seo-tone">
-        <option value="professional" selected>Professional</option>
-        <option value="trust">High Trust</option>
-        <option value="direct">Direct Response</option>
-        <option value="educational">Educational</option>
-        <option value="luxury">Luxury</option>
-      </select>
-    </div>
-  </div>
-
   <button class="btn-primary" id="seo-btn" onclick="runSEO()">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
     Generate SEO + AEO Package
   </button>
 </div>
 
-<div class="status-bar" id="seo-status"><div class="spinner"></div><span>Analyzing search intent...</span></div>
+<div class="status-bar" id="seo-status"><div class="spinner"></div><span>Building your content package…</span></div>
 <div class="error-bar" id="seo-error"></div>
 
 <div class="out-card" id="seo-out">
   <div class="out-header">
-    <div class="out-title">SEO + AEO Package Ready</div>
+    <div class="out-title">SEO Package Ready</div>
     <div class="out-actions">
       <button class="btn-sm" id="seo-copy" onclick="copyRaw('seo')">Copy All</button>
       <button class="btn-sm" onclick="resetOut('seo')">New Analysis</button>
@@ -1629,13 +1571,13 @@ transition: opacity 0.4s ease;
     <div class="section-hero">
       <div class="section-eyebrow">Station 1 · Live AI Agent</div>
       <div class="section-title">Find your perfect leads<br><span>while you sleep.</span></div>
-      <div class="section-sub">AI scans multiple sources at once, surfaces available contact data, scores each prospect, and delivers a list your team can work immediately.</div>
+      <div class="section-sub">AI scans multiple sources at once, verifies contact data, scores each prospect, and delivers a list your team can work immediately.</div>
     </div>
 
 <!-- What AI does for you -->
 <div class="ls-bullets">
   <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span>Scans Clay, Apollo, Google Maps, LinkedIn and more <strong>simultaneously</strong> — no manual searching</span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span>Surfaces contact info including <strong>available email and phone</strong> for each lead</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span>Pulls available contact info including <strong>email and phone</strong> for each lead</span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span>Scores every lead HOT / WARM / COLD based on <strong>reviews, engagement, and business signals</strong></span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span>Delivers a <strong>ready-to-outreach list</strong> in seconds — what used to take hours of manual research</span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>One click <strong>imports directly to your CRM</strong> and triggers your cold email sequence automatically</span></div>
@@ -2652,76 +2594,53 @@ function renderPosts(text, bodyId) {
 }
 
 // ── SEO ──
-var seoDemoPackages = {
-  hvac: {
-    snapshot: { primary: 'AC repair Palm Desert', pages: '10', questions: '18', links: '24', intent: 'High local intent' },
-    html:
-      '<div class="savings-bar" style="display:flex;margin-bottom:14px">' +
-        '<div class="savings-stat"><div class="savings-num" style="font-size:18px">AC repair Palm Desert</div><div class="savings-lbl">primary keyword</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">10</div><div class="savings-lbl">pages generated</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">18</div><div class="savings-lbl">AEO questions</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">24</div><div class="savings-lbl">internal links</div></div>' +
-      '</div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Keyword Cluster</h3><p><strong>Primary keyword:</strong> AC repair Palm Desert</p><p><strong>Supporting keywords:</strong> emergency AC repair Palm Desert, same day AC repair Palm Desert, air conditioning repair Palm Desert CA, HVAC repair near me Palm Desert, best AC repair company Palm Desert</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Answer Engine Targets</h3><p>Who offers same day AC repair in Palm Desert?</p><p>How much does AC repair cost in Palm Desert?</p><p>Should I repair or replace my air conditioner?</p><p>How quickly can an HVAC technician get to my home in Palm Desert?</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Generated Page Set</h3><p>1. AC Repair in Palm Desert, CA</p><p>2. Emergency AC Repair in Palm Desert</p><p>3. Same Day HVAC Service in Palm Desert</p><p>4. AC Repair Cost Guide for Palm Desert Homeowners</p><p>5. Signs Your AC Needs Repair Before Summer</p><p>6. Why Your AC Stops Cooling in Desert Heat</p><p>7. Residential HVAC Repair Near Palm Desert</p><p>8. 24 Hour Air Conditioning Repair in Palm Desert</p><p>9. Repair vs Replace Your AC Unit in Palm Desert</p><p>10. Palm Desert HVAC FAQs for Homeowners</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Sample Landing Page Preview</h3><p><strong>Page title:</strong> AC Repair in Palm Desert, CA</p><p><strong>Meta title:</strong> Fast AC Repair in Palm Desert | Same Day HVAC Service</p><p><strong>Meta description:</strong> Need fast AC repair in Palm Desert? Get same day HVAC service, honest pricing, and expert repairs for homes across the Coachella Valley.</p><p><strong>Hero headline:</strong> Fast, Reliable AC Repair in Palm Desert</p><p><strong>Suggested sections:</strong> Emergency AC repair, repair costs, desert heat failures, repair vs replace, book service now.</p></div>' +
-      '<div class="content-block"><h3>Draft Deployment Package</h3><p>10 landing pages prepared as drafts</p><p>Metadata included for every page</p><p>FAQ sections included</p><p>Internal linking map included</p><p>Publishing workflow ready</p></div>'
-  },
-  consulting: {
-    snapshot: { primary: 'sales consulting services', pages: '10', questions: '16', links: '20', intent: 'High commercial intent' },
-    html:
-      '<div class="savings-bar" style="display:flex;margin-bottom:14px">' +
-        '<div class="savings-stat"><div class="savings-num" style="font-size:18px">sales consulting services</div><div class="savings-lbl">primary keyword</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">10</div><div class="savings-lbl">pages generated</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">16</div><div class="savings-lbl">AEO questions</div></div>' +
-        '<div class="savings-divider"></div>' +
-        '<div class="savings-stat"><div class="savings-num">20</div><div class="savings-lbl">internal links</div></div>' +
-      '</div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Keyword Cluster</h3><p><strong>Primary keyword:</strong> sales consulting services</p><p><strong>Supporting keywords:</strong> sales process consulting, consulting for B2B sales teams, revenue growth consultant, sales enablement consultant, outbound sales consulting</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Answer Engine Targets</h3><p>What does a sales consultant actually do?</p><p>How can a consultant improve pipeline conversion?</p><p>When should a business hire a sales consultant?</p><p>What is the difference between consulting and sales enablement?</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Generated Page Set</h3><p>1. Sales Consulting Services</p><p>2. Revenue Growth Consulting for Founder Led Teams</p><p>3. Sales Process Optimization for Small Businesses</p><p>4. B2B Sales Enablement Consulting</p><p>5. Proposal Follow Up Systems for Consultants</p><p>6. Outbound Sales Workflow Design</p><p>7. CRM Pipeline Cleanup and Reporting</p><p>8. Sales SOP Creation for Growing Teams</p><p>9. Lead Nurture Systems for Consulting Firms</p><p>10. Sales Consulting FAQs</p></div>' +
-      '<div class="content-block" style="margin-bottom:12px"><h3>Sample Landing Page Preview</h3><p><strong>Page title:</strong> Sales Consulting Services for Growth Focused Teams</p><p><strong>Meta title:</strong> Sales Consulting Services | Improve Pipeline & Close Rate</p><p><strong>Meta description:</strong> Build a stronger sales process, improve follow up, and close more revenue with consulting designed for founder led and small B2B teams.</p><p><strong>Hero headline:</strong> Build a Sales Engine That Actually Closes</p><p><strong>Suggested sections:</strong> pipeline leaks, proposal follow up, CRM hygiene, outreach systems, reporting, next steps.</p></div>' +
-      '<div class="content-block"><h3>Draft Deployment Package</h3><p>10 service and authority pages prepared as drafts</p><p>Metadata included for every page</p><p>FAQ sections included</p><p>Internal linking map included</p><p>Publishing workflow ready</p></div>'
-  }
-};
-
 function runSEO() {
-  var btn = document.getElementById('seo-btn');
-  var status = document.getElementById('seo-status');
-  var statusText = document.querySelector('#seo-status span');
-  var out = document.getElementById('seo-out');
-  var body = document.getElementById('seo-body');
-  var error = document.getElementById('seo-error');
-  var bizType = document.getElementById('seo-biz-type');
-  var selected = bizType ? bizType.value : 'hvac';
-  var pack = selected === 'consulting' ? seoDemoPackages.consulting : seoDemoPackages.hvac;
+  var topic = document.getElementById('seo-topic').value.trim();
+  var biz = document.getElementById('seo-biz').value.trim();
+  var goal = document.getElementById('seo-goal').value;
+  var location = document.getElementById('seo-location').value.trim();
 
-  btn.disabled = true;
-  error.style.display = 'none';
-  out.style.display = 'none';
-  status.style.display = 'flex';
-  statusText.textContent = 'Analyzing search intent...';
+  if (!topic) { document.getElementById('seo-topic').focus(); return; }
+  showStatus('seo');
 
-  setTimeout(function(){ statusText.textContent = 'Mapping keyword clusters...'; }, 700);
-  setTimeout(function(){ statusText.textContent = 'Building AI answer targets...'; }, 1400);
-  setTimeout(function(){ statusText.textContent = 'Drafting page structure...'; }, 2200);
-  setTimeout(function(){ statusText.textContent = 'Preparing publishing package...'; }, 3000);
+  var sys = [
+    'You are an expert SEO and AEO (Answer Engine Optimization) strategist.',
+    'AEO = optimizing to be cited by ChatGPT, Perplexity, and Google AI Overviews.',
+    'Business: ' + (biz||'small business') + '. Location: ' + (location||'not specified') + '. Goal: ' + goal + '.',
+    'Output exactly:',
+    'PRIMARY KEYWORD: [main keyword]',
+    'SECONDARY KEYWORDS: [5-7 comma separated]',
+    'LSI KEYWORDS: [5-6 comma separated]',
+    'LOCAL KEYWORDS: [3-4 local keywords or N/A]',
+    'META TITLE: [under 60 chars]',
+    'META DESCRIPTION: [150-160 chars]',
+    'URL SLUG: [clean slug]',
+    'FAQ 1 Q: [question]',
+    'FAQ 1 A: [direct 2-3 sentence answer]',
+    'FAQ 2 Q: [question]',
+    'FAQ 2 A: [answer]',
+    'FAQ 3 Q: [question]',
+    'FAQ 3 A: [answer]',
+    'FAQ 4 Q: [question]',
+    'FAQ 4 A: [answer]',
+    'FAQ 5 Q: [question]',
+    'FAQ 5 A: [answer]',
+    'CONTENT HEADLINE: [H1]',
+    'CONTENT INTRO: [2 paragraphs, first sentence answers the main question]',
+    'CONTENT BODY: [3-4 paragraphs with natural keyword integration]',
+    'CONTENT CTA: [one clear CTA]',
+    'AEO TIP: [1-2 sentences on why this is structured for AI citation]',
+    'FAQ answers must start with a direct answer (AEO best practice). Output only content. No preamble.'
+  ].join('\n');
 
-  setTimeout(function() {
-    btn.disabled = false;
-    status.style.display = 'none';
-    body.innerHTML = pack.html;
-    rawStore['seo'] = body.innerText || body.textContent || '';
-    out.style.display = 'block';
-    out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  callAPI(sys, 'Topic: ' + topic + (location ? ' in ' + location : ''), function(text, err) {
+    hideStatus('seo');
+    if (err) { showError('seo', err); return; }
+    rawStore['seo'] = text;
+    renderSEO(text, 'seo-body', biz);
+    showOut('seo');
     demoComplete('seo');
-  }, 3800);
+  });
 }
 
 function renderSEO(text, bodyId, biz) {
@@ -2877,17 +2796,17 @@ var verticalConfig = {
     phIndustry: 'plumbing',
     phScript: 'followup'
   },
-  'consulting-sales': {
+  consulting: {
     label: 'Consulting & Sales',
-    ceRole: 'Founder / Consultant / Sales Leader',
-    ceContext: 'Leads come in from referrals, outbound, and networking, but follow-up is inconsistent. Proposals stall, sales conversations go quiet, and there is no structured nurture system.',
+    ceRole: 'Founder / Consultant, Sales Advisory',
+    ceContext: 'Lead flow exists but no consistent nurture, follow-up, or pipeline visibility. Proposals stall and warm conversations are not being worked systematically.',
     prIndustry: 'Consulting & Sales',
-    prNotes: 'Consulting or sales-led business. Pain: warm leads and proposals go stale because follow-up is manual and inconsistent. Wants AI support for outreach, proposal follow-up, nurture, and content.',
+    prNotes: 'Consulting or sales-led business. Pain: too many warm leads go stale, follow-up is inconsistent, no clear nurture sequence, and proposals die after first send.',
     nlAudience: 'professional services firms',
-    smAudience: 'Consultants, advisors, and sales-led business owners',
+    smAudience: 'Consultants, coaches, and sales leaders',
     seoTopic: 'AI automation for consultants and sales teams',
     lsType: 'Law Firms',
-    phIndustry: 'plumbing',
+    phIndustry: 'realestate',
     phScript: 'followup'
   },
   legal: {
@@ -2935,95 +2854,94 @@ document.addEventListener('DOMContentLoaded', function() {
   updateLeadImpactPreview();
 });
 
-function safeSetValue(id, value) {
-  var el = document.getElementById(id);
-  if (el) el.value = value;
-}
-function safeSetText(id, value) {
-  var el = document.getElementById(id);
-  if (el) el.textContent = value;
-}
-function safeSelectValue(id, value) {
-  var el = document.getElementById(id);
-  if (!el || !el.options) return;
-  for (var i = 0; i < el.options.length; i++) {
-    if (el.options[i].value === value) { el.selectedIndex = i; return; }
-  }
-}
-
 function startDemo() {
-  prospect.contact = (document.getElementById('intro-contact') || {}).value ? document.getElementById('intro-contact').value.trim() : 'the prospect';
-  prospect.contact = prospect.contact || 'the prospect';
-  prospect.company = (document.getElementById('intro-company') || {}).value ? document.getElementById('intro-company').value.trim() : 'their business';
-  prospect.company = prospect.company || 'their business';
-  prospect.vertical = (document.getElementById('intro-vertical') || {}).value || 'trades';
-  prospect.teamSize = (document.getElementById('intro-teamsize') || {}).value || 'small';
+  function byId(id) { return document.getElementById(id); }
+  function setValue(id, value) {
+    var el = byId(id);
+    if (!el) return;
+    el.value = value;
+  }
+  function setText(id, value) {
+    var el = byId(id);
+    if (!el) return;
+    el.textContent = value;
+  }
+  function setSelectValue(id, value) {
+    var el = byId(id);
+    if (!el || !el.options) return;
+    for (var i = 0; i < el.options.length; i++) {
+      if (el.options[i].value === value) {
+        el.selectedIndex = i;
+        return;
+      }
+    }
+  }
+
+  prospect.contact = (byId('intro-contact') && byId('intro-contact').value.trim()) || 'the prospect';
+  prospect.company = (byId('intro-company') && byId('intro-company').value.trim()) || 'their business';
+  prospect.vertical = (byId('intro-vertical') && byId('intro-vertical').value) || 'trades';
+  prospect.teamSize = (byId('intro-teamsize') && byId('intro-teamsize').value) || 'small';
 
   var cfg = verticalConfig[prospect.vertical] || verticalConfig['trades'];
 
-  safeSetValue('ce-name', prospect.contact);
-  safeSetValue('ce-company', prospect.company);
-  safeSetValue('ce-role', cfg.ceRole);
-  safeSetValue('ce-context', cfg.ceContext);
+  setValue('ce-name', prospect.contact);
+  setValue('ce-company', prospect.company);
+  setValue('ce-role', cfg.ceRole);
+  setValue('ce-context', cfg.ceContext);
 
-  safeSetValue('pr-client', prospect.contact);
-  safeSetValue('pr-biz', prospect.company);
-  safeSetValue('pr-industry', cfg.prIndustry);
-  safeSetValue('pr-notes', cfg.prNotes);
+  setValue('pr-client', prospect.contact);
+  setValue('pr-biz', prospect.company);
+  setValue('pr-industry', cfg.prIndustry);
+  setValue('pr-notes', cfg.prNotes);
 
-  safeSetValue('fu-name', prospect.contact);
-  safeSetValue('fu-biz', prospect.company + ' — ' + cfg.label);
-  safeSetValue('fu-context', cfg.ceContext);
+  setValue('fu-name', prospect.contact);
+  setValue('fu-biz', prospect.company + ' — ' + cfg.label);
+  setValue('fu-context', cfg.ceContext);
 
-  safeSelectValue('nl-industry', cfg.nlAudience);
-  safeSetValue('sm-audience', cfg.smAudience);
+  setSelectValue('nl-industry', cfg.nlAudience);
+  setValue('sm-audience', cfg.smAudience);
 
-  safeSetValue('seo-topic', cfg.seoTopic);
-  safeSetValue('seo-biz', prospect.company);
-  if (prospect.vertical === 'consulting-sales') {
-    safeSelectValue('seo-biz-type', 'consulting');
-  } else {
-    safeSelectValue('seo-biz-type', 'hvac');
-  }
+  setValue('seo-topic', cfg.seoTopic);
+  setValue('seo-biz', prospect.company);
 
-  safeSelectValue('ls-type', cfg.lsType);
-  safeSetValue('ads-audience', cfg.smAudience);
+  setSelectValue('ls-type', cfg.lsType);
+  setValue('ads-audience', cfg.smAudience);
 
-  safeSetValue('ph-name', prospect.contact);
-  safeSetValue('ph-biz', prospect.company);
-  safeSelectValue('ph-industry', cfg.phIndustry);
-  safeSelectValue('ph-script', cfg.phScript);
+  setValue('ph-name', prospect.contact);
+  setValue('ph-biz', prospect.company);
+  setSelectValue('ph-industry', cfg.phIndustry);
+  setSelectValue('ph-script', cfg.phScript);
 
-  safeSetValue('ct-client', prospect.contact);
-  safeSetValue('inv-client', prospect.company);
-  var invTrigger = document.getElementById('inv-trigger-text');
-  if (invTrigger) invTrigger.textContent = 'Contract signed by ' + prospect.company;
+  setValue('ct-client', prospect.contact);
+  setValue('inv-client', prospect.company);
+  setText('inv-trigger-text', 'Contract signed by ' + prospect.company);
 
   var heroP = document.querySelector('#panel-home .home-hero p');
   if (heroP) heroP.textContent = '12 AI stations — customized for ' + prospect.company + ' (' + cfg.label + '). Select any station to see it live.';
 
-  safeSetText('prospectBadgeText', prospect.contact + ' · ' + prospect.company);
-  var badge = document.getElementById('prospectBadge');
+  setText('prospectBadgeText', prospect.contact + ' · ' + prospect.company);
+  var badge = byId('prospectBadge');
   if (badge) badge.style.display = 'flex';
 
   var calcSub = document.querySelector('.roi-calc-sub');
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
-  var screen = document.getElementById('introScreen');
+  var screen = byId('introScreen');
   if (screen) {
     screen.classList.add('hidden');
     setTimeout(function() {
       screen.style.display = 'none';
-      var topNav = document.getElementById('topNav');
-      var mainContent = document.getElementById('mainContent');
+      var topNav = byId('topNav');
+      var mainContent = byId('mainContent');
       if (topNav) topNav.style.display = 'block';
       if (mainContent) mainContent.style.display = 'block';
     }, 400);
   }
 
-  initROI();
-  updateLeadImpactPreview();
+  if (typeof initROI === 'function') initROI();
+  if (typeof updateLeadImpactPreview === 'function') updateLeadImpactPreview();
 }
+
 
 function resetIntro() {
   document.getElementById('topNav').style.display = 'none';
@@ -3578,4 +3496,30 @@ function runLeadScan() {
     document.getElementById('ls-count').textContent = leads.length + ' leads in ' + radius + ' mi — ' + hot + ' hot, ' + warm + ' warm';
 
     // Animate savings bar
-    document.getElementById('ls-savings'
+    document.getElementById('ls-savings').style.display = 'flex';
+    countUp('ls-time-saved', weeklySaved, '', '', 900);
+    countUp('ls-money-saved', weeklyMoneySaved, '$', '', 1000);
+    countUp('ls-money-annual', annualMoneySaved, '$', '', 1200);
+    countUp('ls-leads-found', leads.length, '', '', 800);
+    countUp('ls-hot-count', hot, '', '', 700);
+
+    var html = '<table class="leads-table"><thead><tr>' +
+      '<th>Business</th><th>Owner</th><th>Phone</th><th>Email</th><th>Source</th><th>Rating</th><th>Score</th>' +
+      '</tr></thead><tbody>';
+
+    for (var i = 0; i < leads.length; i++) {
+      var l = leads[i];
+      var src = sources[i % sources.length];
+      html += '<tr class="lead-row-new" style="animation-delay:' + (i * 110) + 'ms">' +
+        '<td><span class="lead-name">' + esc(l.name) + '</span></td>' +
+        '<td>' + esc(l.owner) + '</td>' +
+        '<td>' + esc(l.phone) + '</td>' +
+        '<td style="color:var(--blue-bright)">' + esc(l.email) + '</td>' +
+        '<td style="color:var(--text-dimmer);font-size:11px">' + esc(src) + '</td>' +
+        '<td>' + l.rating + ' <span style="color:var(--text-dimmer);font-size:11px">(' + l.reviews + ')</span></td>' +
+        '<td><span class="lead-score ' + l.score + '">' + l.score.toUpperCase() + '</span></td>' +
+        '</tr>';
+    }
+    html += '</tbody></table>';
+
+    document.getElementById('ls-body').innerHTML = html;
