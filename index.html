@@ -1380,22 +1380,22 @@ color: var(--text-dim);
 <!-- ROI STATS BAR -->
 <div class="roi-bar" id="roiBar">
  <div class="roi-stat">
- <div class="roi-num" id="statWeeklyHours">0</div>
+ <div class="roi-num" id="statHours">0</div>
  <div class="roi-label">hrs saved / week</div>
  </div>
  <div class="roi-divider"></div>
  <div class="roi-stat">
- <div class="roi-num" id="statWeeklyRevenue">$0</div>
+ <div class="roi-num" id="statRevenue">$0</div>
  <div class="roi-label">saved / week</div>
  </div>
  <div class="roi-divider"></div>
  <div class="roi-stat">
- <div class="roi-num" id="statAnnualHours">0</div>
+ <div class="roi-num" id="statLeads">0</div>
  <div class="roi-label">hrs saved / year</div>
  </div>
  <div class="roi-divider"></div>
  <div class="roi-stat">
- <div class="roi-num" id="statAnnualRevenue">$0</div>
+ <div class="roi-num" id="statROI">$0</div>
  <div class="roi-label">saved / year</div>
  </div>
 </div>
@@ -4646,9 +4646,8 @@ function recomputeOverviewTotals() {
    if (!completedDemos[stationId]) continue;
    var contrib = demoContributions[stationId];
    if (!contrib) continue;
-   var stationSavings = getConfiguredSavingsForStation(stationId);
-   demoStats.hoursSaved += stationSavings.hours;
-   demoStats.revenue += stationSavings.weekly;
+   demoStats.hoursSaved += getConfiguredHoursForStation(stationId);
+   demoStats.revenue += contrib.revenue;
    demoStats.leads += contrib.leads;
    demoStats.demosRun++;
  }
@@ -4656,10 +4655,10 @@ function recomputeOverviewTotals() {
  var weeklyRevenueSaved = Math.round(demoStats.revenue);
  var annualHoursSaved = Math.round(weeklyHoursSaved * 52 * 10) / 10;
  var annualRevenueSaved = Math.round(weeklyRevenueSaved * 52);
- countUp('statWeeklyHours', weeklyHoursSaved, '', '', 900);
- countUp('statWeeklyRevenue', weeklyRevenueSaved, '$', '', 1000);
- countUp('statAnnualHours', annualHoursSaved, '', '', 1100);
- countUp('statAnnualRevenue', annualRevenueSaved, '$', '', 1200);
+ countUp('statHours', weeklyHoursSaved, '', '', 900);
+ countUp('statRevenue', weeklyRevenueSaved, '$', '', 1000);
+ countUp('statLeads', annualHoursSaved, '', '', 1100);
+ countUp('statROI', annualRevenueSaved, '$', '', 1200);
  var resultEl = document.getElementById('roiResult');
  if (resultEl) {
    if (demoStats.demosRun === 0) {
@@ -4766,10 +4765,10 @@ function countUp(elId, target, prefix, suffix, duration) {
 }
 
 function initROI() {
- document.getElementById('statWeeklyHours').textContent = '0';
- document.getElementById('statWeeklyRevenue').textContent = '$0';
- document.getElementById('statAnnualHours').textContent = '0';
- document.getElementById('statAnnualRevenue').textContent = '$0';
+ document.getElementById('statHours').textContent = '0';
+ document.getElementById('statRevenue').textContent = '$0';
+ document.getElementById('statLeads').textContent = '0';
+ document.getElementById('statROI').textContent = '$0';
  document.getElementById('roiResult').innerHTML = '<span style="color:var(--text-dimmer)">Run any demo above. Each completed station rolls up weekly and annual labor savings here.</span>';
 }
 
@@ -5193,23 +5192,4 @@ function runAdCampaign() {
     var html = '';
     html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
     html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(--text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(--text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(--text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
-    html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block"><div class="seo-lbl">Offer Angle</div><p>Free audit, fast response, and a clear next step that gets prospects into the pipeline immediately.</p></div></div>';
-    html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(--blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
-    document.getElementById('ads-body').innerHTML = buildSavingsSummaryCard('ads', 'Estimated savings from ad campaign setup') + html;
-    document.getElementById('ads-out').style.display = 'block';
-    document.getElementById('ads-out').scrollIntoView({ behavior:'smooth', block:'nearest' });
-    demoComplete('ads');
-  }, 1200);
-}
-
-function renderPipeline(bodyId, steps, doneCb) {
-  var html = '<div class="pipeline">';
-  for (var i = 0; i < steps.length; i++) {
-    var s = steps[i];
-    html += '<div class="pipe-step ' + (s.done ? 'done' : '') + ' ' + (s.active ? 'active' : '') + '">';
-    html += '<div class="pipe-dot">' + s.icon + '</div>';
-    html += '<div class="pipe-content"><div class="pipe-title">' + esc(s.title) + '</div><div class="pipe-detail">' + esc(s.detail) + '</div>';
-    if (s.time) html += '<div class="pipe-time">' + esc(s.time) + '</div>';
-    html += '</div></div>';
-  }
-  html += 
+    html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block">
