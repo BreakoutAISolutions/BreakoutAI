@@ -4552,6 +4552,30 @@ var demoContributions = {
  'dashboard-station': { hours: 1, revenue: 0, leads: 0, activity: 'ð Dashboard reviewed - full pipeline visibility confirmed' }
 };
 
+var stationHoursInputs = {
+ 'find-leads': 'ls-hours-input',
+ 'seo': 'seo-hours-input',
+ 'cold-email': 'crm-hours-input',
+ 'phone-agent': 'ph-hours-input',
+ 'proposal': 'pr-hours-input',
+ 'contracts': 'ct-hours-input',
+ 'invoicing': 'iv-hours-input',
+ 'followup': 'fu-hours-input',
+ 'social': 'sm-hours-input',
+ 'ads': 'ads-hours-input',
+ 'newsletter': 'nl-hours-input',
+ 'dashboard-station': 'db-hours-input'
+};
+
+function getConfiguredHoursForStation(stationId) {
+ var inputId = stationHoursInputs[stationId];
+ var el = inputId ? document.getElementById(inputId) : null;
+ var parsed = el ? parseFloat(el.value || '0') : NaN;
+ if (!isNaN(parsed) && parsed > 0) return parsed;
+ var fallback = demoContributions[stationId];
+ return fallback ? fallback.hours : 0;
+}
+
 var completedDemos = {};
 var liveActivityFeed = [];
 
@@ -4562,7 +4586,9 @@ function demoComplete(stationId) {
  var contrib = demoContributions[stationId];
  if (!contrib) return;
 
- demoStats.hoursSaved += contrib.hours;
+ var effectiveHours = getConfiguredHoursForStation(stationId);
+
+ demoStats.hoursSaved += effectiveHours;
  demoStats.revenue += contrib.revenue;
  demoStats.leads += contrib.leads;
  demoStats.demosRun++;
@@ -4618,7 +4644,7 @@ function demoComplete(stationId) {
  } else {
  resultEl.innerHTML =
  'Across <strong>' + demoStats.demosRun + ' station' + (demoStats.demosRun > 1 ? 's' : '') + '</strong> demonstrated so far, this system saves ' +
- '<span class="roi-highlight">' + demoStats.hoursSaved + ' hours per week</span>, ' +
+ '<span class="roi-highlight">' + (Math.round(demoStats.hoursSaved * 10) / 10) + ' hours per week</span>, ' +
  'generates <span class="roi-highlight">$' + demoStats.revenue.toLocaleString() + ' in monthly revenue potential</span>, ' +
  'and surfaces <span class="roi-highlight">' + demoStats.leads + ' new leads</span> - all automatically.';
  }
@@ -4768,13 +4794,14 @@ function runLeadScan() {
  var hot = leads.filter(function(l) { return l.score === 'hot'; }).length;
  var warm = leads.filter(function(l) { return l.score === 'warm'; }).length;
 
- document.getElementById('ls-count').textContent = leads.length + ' leads - ' + hot + ' hot, ' + warm + ' warm - ' + radius + ' mi radius';
+ document.getElementById('ls-count').textContent = leads.length + ' leads | ' + hot + ' hot | ' + warm + ' warm | ' + radius + ' mi radius | ' + hoursSaved + ' hrs saved | $' + moneySaved.toLocaleString() + ' labor saved per week';
 
- // Time savings: 1 person Ã 1 hr/day Ã $100/hr = $100/hr baseline
- // Manual lead research: ~5 min per lead = leads.length * 5 min
- var minutesSaved = leads.length * 5;
- var hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
- var moneySaved = Math.round(hoursSaved * 100);
+ // Pull the user's weekly assumptions directly from the task snapshot
+ var configuredHoursEl = document.getElementById('ls-hours-input');
+ var configuredRateEl = document.getElementById('ls-hourly-rate');
+ var hoursSaved = configuredHoursEl ? (parseFloat(configuredHoursEl.value || '0') || 0) : 0;
+ var hourlyRate = configuredRateEl ? (parseFloat(configuredRateEl.value || '0') || 0) : 0;
+ var moneySaved = Math.round(hoursSaved * hourlyRate);
 
  // Animate savings bar
  document.getElementById('ls-savings').style.display = 'flex';
