@@ -976,7 +976,7 @@ transition: opacity 0.4s ease;
         <option value="restaurant">Restaurant &amp; Hospitality</option>
         <option value="ecommerce">E-Commerce</option>
         <option value="services">Professional Services</option>
-        <option value="consulting">Consulting &amp; Sales</option>
+        <option value="consultingsales">Consulting &amp; Sales</option>
         <option value="legal">Legal</option>
         <option value="fitness">Fitness &amp; Wellness</option>
       </select>
@@ -1114,7 +1114,7 @@ transition: opacity 0.4s ease;
   <div class="station-tile live-tile" onclick="showPanel('find-leads')">
     <div class="tile-icon">🎯</div>
     <div class="tile-title">Find Leads</div>
-    <div class="tile-desc">AI scans Clay, Apollo, Google Maps + more — ready-to-work leads delivered instantly</div>
+    <div class="tile-desc">AI scans Clay, Apollo, Google Maps + more — verified leads delivered instantly</div>
     <div class="tile-badge"><span class="live-badge">LIVE AGENT</span></div>
   </div>
   <div class="station-tile live-tile" onclick="showPanel('seo')">
@@ -1512,13 +1512,27 @@ transition: opacity 0.4s ease;
     <div class="section-hero">
       <div class="section-eyebrow">Station 2 · Live Agent</div>
       <div class="section-title">Get found on Google.<br><span>Get cited by AI.</span></div>
-      <div class="section-sub">Keywords, meta tags, FAQ schema, and optimized content — built for both search engines and AI answer tools.</div>
+  </div>
+
+
+    <div class="ls-bullets">
+      <div class="ls-bullet"><span class="ls-bullet-icon">&#128269;</span><span>Searches high intent keywords by <strong>service, city, and audience</strong></span></div>
+      <div class="ls-bullet"><span class="ls-bullet-icon">&#128221;</span><span>Builds <strong>SEO page outlines, metadata, and FAQ sections</strong> in seconds</span></div>
+      <div class="ls-bullet"><span class="ls-bullet-icon">&#129302;</span><span>Creates <strong>AEO ready answers</strong> designed for AI search and answer engines</span></div>
+      <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>Maps <strong>internal linking and content clusters</strong> for stronger authority</span></div>
+      <div class="ls-bullet"><span class="ls-bullet-icon">&#128640;</span><span>Generates <strong>draft landing pages and content briefs</strong> ready for publishing</span></div>
     </div>
 
 <div class="card">
   <div class="row2">
-    <div class="field"><label>Topic / Target Keyword</label>
-      <input class="inp" id="seo-topic" type="text" placeholder="e.g. AI automation for HVAC companies" />
+    <div class="field"><label>Primary Service</label>
+      <select class="sel" id="seo-topic">
+        <option value="AC Repair" selected>AC Repair</option>
+        <option value="HVAC Installation">HVAC Installation</option>
+        <option value="Emergency Service">Emergency Service</option>
+        <option value="Maintenance Plans">Maintenance Plans</option>
+        <option value="Duct Cleaning">Duct Cleaning</option>
+      </select>
     </div>
     <div class="field"><label>Business Type</label>
       <input class="inp" id="seo-biz" type="text" placeholder="e.g. HVAC company, Palm Desert CA" />
@@ -1527,7 +1541,7 @@ transition: opacity 0.4s ease;
   <div class="row2" style="margin-top:4px">
     <div class="field"><label>Content Goal</label>
       <select class="sel" id="seo-goal">
-        <option value="rank locally and attract leads">Local Lead Generation</option>
+        <option value="rank locally and attract leads" selected>Local Lead Generation</option>
         <option value="establish authority in the industry">Thought Leadership</option>
         <option value="answer buyer questions and drive conversions">Buyer Education</option>
         <option value="rank for informational queries">Informational / Blog</option>
@@ -1577,7 +1591,7 @@ transition: opacity 0.4s ease;
 <!-- What AI does for you -->
 <div class="ls-bullets">
   <div class="ls-bullet"><span class="ls-bullet-icon">&#127919;</span><span>Scans Clay, Apollo, Google Maps, LinkedIn and more <strong>simultaneously</strong> — no manual searching</span></div>
-  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span>Pulls available contact info including <strong>email and phone</strong> for each lead</span></div>
+  <div class="ls-bullet"><span class="ls-bullet-icon">&#9989;</span><span>Verifies contact info including <strong>direct email and phone</strong> for each lead</span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#128200;</span><span>Scores every lead HOT / WARM / COLD based on <strong>reviews, engagement, and business signals</strong></span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#9889;</span><span>Delivers a <strong>ready-to-outreach list</strong> in seconds — what used to take hours of manual research</span></div>
   <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>One click <strong>imports directly to your CRM</strong> and triggers your cold email sequence automatically</span></div>
@@ -2796,19 +2810,6 @@ var verticalConfig = {
     phIndustry: 'plumbing',
     phScript: 'followup'
   },
-  consulting: {
-    label: 'Consulting & Sales',
-    ceRole: 'Founder / Consultant, Sales Advisory',
-    ceContext: 'Lead flow exists but no consistent nurture, follow-up, or pipeline visibility. Proposals stall and warm conversations are not being worked systematically.',
-    prIndustry: 'Consulting & Sales',
-    prNotes: 'Consulting or sales-led business. Pain: too many warm leads go stale, follow-up is inconsistent, no clear nurture sequence, and proposals die after first send.',
-    nlAudience: 'professional services firms',
-    smAudience: 'Consultants, coaches, and sales leaders',
-    seoTopic: 'AI automation for consultants and sales teams',
-    lsType: 'Law Firms',
-    phIndustry: 'realestate',
-    phScript: 'followup'
-  },
   legal: {
     label: 'Legal',
     ceRole: 'Managing Partner / Attorney',
@@ -2835,6 +2836,21 @@ var verticalConfig = {
     phIndustry: 'plumbing',
     phScript: 'discovery'
   }
+  },
+  consultingsales: {
+    label: 'Consulting & Sales',
+    ceRole: 'Founder / Principal, Consulting & Sales',
+    ceContext: 'Strong expertise but inconsistent pipeline. Follow-up is manual, proposals stall, and warm leads are not being nurtured with a repeatable system.',
+    prIndustry: 'Consulting / Sales',
+    prNotes: 'Runs a consulting or sales driven business. Pain: inconsistent lead flow, manual follow-up, proposals go quiet, and there is no structured nurture process. Wants a cleaner sales engine without adding headcount.',
+    nlAudience: 'professional services firms',
+    smAudience: 'Consultants, agencies, and sales-led service businesses',
+    seoTopic: 'lead generation for consultants and sales firms',
+    lsType: 'Law Firms',
+    phIndustry: 'plumbing',
+    phScript: 'qualify'
+
+  }
 };
 
 // Update button label as contact name is typed
@@ -2855,93 +2871,95 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function startDemo() {
-  function byId(id) { return document.getElementById(id); }
-  function setValue(id, value) {
-    var el = byId(id);
-    if (!el) return;
-    el.value = value;
-  }
-  function setText(id, value) {
-    var el = byId(id);
-    if (!el) return;
-    el.textContent = value;
-  }
-  function setSelectValue(id, value) {
-    var el = byId(id);
-    if (!el || !el.options) return;
-    for (var i = 0; i < el.options.length; i++) {
-      if (el.options[i].value === value) {
-        el.selectedIndex = i;
-        return;
-      }
-    }
-  }
-
-  prospect.contact = (byId('intro-contact') && byId('intro-contact').value.trim()) || 'the prospect';
-  prospect.company = (byId('intro-company') && byId('intro-company').value.trim()) || 'their business';
-  prospect.vertical = (byId('intro-vertical') && byId('intro-vertical').value) || 'trades';
-  prospect.teamSize = (byId('intro-teamsize') && byId('intro-teamsize').value) || 'small';
+  prospect.contact = document.getElementById('intro-contact').value.trim() || 'the prospect';
+  prospect.company = document.getElementById('intro-company').value.trim() || 'their business';
+  prospect.vertical = document.getElementById('intro-vertical').value || 'trades';
+  prospect.teamSize = document.getElementById('intro-teamsize').value || 'small';
 
   var cfg = verticalConfig[prospect.vertical] || verticalConfig['trades'];
 
-  setValue('ce-name', prospect.contact);
-  setValue('ce-company', prospect.company);
-  setValue('ce-role', cfg.ceRole);
-  setValue('ce-context', cfg.ceContext);
+  // Pre-fill Cold Email
+  document.getElementById('ce-name').value = prospect.contact;
+  document.getElementById('ce-company').value = prospect.company;
+  document.getElementById('ce-role').value = cfg.ceRole;
+  document.getElementById('ce-context').value = cfg.ceContext;
 
-  setValue('pr-client', prospect.contact);
-  setValue('pr-biz', prospect.company);
-  setValue('pr-industry', cfg.prIndustry);
-  setValue('pr-notes', cfg.prNotes);
+  // Pre-fill Proposal
+  document.getElementById('pr-client').value = prospect.contact;
+  document.getElementById('pr-biz').value = prospect.company;
+  document.getElementById('pr-industry').value = cfg.prIndustry;
+  document.getElementById('pr-notes').value = cfg.prNotes;
 
-  setValue('fu-name', prospect.contact);
-  setValue('fu-biz', prospect.company + ' — ' + cfg.label);
-  setValue('fu-context', cfg.ceContext);
+  // Pre-fill Follow-Up
+  document.getElementById('fu-name').value = prospect.contact;
+  document.getElementById('fu-biz').value = prospect.company + ' — ' + cfg.label;
+  document.getElementById('fu-context').value = cfg.ceContext;
 
-  setSelectValue('nl-industry', cfg.nlAudience);
-  setValue('sm-audience', cfg.smAudience);
+  // Pre-fill Newsletter audience
+  var nlIndustry = document.getElementById('nl-industry');
+  for (var i = 0; i < nlIndustry.options.length; i++) {
+    if (nlIndustry.options[i].value === cfg.nlAudience) { nlIndustry.selectedIndex = i; break; }
+  }
 
-  setValue('seo-topic', cfg.seoTopic);
-  setValue('seo-biz', prospect.company);
+  // Pre-fill Social audience
+  document.getElementById('sm-audience').value = cfg.smAudience;
 
-  setSelectValue('ls-type', cfg.lsType);
-  setValue('ads-audience', cfg.smAudience);
+  // Pre-fill SEO
+  document.getElementById('seo-topic').value = cfg.seoTopic;
+  document.getElementById('seo-biz').value = prospect.company;
 
-  setValue('ph-name', prospect.contact);
-  setValue('ph-biz', prospect.company);
-  setSelectValue('ph-industry', cfg.phIndustry);
-  setSelectValue('ph-script', cfg.phScript);
+  // Pre-fill Find Leads
+  var lsType = document.getElementById('ls-type');
+  for (var j = 0; j < lsType.options.length; j++) {
+    if (lsType.options[j].value === cfg.lsType) { lsType.selectedIndex = j; break; }
+  }
 
-  setValue('ct-client', prospect.contact);
-  setValue('inv-client', prospect.company);
-  setText('inv-trigger-text', 'Contract signed by ' + prospect.company);
+  // Pre-fill Ad Campaigns
+  document.getElementById('ads-audience').value = cfg.smAudience;
 
+  // Pre-fill Phone Agent
+  document.getElementById('ph-name').value = prospect.contact;
+  document.getElementById('ph-biz').value = prospect.company;
+  var phInd = document.getElementById('ph-industry');
+  for (var k = 0; k < phInd.options.length; k++) {
+    if (phInd.options[k].value === cfg.phIndustry) { phInd.selectedIndex = k; break; }
+  }
+  var phScript = document.getElementById('ph-script');
+  for (var m = 0; m < phScript.options.length; m++) {
+    if (phScript.options[m].value === cfg.phScript) { phScript.selectedIndex = m; break; }
+  }
+
+  // Pre-fill Contracts / Invoicing
+  document.getElementById('ct-client').value = prospect.contact;
+  document.getElementById('inv-client').value = prospect.company;
+  var invTrigger = document.getElementById('inv-trigger-text');
+  if (invTrigger) invTrigger.textContent = 'Contract signed by ' + prospect.company;
+
+  // Update home hero to reference prospect
   var heroP = document.querySelector('#panel-home .home-hero p');
   if (heroP) heroP.textContent = '12 AI stations — customized for ' + prospect.company + ' (' + cfg.label + '). Select any station to see it live.';
 
-  setText('prospectBadgeText', prospect.contact + ' · ' + prospect.company);
-  var badge = byId('prospectBadge');
-  if (badge) badge.style.display = 'flex';
+  // Show prospect badge in topnav
+  document.getElementById('prospectBadgeText').textContent = prospect.contact + ' · ' + prospect.company;
+  document.getElementById('prospectBadge').style.display = 'flex';
 
+  // Update ROI sub-label
   var calcSub = document.querySelector('.roi-calc-sub');
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
-  var screen = byId('introScreen');
-  if (screen) {
-    screen.classList.add('hidden');
-    setTimeout(function() {
-      screen.style.display = 'none';
-      var topNav = byId('topNav');
-      var mainContent = byId('mainContent');
-      if (topNav) topNav.style.display = 'block';
-      if (mainContent) mainContent.style.display = 'block';
-    }, 400);
-  }
+  // Dismiss intro screen and reveal app
+  var screen = document.getElementById('introScreen');
+  screen.classList.add('hidden');
+  setTimeout(function() {
+    screen.style.display = 'none';
+    document.getElementById('topNav').style.display = 'block';
+    document.getElementById('mainContent').style.display = 'block';
+  }, 400);
 
-  if (typeof initROI === 'function') initROI();
-  if (typeof updateLeadImpactPreview === 'function') updateLeadImpactPreview();
+  // Initialize ROI at zero
+  initROI();
+  updateLeadImpactPreview();
 }
-
 
 function resetIntro() {
   document.getElementById('topNav').style.display = 'none';
@@ -3523,3 +3541,167 @@ function runLeadScan() {
     html += '</tbody></table>';
 
     document.getElementById('ls-body').innerHTML = html;
+    document.getElementById('ls-out').style.display = 'block';
+    document.getElementById('ls-out').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    demoComplete('find-leads');
+  }, 4400);
+}
+
+function importToCRM() {
+  var btn = document.getElementById('ls-crm-btn');
+  btn.textContent = 'Importing…';
+  btn.disabled = true;
+
+  setTimeout(function() {
+    var leads = document.querySelectorAll('#ls-body .lead-row-new').length || 5;
+    document.getElementById('ls-crm-confirm').style.display = 'block';
+    document.getElementById('ls-crm-body').innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:10px">' +
+      '<div class="crm-field"><div class="crm-key">Records Imported</div><div class="crm-val">' + leads + ' leads</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Destination</div><div class="crm-val">HubSpot CRM — Leads Pipeline</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Tags Applied</div><div class="crm-val">AI-Sourced, Needs Outreach</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Follow-Up Sequence</div><div class="crm-val"><span class="crm-val tag qualified">✓ Cold Email Sequence Triggered</span></div></div>' +
+      '<div class="crm-field"><div class="crm-key">Assigned To</div><div class="crm-val">Dave — Breakout AI Solutions</div></div>' +
+      '</div>';
+    document.getElementById('ls-crm-confirm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    btn.textContent = '✓ Imported';
+  }, 1200);
+}
+
+
+
+// ══════════════════════════════════════════
+// PHONE AGENT DEMO
+// ══════════════════════════════════════════
+var phoneScripts = {
+  discovery: [
+    { role:'ai', text:"Hi, this is Aria calling from Breakout AI Solutions. Am I speaking with {name}?" },
+    { role:'lead', text:"Yeah, this is {name}. Who is this?" },
+    { role:'ai', text:"Hi {name}! I'm an AI assistant for Breakout AI Solutions. You filled out our contact form about AI automation for {biz} — is now a good moment for a couple quick questions?" },
+    { role:'lead', text:"Sure, I've got a few minutes." },
+    { role:'ai', text:"Great. What's the biggest time drain in your business right now — follow-ups, scheduling, paperwork, or something else?" },
+    { role:'lead', text:"Honestly? Follow-ups. We quote jobs and then lose track. Half the time the competitor calls before we do." },
+    { role:'ai', text:"That's exactly what we hear from most {biz_type} owners. You're leaving revenue on the table every week. Have you looked at automation tools before, or is this new territory?" },
+    { role:'lead', text:"We tried something with email once. Didn't stick. I don't want anything complicated." },
+    { role:'ai', text:"Completely understand — our approach is human-first, built around how you already work. I'm flagging you as high-priority and having Dave reach out personally within the hour. Does that work?" },
+    { role:'lead', text:"Yeah that's fine. Have him call my cell." },
+    { role:'ai', text:"Perfect. Everything's logged and Dave will call you shortly. Thanks {name} — talk soon!" }
+  ],
+  qualify: [
+    { role:'ai', text:"Hi, may I speak with {name}? This is Aria from Breakout AI Solutions." },
+    { role:'lead', text:"Speaking." },
+    { role:'ai', text:"Hi {name}, quick question — is {biz} handling digital follow-up with customers currently, or mostly manual?" },
+    { role:'lead', text:"Mostly manual. We have one person but it's inconsistent." },
+    { role:'ai', text:"How many new leads or quotes do you send out per week roughly?" },
+    { role:'lead', text:"Probably 15 to 20." },
+    { role:'ai', text:"And what's your average job value?" },
+    { role:'lead', text:"Anywhere from $800 to $3,000 depending on the job." },
+    { role:'ai', text:"You're a strong fit. I'm marking you as qualified and sending your info to Dave now for a no-cost audit proposal. Sound good?" },
+    { role:'lead', text:"Yeah, send it over." }
+  ],
+  followup: [
+    { role:'ai', text:"Hi {name}, this is Aria from Breakout AI. Following up on the proposal Dave sent for {biz} — did you get a chance to look at it?" },
+    { role:'lead', text:"Yeah I glanced at it. Still thinking." },
+    { role:'ai', text:"That's fair. Was there anything that gave you pause?" },
+    { role:'lead', text:"Mainly the price. I want to make sure it's worth it." },
+    { role:'ai', text:"Completely reasonable. Based on your numbers — 15 to 20 quotes a week at around $2,000 average — recapturing even 2 lost jobs a month adds $4,000 in revenue. The investment typically pays for itself in 30 days." },
+    { role:'lead', text:"When you put it that way..." },
+    { role:'ai', text:"I'll let Dave know you're warm and he'll call today to walk through the ROI. Fair enough?" },
+    { role:'lead', text:"Yeah have him call me." }
+  ]
+};
+
+var phoneTimer = null;
+var phoneSeconds = 0;
+
+function runPhoneCall() {
+  var name = document.getElementById('ph-name').value || 'Marcus Rivera';
+  var biz = document.getElementById('ph-biz').value || 'your business';
+  var industry = document.getElementById('ph-industry').value;
+  var scriptKey = document.getElementById('ph-script').value;
+  var bizTypes = { plumbing:'plumbing company', realestate:'real estate business', medspa:'med spa', restaurant:'restaurant' };
+  var bizType = bizTypes[industry] || 'business';
+  var script = phoneScripts[scriptKey];
+  var lines = [];
+  for (var i = 0; i < script.length; i++) {
+    lines.push({ role: script[i].role, text: script[i].text.replace(/{name}/g, name.split(' ')[0]).replace(/{biz}/g, biz).replace(/{biz_type}/g, bizType) });
+  }
+  document.getElementById('ph-btn').disabled = true;
+  document.getElementById('ph-transcript').innerHTML = '';
+  document.getElementById('ph-typing').style.display = 'none';
+  document.getElementById('ph-crm').style.display = 'none';
+  document.getElementById('ph-meta').style.display = 'none';
+  document.getElementById('ph-call-status').textContent = 'Dialing ' + name + '…';
+  document.getElementById('ph-out').style.display = 'block';
+  document.getElementById('ph-out').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  phoneSeconds = 0;
+  if (phoneTimer) clearInterval(phoneTimer);
+  phoneTimer = setInterval(function() {
+    phoneSeconds++;
+    var m = Math.floor(phoneSeconds/60), s = phoneSeconds%60;
+    document.getElementById('ph-timer').textContent = m + ':' + (s<10?'0':'') + s;
+  }, 1000);
+  setTimeout(function() { document.getElementById('ph-call-status').textContent = 'Call Connected'; playLines(lines, 0, name, biz); }, 1400);
+}
+
+function playLines(lines, idx, name, biz) {
+  if (idx >= lines.length) {
+    if (phoneTimer) clearInterval(phoneTimer);
+    document.getElementById('ph-call-status').textContent = '✓ Call Complete — CRM Updated';
+    showCRMLog(name, biz);
+    document.getElementById('ph-btn').disabled = false;
+    var transcript = document.getElementById('ph-transcript');
+    var tc = document.createElement('div');
+    tc.id = 'ph-transfer-card';
+    tc.style.cssText = 'margin-top:12px;padding:12px 14px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.28);border-radius:10px';
+    var fn = name.split(' ')[0];
+    tc.innerHTML = '<div style="font-size:13px;color:var(--text-dim);margin-bottom:10px">&#127881; <strong style="color:var(--text)">' + esc(fn) + ' said yes</strong> — transfer to Dave or schedule?</div>' +
+      '<div style="display:flex;gap:8px">' +
+      '<button class="btn-sm" style="background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);color:var(--success)" onclick="doLiveTransfer(this,\'' + fn + '\')">&#9654; Live Transfer Now</button>' +
+      '<button class="btn-sm" onclick="skipTransfer(this,\'' + fn + '\')">&#128197; Schedule Meeting</button>' +
+      '</div>';
+    transcript.appendChild(tc);
+    transcript.scrollTop = transcript.scrollHeight;
+    return;
+  }
+  var line = lines[idx];
+  var typingEl = document.getElementById('ph-typing');
+  var transcript = document.getElementById('ph-transcript');
+  typingEl.style.display = 'block';
+  typingEl.textContent = line.role === 'ai' ? 'AI Agent speaking…' : name.split(' ')[0] + ' responding…';
+  var delay = Math.min(line.role === 'ai' ? 1200 + line.text.length * 16 : 900 + line.text.length * 12, 3000);
+  setTimeout(function() {
+    typingEl.style.display = 'none';
+    var bubble = document.createElement('div');
+    bubble.className = 'call-bubble ' + (line.role === 'ai' ? 'ai' : 'lead');
+    bubble.innerHTML = '<div class="bubble-avatar ' + (line.role==='ai'?'ai-av':'lead-av') + '">' + (line.role==='ai'?'&#129302;':'&#128100;') + '</div>' +
+      '<div><div class="bubble-label">' + (line.role==='ai' ? 'AI AGENT — ARIA' : name.toUpperCase()) + '</div>' +
+      '<div class="bubble-text">' + esc(line.text) + '</div></div>';
+    transcript.appendChild(bubble);
+    transcript.scrollTop = transcript.scrollHeight;
+    setTimeout(function() { playLines(lines, idx+1, name, biz); }, line.role==='ai' ? 500 : 700);
+  }, delay);
+}
+
+function doLiveTransfer(btn, name) {
+  var card = document.getElementById('ph-transfer-card');
+  if (card) card.innerHTML = '<div style="font-size:13px;color:var(--text-dim)">&#128222; Transferring <strong style="color:var(--text)">' + esc(name) + '</strong> to Dave… <span style="color:var(--text-dimmer)">(ringing)</span></div>';
+  setTimeout(function() {
+    if (card) card.innerHTML = '<div style="font-size:13px;color:var(--success)">&#10003; Live transfer complete — Dave is now on the call with ' + esc(name) + '</div>';
+    liveActivityFeed.unshift({ dot:'green', text:'Live transfer — ' + name + ' connected to Dave', time:'just now' });
+  }, 2200);
+}
+
+function skipTransfer(btn, name) {
+  var card = document.getElementById('ph-transfer-card');
+  if (card) card.innerHTML = '<div style="font-size:13px;color:var(--text-dim)">&#128197; Meeting scheduled — Calendly link sent to ' + esc(name) + '</div>';
+  liveActivityFeed.unshift({ dot:'blue', text:'Meeting scheduled — ' + name + ' booked via Calendly', time:'just now' });
+}
+
+function showCRMLog(name, biz) {
+  var now = new Date();
+  var timeStr = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  var dateStr = now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  document.getElementById('ph-crm-body').innerHTML =
+    '<div class="crm-field"><div class="crm-key">Contact</div><div class="crm-val">' + esc(name) + '</div></div>' +
+    '<div class="crm-field"><div class="crm-key">Bu
