@@ -118,7 +118,7 @@ scrollbar-width: none;
 .nav-tabs::-webkit-scrollbar { display: none; }
 
 .nav-tab {
-display: flex; align-items: center; gap: 6px;
+display: flex; align-items: center; gap: 0;
 padding: 7px 13px;
 border-radius: 8px;
 cursor: pointer;
@@ -153,7 +153,7 @@ content: ' â';
 font-size: 10px;
 }
 
-.tab-icon { font-size: 14px; }
+.tab-icon { display: none; }
 
 /* Separator between live and integration tabs */
 .tab-sep {
@@ -667,7 +667,7 @@ line-height: 1.7;
 .station-tile { background: var(--navy2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; text-align: left; }
 .station-tile:hover { border-color: var(--blue-border); background: var(--navy3); transform: translateY(-2px); }
 .station-tile.live-tile:hover { box-shadow: 0 8px 32px rgba(59,130,246,0.15); }
-.tile-icon { font-size: 20px; margin-bottom: 7px; }
+.tile-icon { display: none; }
 .tile-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
 .tile-desc { font-size: 11px; color: var(--text-dimmer); font-weight: 300; line-height: 1.4; }
 .tile-badge { margin-top: 8px; }
@@ -1226,47 +1226,6 @@ color: var(--text-dim);
 }
 .criteria-note strong { color: var(--blue-bright); }
 
-.criteria-actions { display:flex; align-items:center; gap:10px; }
-.criteria-toggle-btn {
-background: rgba(255,255,255,0.06);
-border: 1px solid var(--glass-border);
-color: var(--text);
-border-radius: 999px;
-width: 36px;
-height: 36px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-font-family: 'DM Sans', sans-serif;
-font-size: 24px;
-line-height: 1;
-transition: all 0.18s;
-}
-.criteria-toggle-btn:hover { border-color: var(--blue-border); background: var(--blue-glow); color: var(--blue-bright); }
-.criteria-toggle-btn #criteriaToggleLabel { display:none; }
-.criteria-toggle-icon { display:inline-flex; align-items:center; justify-content:center; transform: translateY(-1px); }
-.criteria-body { display:block; }
-.criteria-minibar {
-display:none;
-align-items:center;
-gap:8px;
-padding-top:10px;
-border-top: 1px solid var(--glass-border);
-margin-top: 12px;
-cursor:pointer;
-font-size: 13px;
-color: var(--text-dim);
-}
-.criteria-minibar strong { color: var(--blue-bright); font-weight:700; }
-.criteria-card.minimized .criteria-body { display:none; }
-.criteria-card.minimized .criteria-minibar { display:flex !important; }
-.criteria-card.minimized { padding-bottom: 18px; }
-.nav-tab .tab-icon, .tile-icon { display:none !important; }
-.nav-tab { gap: 0; }
-.station-tile { padding-top: 22px; }
-
-
 @media (max-width: 768px) {
 .criteria-wrap { padding: 0 16px; }
 .criteria-grid { grid-template-columns: 1fr; }
@@ -1403,72 +1362,57 @@ color: var(--text-dim);
 
 <div class="main" id="mainContent">
 
-
+<div class="criteria-wrap">
+  <div class="criteria-card">
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-sub">No launch step needed</div>
+    </div>
+    <div class="criteria-grid">
+      <div class="field">
+        <label>Prospect First Name</label>
+        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
+      </div>
+      <div class="field">
+        <label>Vertical</label>
+        <select class="sel" id="crit-vertical">
+          <option value="homeservices" selected>Home Services</option>
+          <option value="salesmarketing">Sales and Marketing</option>
+          <option value="ecommerce">E Commerce</option>
+          <option value="professionalservices">Professional Services</option>
+          <option value="realestate">Real Estate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team Size</label>
+        <select class="sel" id="crit-teamsize">
+          <option value="solo">Solo / 1 person</option>
+          <option value="small" selected>2-5 people</option>
+          <option value="medium">6-15 people</option>
+          <option value="large">16-50 people</option>
+        </select>
+      </div>
+    </div>
+    <div class="criteria-note">
+      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
+    </div>
+  </div>
+</div>
 
 
  <!-- ââââââââââââââââââââââââââââââââââââââââââ
  HOME
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
- 
  <div class="panel active" id="panel-home">
- <div class="criteria-wrap home-criteria-wrap" id="homeCriteriaWrap">
-  <div class="criteria-card" id="criteriaCard">
-    <div class="criteria-head">
-      <div>
-        <div class="criteria-title">Demo Criteria</div>
-        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
-      </div>
-      <div class="criteria-actions">
-        <button class="criteria-toggle-btn" id="criteriaToggleBtn" type="button" onclick="toggleCriteriaCard()">
-          <span id="criteriaToggleLabel">Minimize</span>
-          <span class="criteria-toggle-icon" id="criteriaToggleIcon">â</span>
-        </button>
-      </div>
-    </div>
-    <div class="criteria-body" id="criteriaBody">
-      <div class="criteria-grid">
-        <div class="field">
-          <label>Prospect First Name</label>
-          <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
-        </div>
-        <div class="field">
-          <label>Company Name</label>
-          <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
-        </div>
-        <div class="field">
-          <label>Vertical</label>
-          <select class="sel" id="crit-vertical">
-            <option value="homeservices" selected>Home Services</option>
-            <option value="salesmarketing">Sales and Marketing</option>
-            <option value="ecommerce">E Commerce</option>
-            <option value="professionalservices">Professional Services</option>
-            <option value="realestate">Real Estate</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Team Size</label>
-          <select class="sel" id="crit-teamsize">
-            <option value="solo">Solo / 1 person</option>
-            <option value="small" selected>2-5 people</option>
-            <option value="medium">6-15 people</option>
-            <option value="large">16-50 people</option>
-          </select>
-        </div>
-      </div>
-      <div class="criteria-note">
-        Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services | HVAC</strong>. Update any field and the station defaults refresh automatically.
-      </div>
-    </div>
-    <div class="criteria-minibar" id="criteriaMinibar" onclick="toggleCriteriaCard()" style="display:none">
-      <span class="criteria-minibar-label">Demo loaded for</span>
-      <strong id="criteriaMinibarSummary">Kelly â¢ Palm Desert AC Services | HVAC</strong>
-    </div>
-  </div>
- </div>
-
  <div class="home-hero">
-
  <h1>Your Business Runs on<br><span>Autopilot.</span></h1>
  <p>12 AI stations working together for an HVAC company in Palm Desert. Select a station below to see the canned demo flow.</p>
  </div>
@@ -4064,41 +4008,7 @@ function applyVerticalDefaults(key) {
 function updateCriteriaSummary() {
   var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
   var summary = document.getElementById('criteria-summary');
-  if (summary) summary.textContent = prospect.company + ' | ' + cfg.label;
-}
-
-function updateCriteriaMinibar() {
-  var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
-  var mini = document.getElementById('criteriaMinibarSummary');
-  if (mini) mini.textContent = prospect.contact + ' | ' + prospect.company + ' | ' + cfg.label;
-}
-
-function setCriteriaCollapsed(collapsed) {
-  var card = document.getElementById('criteriaCard');
-  var body = document.getElementById('criteriaBody');
-  var minibar = document.getElementById('criteriaMinibar');
-  var label = document.getElementById('criteriaToggleLabel');
-  var icon = document.getElementById('criteriaToggleIcon');
-  if (!card) return;
-  if (collapsed) {
-    card.classList.add('minimized');
-    if (body) body.style.display = 'none';
-    if (minibar) minibar.style.display = 'flex';
-    if (label) label.textContent = 'Expand';
-    if (icon) icon.textContent = '+';
-  } else {
-    card.classList.remove('minimized');
-    if (body) body.style.display = 'block';
-    if (minibar) minibar.style.display = 'none';
-    if (label) label.textContent = 'Minimize';
-    if (icon) icon.textContent = 'â';
-  }
-}
-
-function toggleCriteriaCard() {
-  var card = document.getElementById('criteriaCard');
-  if (!card) return;
-  setCriteriaCollapsed(!card.classList.contains('minimized'));
+  if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
 }
 
 function syncCriteriaToProspect() {
@@ -4127,7 +4037,6 @@ function syncCriteriaToProspect() {
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
   updateCriteriaSummary();
-  updateCriteriaMinibar();
 }
 
 
@@ -4594,7 +4503,6 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 
  syncCriteriaToProspect();
- setCriteriaCollapsed(false);
  updatePhonePresenterPrompts();
  initROI();
  applyPackageView();
@@ -5169,4 +5077,302 @@ function runAdCampaign() {
   setTimeout(function() {
     hideStatus('ads');
     var html = '';
-    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-siz
+    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
+    html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(--text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(--text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(--text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
+    html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block"><div class="seo-lbl">Offer Angle</div><p>Free audit, fast response, and a clear next step that gets prospects into the pipeline immediately.</p></div></div>';
+    html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(--blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
+    document.getElementById('ads-body').innerHTML = html;
+    document.getElementById('ads-out').style.display = 'block';
+    document.getElementById('ads-out').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    demoComplete('ads');
+  }, 1200);
+}
+
+function renderPipeline(bodyId, steps, doneCb) {
+  var html = '<div class="pipeline">';
+  for (var i = 0; i < steps.length; i++) {
+    var s = steps[i];
+    html += '<div class="pipe-step ' + (s.done ? 'done' : '') + ' ' + (s.active ? 'active' : '') + '">';
+    html += '<div class="pipe-dot">' + s.icon + '</div>';
+    html += '<div class="pipe-content"><div class="pipe-title">' + esc(s.title) + '</div><div class="pipe-detail">' + esc(s.detail) + '</div>';
+    if (s.time) html += '<div class="pipe-time">' + esc(s.time) + '</div>';
+    html += '</div></div>';
+  }
+  html += '</div>';
+  document.getElementById(bodyId).innerHTML = html;
+  if (doneCb) setTimeout(doneCb, 600);
+}
+
+// =============================================
+// DASHBOARD - station summary tiles
+// =============================================
+var dashActivities = [
+ { dot:'green', text:'Lead found - Desert Air HVAC (HOT) Â· Clay.com', time:'2 min ago' },
+ { dot:'blue', text:'AI call completed - Marcus Rivera qualified', time:'8 min ago' },
+ { dot:'green', text:'Contract signed - Sarah Johnson ($2,500)', time:'14 min ago' },
+ { dot:'blue', text:'Meeting booked - Tom Keller, Tuesday 10:30 AM', time:'22 min ago' },
+ { dot:'green', text:'Invoice paid - Rivera Home Services ($6,500)', time:'1 hr ago' },
+ { dot:'yellow', text:'Follow-up SMS - 3 prospects (Day 4 trigger)', time:'2 hrs ago' },
+ { dot:'blue', text:'Newsletter scheduled - 847 subscribers', time:'3 hrs ago' },
+ { dot:'green', text:'Ad campaign live - Facebook + Instagram $1k/mo', time:'4 hrs ago' }
+];
+
+function refreshDash() {
+ var leads = demoStats.leads > 0 ? demoStats.leads + 18 : 24 + Math.floor(Math.random()*8);
+ var calls = completedDemos['phone-agent'] ? 12 + Math.floor(Math.random()*4) : 8 + Math.floor(Math.random()*5);
+ var revenue = demoStats.revenue > 0 ? demoStats.revenue + 9400 : 18400 + Math.floor(Math.random()*4200);
+ var proposals = completedDemos['proposal'] ? 8 + Math.floor(Math.random()*3) : 6 + Math.floor(Math.random()*4);
+ var signed = completedDemos['contracts'] ? Math.floor(proposals*0.55) : Math.floor(proposals*0.4);
+ var hours = demoStats.hoursSaved > 0 ? demoStats.hoursSaved + 14 : 31 + Math.floor(Math.random()*7);
+ var hotLeads = Math.floor(leads*0.4);
+ var invPending = 2 + Math.floor(Math.random()*3);
+ var smsToday = 8 + Math.floor(Math.random()*12);
+ var adSpend = 1000 + Math.floor(Math.random()*2000);
+
+ var tiles = [
+ { icon:'&#127919;', label:'Find Leads', color:'blue', panel:'find-leads',
+ items:[{dot:'green',text:leads+' leads this week'},{dot:'blue',text:hotLeads+' marked HOT'},{dot:'yellow',text:'Clay Â· Apollo Â· Google Maps'}],
+ footer:{text:'+'+(2+Math.floor(Math.random()*4))+' new since yesterday',color:'green'}},
+ { icon:'&#128269;', label:'SEO + AEO', color:'purple', panel:'seo',
+ items:[{dot:'green',text:'3 pages ranking page 1'},{dot:'blue',text:'Cited by AI 12x this week'},{dot:'yellow',text:'2 new opportunities'}],
+ footer:{text:'Organic traffic +31%',color:'green'}},
+ { icon:'&#128231;', label:'Smart CRM', color:'blue', panel:'cold-email',
+ items:[{dot:'green',text:'3 sequences active'},{dot:'blue',text:'47 sent Â· 22% open rate'},{dot:'yellow',text:'4 replies - 2 hot leads'}],
+ footer:{text:'Reply rate: 8.5%',color:'green'}},
+ { icon:'&#128222;', label:'Phone Agent', color:'green', panel:'phone-agent',
+ items:[{dot:'green',text:calls+' calls today'},{dot:'blue',text:Math.floor(calls*0.7)+' qualified'},{dot:'yellow',text:'2 transfers pending'}],
+ footer:{text:'Avg call: 3:42',color:'blue'}},
+ { icon:'&#128203;', label:'Proposals', color:'blue', panel:'proposal',
+ items:[{dot:'blue',text:proposals+' sent this week'},{dot:'green',text:Math.floor(proposals*0.6)+' opened'},{dot:'yellow',text:(proposals-Math.floor(proposals*0.6))+' unseen'}],
+ footer:{text:'Avg value: $3,200',color:'blue'}},
+ { icon:'&#9997;', label:'Contracts', color:'green', panel:'contracts',
+ items:[{dot:'green',text:signed+' signed this week'},{dot:'yellow',text:'2 awaiting signature'},{dot:'blue',text:'1 invoice triggered'}],
+ footer:{text:'$'+(signed*2800).toLocaleString()+' locked in',color:'green'}},
+ { icon:'&#128176;', label:'Invoicing', color:'green', panel:'invoicing',
+ items:[{dot:'green',text:'$'+revenue.toLocaleString()+' collected'},{dot:'yellow',text:invPending+' pending payment'},{dot:'red',text:'1 overdue - Day 7 reminder'}],
+ footer:{text:'â 23% vs last month',color:'green'}},
+ { icon:'&#128172;', label:'Follow-Up SMS', color:'yellow', panel:'followup',
+ items:[{dot:'green',text:smsToday+' messages today'},{dot:'blue',text:'3 triggers active'},{dot:'yellow',text:'2 replies need response'}],
+ footer:{text:'94% delivery rate',color:'green'}},
+ { icon:'&#128241;', label:'Social Media', color:'purple', panel:'social',
+ items:[{dot:'green',text:'5 posts scheduled'},{dot:'blue',text:'Instagram Â· Facebook Â· LinkedIn'},{dot:'yellow',text:'1 pending approval'}],
+ footer:{text:'Reach +18% this week',color:'green'}},
+ { icon:'&#128226;', label:'Ad Campaigns', color:'blue', panel:'ads',
+ items:[{dot:'green',text:'$'+adSpend.toLocaleString()+'/mo Â· 2 live'},{dot:'blue',text:'CTR: 3.2% Â· CPL: $'+(18+Math.floor(Math.random()*14))},{dot:'yellow',text:'Budget 68% spent'}],
+ footer:{text:'ROAS: 3.8x this month',color:'green'}},
+ { icon:'&#9993;', label:'Newsletter', color:'blue', panel:'newsletter',
+ items:[{dot:'green',text:'847 subscribers Â· 38% open'},{dot:'blue',text:'Next: Monday 9AM'},{dot:'yellow',text:'1 draft awaiting approval'}],
+ footer:{text:'+24 new subs this week',color:'green'}},
+ { icon:'&#9201;', label:'Hours Saved', color:'yellow', panel:'home',
+ items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blue',text:'~$'+(28*hours).toLocaleString()+' in labor cost'},{dot:'yellow',text:demoStats.demosRun+' of 12 stations active'}],
+ footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
+ ];
+
+ var html = '';
+ for (var i = 0; i < tiles.length; i++) {
+ var t = tiles[i];
+ var done = completedDemos[t.panel];
+ var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
+ html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
+ if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
+ html += '<div class="dash-tile-icon">' + t.icon + '</div>';
+ html += '<div class="dash-tile-label">' + t.label + '</div>';
+ html += '<div class="dash-tile-items">';
+ for (var j = 0; j < t.items.length; j++) {
+ html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
+ }
+ html += '</div>';
+ html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
+ html += '</div>';
+ }
+ document.getElementById('dashGrid').innerHTML = html;
+
+ var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
+ var existAct = document.getElementById('dashActivity');
+ if (existAct) existAct.remove();
+ var actDiv = document.createElement('div');
+ actDiv.id = 'dashActivity';
+ actDiv.className = 'dash-activity';
+ var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
+ for (var k = 0; k < combined.length; k++) {
+ var a = combined[k];
+ actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
+ }
+ actDiv.innerHTML = actHtml;
+ document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
+}
+
+var dashInited = false;
+var _sp = showPanel;
+showPanel = function(id) {
+ _sp(id);
+ if (id === 'dashboard-station') {
+ if (!dashInited) { dashInited = true; }
+ refreshDash();
+ demoComplete('dashboard-station');
+ }
+};
+
+document.addEventListener('keydown', function(e) {
+ if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
+ var active = document.querySelector('.panel.active');
+ if (!active) return;
+ var id = active.id.replace('panel-','');
+ var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
+ if (map[id]) map[id]();
+});
+
+function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
+  var hoursEl = document.getElementById(hoursId);
+  var rateEl = document.getElementById(rateId);
+  var impactEl = document.getElementById(impactId);
+  if (!hoursEl || !rateEl || !impactEl) return;
+  var hours = parseFloat(hoursEl.value || '0') || 0;
+  var rate = parseFloat(rateEl.value || '0') || 0;
+  var weekly = Math.round(hours * rate);
+  var annual = Math.round(weekly * 52);
+  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
+}
+
+function setupTaskCalculators() {
+  var calculators = [
+    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
+    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
+    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
+    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
+    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
+    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
+    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
+    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
+    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
+    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
+    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
+    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
+  ];
+  calculators.forEach(function(cfg) {
+    var hoursEl = document.getElementById(cfg[0]);
+    var rateEl = document.getElementById(cfg[1]);
+    if (!hoursEl || !rateEl) return;
+    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
+    hoursEl.addEventListener('input', fn);
+    rateEl.addEventListener('change', fn);
+    fn();
+  });
+}
+
+setupTaskCalculators();
+</script>
+
+
+<script>
+(function(){
+  var defaults = {
+    contact: 'Kelly',
+    company: 'Palm Desert AC Services',
+    vertical: 'homeservices',
+    teamSize: 'small'
+  };
+
+  function byId(id){ return document.getElementById(id); }
+  function setIfPossible(id, value){ var el = byId(id); if (el) el.value = value; }
+  function setText(sel, value){ var el = typeof sel === 'string' ? document.querySelector(sel) : sel; if (el) el.textContent = value; }
+
+  function applyDefaults(){
+    setIfPossible('crit-contact', defaults.contact);
+    setIfPossible('crit-company', defaults.company);
+    setIfPossible('crit-vertical', defaults.vertical);
+    setIfPossible('crit-teamsize', defaults.teamSize);
+
+    var summary = byId('criteria-summary');
+    if (summary) summary.textContent = defaults.company + ' â¢ HVAC';
+
+    var hero = document.querySelector('#panel-home .home-hero p');
+    if (hero) hero.textContent = '12 AI stations customized for ' + defaults.company + ' (HVAC). Select a station below to see it live.';
+
+    var badge = byId('prospectBadge');
+    var badgeText = byId('prospectBadgeText');
+    if (badge) badge.style.display = 'flex';
+    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
+
+    if (typeof window.prospect === 'object' && window.prospect) {
+      window.prospect.contact = defaults.contact;
+      window.prospect.company = defaults.company;
+      window.prospect.vertical = defaults.vertical;
+      window.prospect.teamSize = defaults.teamSize;
+    }
+
+    if (typeof window.applyVerticalDefaults === 'function') {
+      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
+    }
+    if (typeof window.updateCriteriaSummary === 'function') {
+      try { window.updateCriteriaSummary(); } catch (e) {}
+    }
+  }
+
+  function activatePanel(id){
+    if (!id) return false;
+    var panel = byId('panel-' + id);
+    if (!panel) return false;
+
+    var panels = document.querySelectorAll('.panel');
+    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+
+    panel.classList.add('active');
+
+    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
+    if (activeTab) activeTab.classList.add('active');
+
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
+    return true;
+  }
+
+  window.showPanel = activatePanel;
+
+  function inferPanelName(el){
+    if (!el) return '';
+    var direct = el.getAttribute('data-panel');
+    if (direct) return direct;
+    var onclickAttr = el.getAttribute('onclick') || '';
+    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
+    return m ? m[1] : '';
+  }
+
+  function bindStations(){
+    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
+    for (var i = 0; i < nodes.length; i++) {
+      (function(node){
+        var panelId = inferPanelName(node);
+        if (!panelId) return;
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          activatePanel(panelId);
+        }, true);
+      })(nodes[i]);
+    }
+  }
+
+  function boot(){
+    applyDefaults();
+    bindStations();
+    activatePanel('home');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  setTimeout(boot, 50);
+  setTimeout(boot, 250);
+  setTimeout(boot, 750);
+})();
+</script>
+
+</body>
+</html>
