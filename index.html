@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -2690,6 +2690,10 @@ function esc(s) {
  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+function escapeHtml(s) {
+ return esc(s);
+}
+
 function showStatus(pfx) {
  document.getElementById(pfx+'-status').style.display = 'flex';
  document.getElementById(pfx+'-error').style.display = 'none';
@@ -5148,7 +5152,4 @@ function refreshDash() {
  items:[{dot:'green',text:'$'+adSpend.toLocaleString()+'/mo Â· 2 live'},{dot:'blue',text:'CTR: 3.2% Â· CPL: $'+(18+Math.floor(Math.random()*14))},{dot:'yellow',text:'Budget 68% spent'}],
  footer:{text:'ROAS: 3.8x this month',color:'green'}},
  { icon:'&#9993;', label:'Newsletter', color:'blue', panel:'newsletter',
- items:[{dot:'green',text:'847 subscribers Â· 38% open'},{dot:'blue',text:'Next: Monday 9AM'},{dot:'yellow',text:'1 draft awaiting approval'}],
- footer:{text:'+24 new subs this week',color:'green'}},
- { icon:'&#9201;', label:'Hours Saved', color:'yellow', panel:'home',
- items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blu
+ items:[{
