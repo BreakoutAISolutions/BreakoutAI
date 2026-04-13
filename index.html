@@ -1362,57 +1362,72 @@ color: var(--text-dim);
 
 <div class="main" id="mainContent">
 
-<div class="criteria-wrap">
-  <div class="criteria-card">
-    <div class="criteria-head">
-      <div>
-        <div class="criteria-title">Demo Criteria</div>
-        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
-      </div>
-      <div class="criteria-sub">No launch step needed</div>
-    </div>
-    <div class="criteria-grid">
-      <div class="field">
-        <label>Prospect First Name</label>
-        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
-      </div>
-      <div class="field">
-        <label>Company Name</label>
-        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
-      </div>
-      <div class="field">
-        <label>Vertical</label>
-        <select class="sel" id="crit-vertical">
-          <option value="homeservices" selected>Home Services</option>
-          <option value="salesmarketing">Sales and Marketing</option>
-          <option value="ecommerce">E Commerce</option>
-          <option value="professionalservices">Professional Services</option>
-          <option value="realestate">Real Estate</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Team Size</label>
-        <select class="sel" id="crit-teamsize">
-          <option value="solo">Solo / 1 person</option>
-          <option value="small" selected>2-5 people</option>
-          <option value="medium">6-15 people</option>
-          <option value="large">16-50 people</option>
-        </select>
-      </div>
-    </div>
-    <div class="criteria-note">
-      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
-    </div>
-  </div>
-</div>
+
 
 
  <!-- ââââââââââââââââââââââââââââââââââââââââââ
  HOME
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
+ 
  <div class="panel active" id="panel-home">
+ <div class="criteria-wrap home-criteria-wrap" id="homeCriteriaWrap">
+  <div class="criteria-card" id="criteriaCard">
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-actions">
+        <button class="criteria-toggle-btn" id="criteriaToggleBtn" type="button" onclick="toggleCriteriaCard()">
+          <span id="criteriaToggleLabel">Minimize</span>
+          <span class="criteria-toggle-icon" id="criteriaToggleIcon">â´</span>
+        </button>
+      </div>
+    </div>
+    <div class="criteria-body" id="criteriaBody">
+      <div class="criteria-grid">
+        <div class="field">
+          <label>Prospect First Name</label>
+          <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
+        </div>
+        <div class="field">
+          <label>Company Name</label>
+          <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
+        </div>
+        <div class="field">
+          <label>Vertical</label>
+          <select class="sel" id="crit-vertical">
+            <option value="homeservices" selected>Home Services</option>
+            <option value="salesmarketing">Sales and Marketing</option>
+            <option value="ecommerce">E Commerce</option>
+            <option value="professionalservices">Professional Services</option>
+            <option value="realestate">Real Estate</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Team Size</label>
+          <select class="sel" id="crit-teamsize">
+            <option value="solo">Solo / 1 person</option>
+            <option value="small" selected>2-5 people</option>
+            <option value="medium">6-15 people</option>
+            <option value="large">16-50 people</option>
+          </select>
+        </div>
+      </div>
+      <div class="criteria-note">
+        Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
+      </div>
+    </div>
+    <div class="criteria-minibar" id="criteriaMinibar" onclick="toggleCriteriaCard()" style="display:none">
+      <span class="criteria-minibar-label">Demo loaded for</span>
+      <strong id="criteriaMinibarSummary">Kelly â¢ Palm Desert AC Services â¢ HVAC</strong>
+    </div>
+  </div>
+ </div>
+
  <div class="home-hero">
+
  <h1>Your Business Runs on<br><span>Autopilot.</span></h1>
  <p>12 AI stations working together for an HVAC company in Palm Desert. Select a station below to see the canned demo flow.</p>
  </div>
@@ -4011,6 +4026,34 @@ function updateCriteriaSummary() {
   if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
 }
 
+function updateCriteriaMinibar() {
+  var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
+  var mini = document.getElementById('criteriaMinibarSummary');
+  if (mini) mini.textContent = prospect.contact + ' â¢ ' + prospect.company + ' â¢ ' + cfg.label;
+}
+
+function setCriteriaCollapsed(collapsed) {
+  var card = document.getElementById('criteriaCard');
+  var label = document.getElementById('criteriaToggleLabel');
+  var icon = document.getElementById('criteriaToggleIcon');
+  if (!card) return;
+  if (collapsed) {
+    card.classList.add('minimized');
+    if (label) label.textContent = 'Expand';
+    if (icon) icon.textContent = 'â¾';
+  } else {
+    card.classList.remove('minimized');
+    if (label) label.textContent = 'Minimize';
+    if (icon) icon.textContent = 'â´';
+  }
+}
+
+function toggleCriteriaCard() {
+  var card = document.getElementById('criteriaCard');
+  if (!card) return;
+  setCriteriaCollapsed(!card.classList.contains('minimized'));
+}
+
 function syncCriteriaToProspect() {
   var cName = document.getElementById('crit-contact');
   var cCompany = document.getElementById('crit-company');
@@ -4037,6 +4080,7 @@ function syncCriteriaToProspect() {
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
   updateCriteriaSummary();
+  updateCriteriaMinibar();
 }
 
 
@@ -4503,6 +4547,7 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 
  syncCriteriaToProspect();
+ setCriteriaCollapsed(false);
  updatePhonePresenterPrompts();
  initROI();
  applyPackageView();
@@ -5263,3 +5308,118 @@ function setupTaskCalculators() {
 setupTaskCalculators();
 </script>
 
+
+<script>
+(function(){
+  var defaults = {
+    contact: 'Kelly',
+    company: 'Palm Desert AC Services',
+    vertical: 'homeservices',
+    teamSize: 'small'
+  };
+
+  function byId(id){ return document.getElementById(id); }
+  function setIfPossible(id, value){ var el = byId(id); if (el) el.value = value; }
+  function setText(sel, value){ var el = typeof sel === 'string' ? document.querySelector(sel) : sel; if (el) el.textContent = value; }
+
+  function applyDefaults(){
+    setIfPossible('crit-contact', defaults.contact);
+    setIfPossible('crit-company', defaults.company);
+    setIfPossible('crit-vertical', defaults.vertical);
+    setIfPossible('crit-teamsize', defaults.teamSize);
+
+    var summary = byId('criteria-summary');
+    if (summary) summary.textContent = defaults.company + ' â¢ HVAC';
+    var miniSummary = byId('criteriaMinibarSummary');
+    if (miniSummary) miniSummary.textContent = defaults.contact + ' â¢ ' + defaults.company + ' â¢ HVAC';
+
+    var hero = document.querySelector('#panel-home .home-hero p');
+    if (hero) hero.textContent = '12 AI stations customized for ' + defaults.company + ' (HVAC). Select a station below to see it live.';
+
+    var badge = byId('prospectBadge');
+    var badgeText = byId('prospectBadgeText');
+    if (badge) badge.style.display = 'flex';
+    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
+
+    if (typeof window.prospect === 'object' && window.prospect) {
+      window.prospect.contact = defaults.contact;
+      window.prospect.company = defaults.company;
+      window.prospect.vertical = defaults.vertical;
+      window.prospect.teamSize = defaults.teamSize;
+    }
+
+    if (typeof window.applyVerticalDefaults === 'function') {
+      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
+    }
+    if (typeof window.updateCriteriaSummary === 'function') {
+      try { window.updateCriteriaSummary(); } catch (e) {}
+    }
+  }
+
+  function activatePanel(id){
+    if (!id) return false;
+    var panel = byId('panel-' + id);
+    if (!panel) return false;
+
+    var panels = document.querySelectorAll('.panel');
+    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+
+    panel.classList.add('active');
+
+    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
+    if (activeTab) activeTab.classList.add('active');
+
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
+    return true;
+  }
+
+  window.showPanel = activatePanel;
+
+  function inferPanelName(el){
+    if (!el) return '';
+    var direct = el.getAttribute('data-panel');
+    if (direct) return direct;
+    var onclickAttr = el.getAttribute('onclick') || '';
+    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
+    return m ? m[1] : '';
+  }
+
+  function bindStations(){
+    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
+    for (var i = 0; i < nodes.length; i++) {
+      (function(node){
+        var panelId = inferPanelName(node);
+        if (!panelId) return;
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          activatePanel(panelId);
+        }, true);
+      })(nodes[i]);
+    }
+  }
+
+  function boot(){
+    applyDefaults();
+    bindStations();
+    activatePanel('home');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  setTimeout(boot, 50);
+  setTimeout(boot, 250);
+  setTimeout(boot, 750);
+})();
+</script>
+
+</body>
+</html>
