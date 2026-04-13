@@ -2685,19 +2685,12 @@ function runColdEmail() {
    };
 
    var emailSubject = company + ' - ' + triggerLabelMap[trigger];
-   var emailBody = openerMap[trigger] + ', ' + name + '.
-
-' +
+   var emailBody = openerMap[trigger] + ', ' + name + '.\n\n' +
      'Based on your role as ' + role + ', and what we know from the CRM, I put together the most relevant next move for you. ' +
      (context ? 'The main context we are working from is: ' + context + '. ' : '') +
-     'The goal here is to ' + goal + ' without adding more manual work for your team.
-
-' +
-     'If helpful, I can send over a tighter recommendation focused on the exact station that matters most right now.
-
-' +
-     'Dave
-Breakout AI Solutions';
+     'The goal here is to ' + goal + ' without adding more manual work for your team.\n\n' +
+     'If helpful, I can send over a tighter recommendation focused on the exact station that matters most right now.\n\n' +
+     'Dave\nBreakout AI Solutions';
 
    var smsBody = smsMap[trigger] + ' ' + (goal.charAt(0).toUpperCase() + goal.slice(1)) + ' from there?';
 
@@ -2710,10 +2703,7 @@ Breakout AI Solutions';
      html += '<div class="email-subj">Subject: ' + esc(emailSubject) + '</div>';
      html += '<div class="email-body">' + esc(emailBody) + '</div>';
      html += '</div>';
-     raw.push('SMART EMAIL
-SUBJECT: ' + emailSubject + '
-BODY:
-' + emailBody);
+     raw.push('SMART EMAIL\nSUBJECT: ' + emailSubject + '\nBODY:\n' + emailBody);
    }
 
    if (channel === 'sms' || channel === 'both') {
@@ -2723,9 +2713,7 @@ BODY:
      html += '<div class="touch-body">' + esc(smsBody) + '</div>';
      html += '<div class="touch-chars">' + smsBody.length + ' characters</div>';
      html += '</div>';
-     raw.push('SMART TEXT
-BODY:
-' + smsBody);
+     raw.push('SMART TEXT\nBODY:\n' + smsBody);
    }
 
    html += '<div class="divider"></div>';
@@ -2733,9 +2721,7 @@ BODY:
    html += '<div class="crm-field"><div class="crm-key">Primary Goal</div><div class="crm-val">' + esc(goal) + '</div></div>';
    html += '<div class="crm-field"><div class="crm-key">CRM Action</div><div class="crm-val"><span class="crm-val tag qualified">Ready to log and send</span></div></div>';
 
-   rawStore['ce'] = raw.join('
-
-');
+   rawStore['ce'] = raw.join('\n\n');
    document.getElementById('ce-body').innerHTML = html;
    showOut('ce');
    demoComplete('cold-email');
@@ -4636,87 +4622,4 @@ function refreshDash() {
  html += '<div class="dash-tile-label">' + t.label + '</div>';
  html += '<div class="dash-tile-items">';
  for (var j = 0; j < t.items.length; j++) {
- html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
- }
- html += '</div>';
- html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
- html += '</div>';
- }
- document.getElementById('dashGrid').innerHTML = html;
-
- var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
- var existAct = document.getElementById('dashActivity');
- if (existAct) existAct.remove();
- var actDiv = document.createElement('div');
- actDiv.id = 'dashActivity';
- actDiv.className = 'dash-activity';
- var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
- for (var k = 0; k < combined.length; k++) {
- var a = combined[k];
- actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
- }
- actDiv.innerHTML = actHtml;
- document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
-}
-
-var dashInited = false;
-var _sp = showPanel;
-showPanel = function(id) {
- _sp(id);
- if (id === 'dashboard-station') {
- if (!dashInited) { dashInited = true; }
- refreshDash();
- demoComplete('dashboard-station');
- }
-};
-
-document.addEventListener('keydown', function(e) {
- if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
- var active = document.querySelector('.panel.active');
- if (!active) return;
- var id = active.id.replace('panel-','');
- var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
- if (map[id]) map[id]();
-});
-
-function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
-  var hoursEl = document.getElementById(hoursId);
-  var rateEl = document.getElementById(rateId);
-  var impactEl = document.getElementById(impactId);
-  if (!hoursEl || !rateEl || !impactEl) return;
-  var hours = parseFloat(hoursEl.value || '0') || 0;
-  var rate = parseFloat(rateEl.value || '0') || 0;
-  var weekly = Math.round(hours * rate);
-  var annual = Math.round(weekly * 52);
-  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
-}
-
-function setupTaskCalculators() {
-  var calculators = [
-    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
-    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
-    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
-    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
-    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
-    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
-    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
-    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
-    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
-    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing']
-  ];
-  calculators.forEach(function(cfg) {
-    var hoursEl = document.getElementById(cfg[0]);
-    var rateEl = document.getElementById(cfg[1]);
-    if (!hoursEl || !rateEl) return;
-    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
-    hoursEl.addEventListener('input', fn);
-    rateEl.addEventListener('change', fn);
-    fn();
-  });
-}
-
-setupTaskCalculators();
-</script>
-
-</body>
-</html>
+ html +=
