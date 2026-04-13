@@ -1225,63 +1225,20 @@ font-size: 12px;
 color: var(--text-dim);
 }
 .criteria-note strong { color: var(--blue-bright); }
-.criteria-body {
-max-height: 420px;
-overflow: hidden;
-opacity: 1;
-transition: max-height 0.25s ease, opacity 0.2s ease, margin-top 0.2s ease;
-}
-.criteria-compact {
-display: none;
-font-size: 12px;
-color: var(--text-dim);
-line-height: 1.5;
-padding-right: 44px;
-}
-.criteria-toggle {
-width: 32px;
-height: 32px;
-border-radius: 8px;
-border: 1px solid var(--glass-border);
-background: var(--navy3);
-color: var(--text);
-font-family: 'DM Sans', sans-serif;
-font-size: 20px;
-line-height: 1;
-cursor: pointer;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-}
-.criteria-toggle:hover {
-border-color: var(--blue-border);
-background: var(--blue-glow);
-color: var(--blue-bright);
-}
-.criteria-card.collapsed {
-padding: 12px 16px;
-}
-.criteria-card.collapsed .criteria-body {
-max-height: 0;
-opacity: 0;
-margin-top: 0;
-pointer-events: none;
-}
-.criteria-card.collapsed .criteria-compact {
-display: block;
-margin-top: 2px;
-}
-.criteria-card.collapsed .criteria-head {
-margin-bottom: 6px;
-}
 
 @media (max-width: 768px) {
 .criteria-wrap { padding: 0 16px; }
 .criteria-grid { grid-template-columns: 1fr; }
-.criteria-compact { padding-right: 0; }
 }
+
+
+
+/* v15 overview layout cleanup */
+#panel-home { padding-top: 20px; }
+#panel-home .home-hero { padding: 8px 20px 10px; }
+#panel-home .stations-grid { margin-top: 8px; }
+#panel-home .criteria-wrap { max-width: 960px; margin: 18px auto 0; padding: 0; }
+#panel-home .criteria-card { margin-bottom: 0; }
 
 </style>
 </head>
@@ -1414,51 +1371,8 @@ margin-bottom: 6px;
 
 <div class="main" id="mainContent">
 
-<div class="criteria-wrap" id="criteria-wrap">
-  <div class="criteria-card" id="criteria-card">
-    <div class="criteria-head">
-      <div>
-        <div class="criteria-title">Demo Criteria</div>
-        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
-      </div>
-      <button class="criteria-toggle" id="criteria-toggle" type="button" aria-expanded="true" aria-label="Minimize demo criteria">â</button>
-    </div>
-    <div class="criteria-compact" id="criteria-compact-summary">Kelly | Palm Desert AC Services | Home Services | 2 to 5 people</div>
-    <div class="criteria-body" id="criteria-body">
-      <div class="criteria-grid">
-        <div class="field">
-          <label>Prospect First Name</label>
-          <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
-        </div>
-        <div class="field">
-          <label>Company Name</label>
-          <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
-        </div>
-        <div class="field">
-          <label>Vertical</label>
-          <select class="sel" id="crit-vertical">
-            <option value="homeservices" selected>Home Services</option>
-            <option value="salesmarketing">Sales and Marketing</option>
-            <option value="ecommerce">E Commerce</option>
-            <option value="professionalservices">Professional Services</option>
-            <option value="realestate">Real Estate</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Team Size</label>
-          <select class="sel" id="crit-teamsize">
-            <option value="solo">Solo / 1 person</option>
-            <option value="small" selected>2-5 people</option>
-            <option value="medium">6-15 people</option>
-            <option value="large">16-50 people</option>
-          </select>
-        </div>
-      </div>
-      <div class="criteria-note">
-        Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
-      </div>
-    </div>
-  </div>
+
+
 </div>
 
 
@@ -1577,6 +1491,51 @@ margin-bottom: 6px;
  <div class="tile-desc">Every station at a glance - pipeline, tasks, calls, and performance</div>
  <div class="tile-badge"><span class="live-badge">LIVE AGENT</span></div>
  </div>
+
+
+<div class="criteria-wrap">
+  <div class="criteria-card">
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-sub">No launch step needed</div>
+    </div>
+    <div class="criteria-grid">
+      <div class="field">
+        <label>Prospect First Name</label>
+        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
+      </div>
+      <div class="field">
+        <label>Vertical</label>
+        <select class="sel" id="crit-vertical">
+          <option value="homeservices" selected>Home Services</option>
+          <option value="salesmarketing">Sales and Marketing</option>
+          <option value="ecommerce">E Commerce</option>
+          <option value="professionalservices">Professional Services</option>
+          <option value="realestate">Real Estate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team Size</label>
+        <select class="sel" id="crit-teamsize">
+          <option value="solo">Solo / 1 person</option>
+          <option value="small" selected>2-5 people</option>
+          <option value="medium">6-15 people</option>
+          <option value="large">16-50 people</option>
+        </select>
+      </div>
+    </div>
+    <div class="criteria-note">
+      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
+    </div>
+  </div>
+
 </div>
 
  </div>
@@ -4064,17 +4023,6 @@ function updateCriteriaSummary() {
   var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
   var summary = document.getElementById('criteria-summary');
   if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
-
-  var compact = document.getElementById('criteria-compact-summary');
-  if (compact) {
-    var teamMap = {
-      solo: 'Solo / 1 person',
-      small: '2-5 people',
-      medium: '6-15 people',
-      large: '16-50 people'
-    };
-    compact.textContent = prospect.contact + ' | ' + prospect.company + ' | ' + cfg.label + ' | ' + (teamMap[prospect.teamSize] || prospect.teamSize);
-  }
 }
 
 function syncCriteriaToProspect() {
@@ -5143,13 +5091,4 @@ function runAdCampaign() {
   setTimeout(function() {
     hideStatus('ads');
     var html = '';
-    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
-    html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(--text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(--text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(--text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
-    html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block"><div class="seo-lbl">Offer Angle</div><p>Free audit, fast response, and a clear next step that gets prospects into the pipeline immediately.</p></div></div>';
-    html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(--blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
-    document.getElementById('ads-body').innerHTML = html;
-    document.getElementById('ads-out').style.display = 'block';
-    document.getElementById('ads-out').scrollIntoView({ behavior:'smooth', block:'nearest' });
-    demoComplete('ads');
-  }, 1200);
-}
+    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(plat
