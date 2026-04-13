@@ -3254,100 +3254,328 @@ function renderPosts(text, bodyId) {
 
 // ââ SEO ââ
 function runSEO() {
-  var topic = document.getElementById('seo-topic').value.trim();
-  var biz = document.getElementById('seo-biz').value.trim();
-  var goal = document.getElementById('seo-goal').value;
-  var location = document.getElementById('seo-location').value.trim();
+  var topicEl = document.getElementById('seo-topic');
+  var bizEl = document.getElementById('seo-biz');
+  var goalEl = document.getElementById('seo-goal');
+  var locationEl = document.getElementById('seo-location');
 
-  if (!topic) { document.getElementById('seo-topic').focus(); return; }
+  var topic = topicEl ? topicEl.value.trim() : '';
+  var biz = bizEl ? bizEl.value.trim() : '';
+  var goal = goalEl ? goalEl.value : 'rank locally and attract leads';
+  var location = locationEl ? locationEl.value.trim() : '';
+
+  if (!topic) {
+    if (topicEl) topicEl.focus();
+    return;
+  }
+
   showStatus('seo');
+  hideError('seo');
 
-  var sys = [
-    'You are an expert SEO and AEO strategist building a premium package for a client demo.',
-    'Return concise, persuasive marketing output in the exact format below.',
-    'Use location and business context to make the assets feel real.',
-    'Output exactly:',
-    'PRIMARY KEYWORD: [main keyword]',
-    'SECONDARY KEYWORDS: [6 comma separated]',
-    'LOCAL KEYWORDS: [4 comma separated]',
-    'META TITLE: [under 60 chars]',
-    'META DESCRIPTION: [150-160 chars]',
-    'URL SLUG: [clean slug]',
-    'PAGE HERO: [one strong landing page headline]',
-    'PAGE SUBHEAD: [one sentence supporting line]',
-    'FAQ 1 Q: [question]',
-    'FAQ 1 A: [direct answer]',
-    'FAQ 2 Q: [question]',
-    'FAQ 2 A: [direct answer]',
-    'FAQ 3 Q: [question]',
-    'FAQ 3 A: [direct answer]',
-    'INTERNAL LINKS: [4 comma separated]',
-    'AEO ANSWER BLOCK: [3-4 sentences that answer the core search intent directly]',
-    'CONTENT BRIEF: [5 bullet style sentences separated by semicolons]',
-    'CTA: [one strong CTA]'
-  ].join('\n');
+  setTimeout(function () {
+    try {
+      var data = buildSeoDemoPackage({
+        topic: topic,
+        biz: biz || (window.prospect && prospect.company) || 'Your Business',
+        goal: goal,
+        location: location || 'Palm Desert, CA'
+      });
 
-  callAPI(sys, 'Business: ' + (biz||'small business') + '\nService: ' + topic + '\nLocation: ' + (location||'not specified') + '\nGoal: ' + goal, function(text, err) {
-    hideStatus('seo');
-    if (err) { showError('seo', err); return; }
-    rawStore['seo'] = text;
-    renderSEO(text, 'seo-body', biz || prospect.company || 'Your Business');
-    showOut('seo');
-    demoComplete('seo');
-  });
+      rawStore['seo'] = buildSeoRawText(data);
+      renderSEO(data, 'seo-body');
+      hideStatus('seo');
+      showOut('seo');
+      demoComplete('seo');
+    } catch (err) {
+      hideStatus('seo');
+      showError('seo', err && err.message ? err.message : 'Unable to build SEO package.');
+    }
+  }, 1200);
 }
 
-function renderSEO(text, bodyId, biz) {
-  var primaryKw = getField(text, 'PRIMARY KEYWORD');
-  var secKws = getField(text, 'SECONDARY KEYWORDS');
-  var localKws = getField(text, 'LOCAL KEYWORDS');
-  var metaTitle = getField(text, 'META TITLE');
-  var metaDesc = getField(text, 'META DESCRIPTION');
-  var slug = getField(text, 'URL SLUG');
-  var hero = getField(text, 'PAGE HERO');
-  var subhead = getField(text, 'PAGE SUBHEAD');
-  var internalLinks = getField(text, 'INTERNAL LINKS');
-  var answerBlock = getField(text, 'AEO ANSWER BLOCK');
-  var brief = getField(text, 'CONTENT BRIEF');
-  var cta = getField(text, 'CTA');
+function buildSeoDemoPackage(input) {
+  var topic = input.topic;
+  var biz = input.biz;
+  var goal = input.goal;
+  var location = input.location;
 
-  var faqs = [];
-  for (var i = 1; i <= 3; i++) {
-    var q = getField(text, 'FAQ ' + i + ' Q');
-    var a = getField(text, 'FAQ ' + i + ' A');
-    if (q && a) faqs.push({ q: q, a: a });
+  var parsed = parseSeoLocation(location);
+  var city = parsed.city;
+  var state = parsed.state;
+
+  var serviceSlug = slugify(topic);
+  var citySlug = slugify(city);
+  var primaryKeyword = topic + ' ' + city;
+  var urlSlug = '/' + serviceSlug + '-' + citySlug;
+
+  var nearbyCities = buildNearbyCities(city, state);
+  var localPages = nearbyCities.map(function(c) {
+    return {
+      city: c,
+      keyword: topic + ' ' + c,
+      intent: 'High buyer intent',
+      status: 'Ready to publish',
+      priority: cityPriorityScore(topic, c, city)
+    };
+  });
+
+  var secondaryKeywords = [
+    topic + ' near me',
+    'best ' + topic + ' service',
+    topic + ' company',
+    'same day ' + topic,
+    'licensed ' + topic,
+    'affordable ' + topic
+  ];
+
+  var localKeywords = [
+    topic + ' ' + city,
+    'emergency ' + topic + ' ' + city,
+    topic + ' in ' + city,
+    biz + ' ' + city
+  ];
+
+  var faqItems = [
+    {
+      q: 'How much does ' + topic.toLowerCase() + ' cost in ' + city + '?',
+      a: 'Pricing depends on the scope of the issue, urgency, and whether replacement parts or additional labor are needed. A strong city page should answer this clearly and invite the visitor to request a fast estimate.'
+    },
+    {
+      q: 'Do you offer same day service in ' + city + '?',
+      a: 'A high converting local page should make response time obvious. Same day or priority service language helps align the page with urgent local search intent.'
+    },
+    {
+      q: 'Should I repair or replace before scheduling ' + topic.toLowerCase() + '?',
+      a: 'This answer should help the visitor understand the difference between a quick service call, a larger repair, and a replacement decision so the page earns trust before the call.'
+    }
+  ];
+
+  var uniqueSections = [
+    'Common service issues homeowners and businesses face in ' + city,
+    'Neighborhood and service area references across ' + city + ' and nearby communities',
+    'Trust section with response time, licensing, and review language',
+    'City specific FAQ blocks built for search and AI answer visibility',
+    'Clear call to action focused on quotes, calls, or same day scheduling'
+  ];
+
+  var pageOutline = [
+    'H1: ' + topic + ' in ' + city,
+    'Intro: local problem and fast response promise',
+    'Section: why customers in ' + city + ' search for this service',
+    'Section: service options and what to expect',
+    'Section: nearby service areas and neighborhoods',
+    'Section: FAQ and quick answers',
+    'Section: CTA with phone and form prompt'
+  ];
+
+  var aeoAnswers = [
+    {
+      q: 'What is the average cost of ' + topic.toLowerCase() + ' in ' + city + '?',
+      a: 'The cost depends on the problem, urgency, and any parts involved, but the best city pages explain the range clearly and make it easy to request a quote.'
+    },
+    {
+      q: 'How quickly should I schedule ' + topic.toLowerCase() + ' in ' + city + '?',
+      a: 'If the issue affects comfort, safety, or business operations, a same day or next day appointment should be encouraged directly on the page.'
+    },
+    {
+      q: 'Why choose a local ' + topic.toLowerCase() + ' company in ' + city + '?',
+      a: 'Local pages should highlight service area familiarity, faster response, and a stronger trust signal than a generic company page.'
+    }
+  ];
+
+  var metaTitle = topic + ' ' + city + ' | ' + biz;
+  if (metaTitle.length > 58) {
+    metaTitle = (topic + ' ' + city).substring(0, 42) + ' | ' + biz.substring(0, 12);
   }
 
-  var domainBase = (biz||'yourbusiness').toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,20) + '.com';
-  var links = (internalLinks || '').split(',').map(function(x){ return x.trim(); }).filter(Boolean);
-  var briefItems = (brief || '').split(';').map(function(x){ return x.trim(); }).filter(Boolean);
+  var metaDescription = 'Need ' + topic.toLowerCase() + ' in ' + city + '? ' + biz + ' helps local customers with fast response, clear service options, and easy scheduling.';
+  if (metaDescription.length > 158) {
+    metaDescription = metaDescription.substring(0, 155) + '...';
+  }
 
+  return {
+    biz: biz,
+    topic: topic,
+    goal: goal,
+    location: location,
+    city: city,
+    state: state,
+    primaryKeyword: primaryKeyword,
+    secondaryKeywords: secondaryKeywords,
+    localKeywords: localKeywords,
+    metaTitle: metaTitle,
+    metaDescription: metaDescription,
+    urlSlug: urlSlug,
+    hero: topic + ' in ' + city,
+    subhead: 'A city specific landing page system designed to rank locally, answer buyer questions, and turn search traffic into qualified leads.',
+    cta: 'Book service, request a quote, or speak with a local specialist today.',
+    localPages: localPages,
+    uniqueSections: uniqueSections,
+    pageOutline: pageOutline,
+    faqItems: faqItems,
+    aeoAnswers: aeoAnswers,
+    schemaTypes: ['LocalBusiness', 'Service', 'FAQPage'],
+    nextSteps: [
+      'Publish the ' + city + ' page first',
+      'Launch the next 5 nearby city pages with unique local sections',
+      'Add FAQ and LocalBusiness schema',
+      'Link all city pages from the main service hub',
+      'Track rankings and calls by city page'
+    ]
+  };
+}
+
+function renderSEO(data, bodyId) {
   var html = '';
-  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(biz)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(biz) + ' SEO + AEO Package</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">Landing page system ready for publishing</div></div></div>';
-  html += '<div class="content-block" style="margin-bottom:18px"><div class="seo-lbl">Landing Page Hero</div><h3 style="margin-bottom:6px">' + esc(hero || primaryKw || 'Landing Page') + '</h3><p>' + esc(subhead || '') + '</p>';
-  if (cta) html += '<p style="color:var(--blue-bright);font-weight:600;margin-top:12px">' + esc(cta) + '</p>';
+
+  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">';
+  html += '<div class="doc-logo">' + esc(buildFakeBrand(data.biz)) + '</div>';
+  html += '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(data.biz) + ' SEO + AEO Package</div>';
+  html += '<div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">Local expansion system built around city landing pages</div></div></div>';
+
+  html += '<div class="row2" style="margin-bottom:18px">';
+  html += '<div class="content-block"><div class="seo-lbl">Estimated Opportunities</div><h3 style="margin-bottom:4px">23 keyword opportunities</h3><p>Primary service page plus nearby city pages ready to build.</p></div>';
+  html += '<div class="content-block"><div class="seo-lbl">Top Priority City</div><h3 style="margin-bottom:4px">' + esc(data.city) + '</h3><p>' + esc(data.primaryKeyword) + '</p></div>';
+  html += '<div class="content-block"><div class="seo-lbl">AEO Readiness</div><h3 style="margin-bottom:4px">82 / 100</h3><p>Structured answers, FAQs, and local page architecture included.</p></div>';
   html += '</div>';
-  html += '<div style="margin-bottom:18px"><div class="seo-lbl">Keyword Cluster</div><div class="kw-grid">';
-  if (primaryKw) html += '<span class="kw-chip primary">' + esc(primaryKw) + '</span>';
-  ((secKws || '') + ',' + (localKws || '')).split(',').forEach(function(kw){ kw = kw.trim(); if (kw) html += '<span class="kw-chip">' + esc(kw) + '</span>'; });
-  html += '</div></div>';
-  html += '<div class="divider"></div><div style="margin:18px 0"><div class="seo-lbl">Google Preview</div><div class="meta-preview-box"><div class="meta-url-prev">' + esc(domainBase) + ' / ' + esc(slug || 'service-page') + '</div><div class="meta-title-prev">' + esc(metaTitle || '') + '</div><div class="meta-desc-prev">' + esc(metaDesc || '') + '</div></div></div>';
-  if (answerBlock) html += '<div class="divider"></div><div style="margin:18px 0"><div class="seo-lbl">AEO Answer Block <span class="aeo-badge">AI Ready</span></div><div class="content-block"><p>' + esc(answerBlock) + '</p></div></div>';
-  if (faqs.length) {
-    html += '<div class="divider"></div><div style="margin:18px 0"><div class="seo-lbl">FAQ Schema</div>';
-    faqs.forEach(function(f){ html += '<div class="faq-item"><div class="faq-q">Q: ' + esc(f.q) + '</div><div class="faq-a">' + esc(f.a) + '</div></div>'; });
-    html += '</div>';
-  }
-  if (briefItems.length || links.length) {
-    html += '<div class="divider"></div><div class="row2" style="margin-top:18px">';
-    html += '<div class="content-block"><div class="seo-lbl">Content Brief</div>';
-    briefItems.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
-    html += '</div>';
-    html += '<div class="content-block"><div class="seo-lbl">Internal Links</div>';
-    links.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
+
+  html += '<div class="content-block" style="margin-bottom:18px">';
+  html += '<div class="seo-lbl">Local Expansion Map</div>';
+  html += '<div class="posts-grid">';
+  data.localPages.forEach(function(page){
+    html += '<div class="post-card">';
+    html += '<div class="post-hd"><div class="post-platform">' + esc(page.city) + '</div><div class="post-day">Priority ' + esc(String(page.priority)) + '</div></div>';
+    html += '<div class="post-body">';
+    html += '<div style="margin-bottom:8px"><strong>Keyword:</strong> ' + esc(page.keyword) + '</div>';
+    html += '<div style="margin-bottom:8px"><strong>Intent:</strong> ' + esc(page.intent) + '</div>';
+    html += '<div><strong>Status:</strong> ' + esc(page.status) + '</div>';
     html += '</div></div>';
-  }
+  });
+  html += '</div></div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div class="row2" style="margin-top:18px">';
+  html += '<div class="content-block">';
+  html += '<div class="seo-lbl">Keyword Clusters</div>';
+  html += '<div class="kw-grid">';
+  html += '<span class="kw-chip primary">' + esc(data.primaryKeyword) + '</span>';
+  data.secondaryKeywords.forEach(function(kw){ html += '<span class="kw-chip">' + esc(kw) + '</span>'; });
+  data.localKeywords.forEach(function(kw){ html += '<span class="kw-chip">' + esc(kw) + '</span>'; });
+  html += '</div></div>';
+
+  html += '<div class="content-block">';
+  html += '<div class="seo-lbl">Schema Included</div>';
+  data.schemaTypes.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
+  html += '</div></div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div style="margin:18px 0"><div class="seo-lbl">Google Preview</div><div class="meta-preview-box">';
+  html += '<div class="meta-url-prev">' + esc(data.urlSlug) + '</div>';
+  html += '<div class="meta-title-prev">' + esc(data.metaTitle) + '</div>';
+  html += '<div class="meta-desc-prev">' + esc(data.metaDescription) + '</div>';
+  html += '</div></div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div class="content-block" style="margin:18px 0">';
+  html += '<div class="seo-lbl">City Page Preview</div>';
+  html += '<h3 style="margin-bottom:8px">' + esc(data.hero) + '</h3>';
+  html += '<p style="margin-bottom:10px">' + esc(data.subhead) + '</p>';
+  html += '<p><strong>URL:</strong> ' + esc(data.urlSlug) + '</p>';
+  html += '<p><strong>Goal:</strong> ' + esc(data.goal) + '</p>';
+  html += '<div style="margin-top:12px">';
+  data.uniqueSections.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
+  html += '</div>';
+  html += '<p style="color:var(--blue-bright);font-weight:600;margin-top:12px">' + esc(data.cta) + '</p>';
+  html += '</div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div class="row2" style="margin-top:18px">';
+  html += '<div class="content-block"><div class="seo-lbl">AEO Answer Blocks <span class="aeo-badge">AI Ready</span></div>';
+  data.aeoAnswers.forEach(function(item){
+    html += '<div class="faq-item"><div class="faq-q">' + esc(item.q) + '</div><div class="faq-a">' + esc(item.a) + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="content-block"><div class="seo-lbl">Recommended Page Outline</div>';
+  data.pageOutline.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
+  html += '</div></div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div style="margin:18px 0"><div class="seo-lbl">FAQ Schema</div>';
+  data.faqItems.forEach(function(item){
+    html += '<div class="faq-item"><div class="faq-q">' + esc(item.q) + '</div><div class="faq-a">' + esc(item.a) + '</div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="divider"></div>';
+  html += '<div class="content-block" style="margin-top:18px">';
+  html += '<div class="seo-lbl">Priority Next Steps</div>';
+  data.nextSteps.forEach(function(item){ html += '<p>' + esc(item) + '</p>'; });
+  html += '</div>';
+
   document.getElementById(bodyId).innerHTML = html;
+}
+
+function buildSeoRawText(data) {
+  var lines = [];
+  lines.push('SEO + AEO PACKAGE');
+  lines.push('Business: ' + data.biz);
+  lines.push('Primary keyword: ' + data.primaryKeyword);
+  lines.push('Meta title: ' + data.metaTitle);
+  lines.push('Meta description: ' + data.metaDescription);
+  lines.push('URL slug: ' + data.urlSlug);
+  lines.push('');
+  lines.push('City Pages:');
+  data.localPages.forEach(function(page){
+    lines.push('- ' + page.city + ' | ' + page.keyword + ' | Priority ' + page.priority);
+  });
+  lines.push('');
+  lines.push('FAQ:');
+  data.faqItems.forEach(function(item){
+    lines.push('- ' + item.q);
+    lines.push('  ' + item.a);
+  });
+  lines.push('');
+  lines.push('Next Steps:');
+  data.nextSteps.forEach(function(item){ lines.push('- ' + item); });
+  return lines.join('\n');
+}
+
+function parseSeoLocation(location) {
+  var cleaned = (location || '').trim();
+  if (!cleaned) return { city: 'Palm Desert', state: 'CA' };
+  var parts = cleaned.split(',').map(function(p){ return p.trim(); }).filter(Boolean);
+  return {
+    city: parts[0] || 'Palm Desert',
+    state: parts[1] || 'CA'
+  };
+}
+
+function slugify(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function buildNearbyCities(city, state) {
+  var map = {
+    'Palm Desert': ['Palm Desert', 'Palm Springs', 'La Quinta', 'Indio', 'Rancho Mirage', 'Cathedral City'],
+    'Palm Springs': ['Palm Springs', 'Palm Desert', 'Rancho Mirage', 'Cathedral City', 'Indio', 'La Quinta'],
+    'Los Angeles': ['Los Angeles', 'Beverly Hills', 'Santa Monica', 'Pasadena', 'Glendale', 'Burbank'],
+    'San Diego': ['San Diego', 'La Mesa', 'Chula Vista', 'El Cajon', 'Carlsbad', 'Encinitas'],
+    'Phoenix': ['Phoenix', 'Scottsdale', 'Mesa', 'Tempe', 'Chandler', 'Glendale'],
+    'Las Vegas': ['Las Vegas', 'Henderson', 'Summerlin', 'North Las Vegas', 'Paradise', 'Spring Valley']
+  };
+  return map[city] || [city, city + ' Heights', city + ' East', city + ' West', city + ' South', city + ' North'];
+}
+
+function cityPriorityScore(topic, targetCity, primaryCity) {
+  if (targetCity === primaryCity) return 94;
+  var base = 88;
+  var mod = (topic.length + targetCity.length) % 6;
+  return base - mod;
 }
 
 // ââ INTRO / PROSPECT SETUP ââ
