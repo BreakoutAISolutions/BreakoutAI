@@ -153,8 +153,7 @@ content: ' â';
 font-size: 10px;
 }
 
-.tab-icon { font-size: 14px; display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; }
-.tab-icon svg { width:15px; height:15px; display:block; }
+.tab-icon { font-size: 14px; }
 
 /* Separator between live and integration tabs */
 .tab-sep {
@@ -1312,43 +1311,43 @@ color: var(--text-dim);
 
 <div class="nav-tabs" id="navTabs">
  <div class="nav-tab active" onclick="showPanel('home')" data-panel="home">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span> Overview
+ <span class="tab-icon">ð </span> Overview
  </div>
  <div class="nav-tab" onclick="showPanel('find-leads')" data-panel="find-leads">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span> Find Leads
+ <span class="tab-icon">ð¯</span> Find Leads
  </div>
  <div class="nav-tab" onclick="showPanel('seo')" data-panel="seo">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span> SEO+AEO
+ <span class="tab-icon">ð</span> SEO+AEO
  </div>
  <div class="nav-tab" onclick="showPanel('cold-email')" data-panel="cold-email">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span> Smart CRM
+ <span class="tab-icon">ð§</span> Smart CRM
  </div>
  <div class="nav-tab" onclick="showPanel('phone-agent')" data-panel="phone-agent">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.15-6.15A19.8 19.8 0 0 1 1.98 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72l.45 3.11a2 2 0 0 1-.57 1.73l-1.9 1.9a16 16 0 0 0 6.14 6.14l1.9-1.9a2 2 0 0 1 1.73-.57l3.11.45A2 2 0 0 1 22 16.92Z"/></svg></span> Phone Agent
+ <span class="tab-icon">ð</span> Phone Agent
  </div>
  <div class="nav-tab" onclick="showPanel('proposal')" data-panel="proposal">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M9 4.5h6M9 10h6M9 14h6"/></svg></span> Proposals
+ <span class="tab-icon">ð</span> Proposals
  </div>
  <div class="nav-tab" onclick="showPanel('contracts')" data-panel="contracts">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 4-1 9-9-3-3-9 9-1 4Z"/><path d="m13 7 3 3"/><path d="M14 20h6"/></svg></span> Contracts
+ <span class="tab-icon">âï¸</span> Contracts
  </div>
  <div class="nav-tab" onclick="showPanel('invoicing')" data-panel="invoicing">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h5"/><circle cx="17" cy="14" r="0.5" fill="currentColor" stroke="none"/></svg></span> Invoicing
+ <span class="tab-icon">ð°</span> Invoicing
  </div>
  <div class="nav-tab" onclick="showPanel('followup')" data-panel="followup">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg></span> Follow-Up SMS
+ <span class="tab-icon">ð¬</span> Follow-Up SMS
  </div>
  <div class="nav-tab" onclick="showPanel('social')" data-panel="social">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 5h2"/><circle cx="12" cy="18" r="0.8" fill="currentColor" stroke="none"/></svg></span> Social Media
+ <span class="tab-icon">ð±</span> Social Media
  </div>
  <div class="nav-tab" onclick="showPanel('ads')" data-panel="ads">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2"/><path d="M7 9v6"/><path d="M7 10 18 6v12L7 14"/><path d="M7 14l2 5h3"/></svg></span> Ad Campaigns
+ <span class="tab-icon">ð£</span> Ad Campaigns
  </div>
  <div class="nav-tab" onclick="showPanel('newsletter')" data-panel="newsletter">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span> Newsletter
+ <span class="tab-icon">âï¸</span> Newsletter
  </div>
  <div class="nav-tab" onclick="showPanel('dashboard-station')" data-panel="dashboard-station">
- <span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20v-12"/></svg></span> Dashboard
+ <span class="tab-icon">ð</span> Dashboard
  </div>
 </div>
 
@@ -1403,15 +1402,6 @@ color: var(--text-dim);
  <div class="roi-num" id="statROI">0x</div>
  <div class="roi-label">saved / year</div>
  </div>
-</div>
-
-<!-- ROI CALCULATOR -->
-<div class="roi-calc" id="roiCalc">
- <div class="roi-calc-header">
- <div class="roi-calc-title">ð Live Impact Tracker</div>
- <div class="roi-calc-sub">Numbers update as you run each demo</div>
- </div>
- <div class="roi-result" id="roiResult"></div>
 </div>
 
 <div class="stations-grid">
@@ -5215,4 +5205,306 @@ function runAdCampaign() {
 function renderPipeline(bodyId, steps, doneCb) {
   var html = '<div class="pipeline">';
   for (var i = 0; i < steps.length; i++) {
-    var s = 
+    var s = steps[i];
+    html += '<div class="pipe-step ' + (s.done ? 'done' : '') + ' ' + (s.active ? 'active' : '') + '">';
+    html += '<div class="pipe-dot">' + s.icon + '</div>';
+    html += '<div class="pipe-content"><div class="pipe-title">' + esc(s.title) + '</div><div class="pipe-detail">' + esc(s.detail) + '</div>';
+    if (s.time) html += '<div class="pipe-time">' + esc(s.time) + '</div>';
+    html += '</div></div>';
+  }
+  html += '</div>';
+  document.getElementById(bodyId).innerHTML = html;
+  if (doneCb) setTimeout(doneCb, 600);
+}
+
+// =============================================
+// DASHBOARD - station summary tiles
+// =============================================
+var dashActivities = [
+ { dot:'green', text:'Lead found - Desert Air HVAC (HOT) Â· Clay.com', time:'2 min ago' },
+ { dot:'blue', text:'AI call completed - Marcus Rivera qualified', time:'8 min ago' },
+ { dot:'green', text:'Contract signed - Sarah Johnson ($2,500)', time:'14 min ago' },
+ { dot:'blue', text:'Meeting booked - Tom Keller, Tuesday 10:30 AM', time:'22 min ago' },
+ { dot:'green', text:'Invoice paid - Rivera Home Services ($6,500)', time:'1 hr ago' },
+ { dot:'yellow', text:'Follow-up SMS - 3 prospects (Day 4 trigger)', time:'2 hrs ago' },
+ { dot:'blue', text:'Newsletter scheduled - 847 subscribers', time:'3 hrs ago' },
+ { dot:'green', text:'Ad campaign live - Facebook + Instagram $1k/mo', time:'4 hrs ago' }
+];
+
+function refreshDash() {
+ var leads = demoStats.leads > 0 ? demoStats.leads + 18 : 24 + Math.floor(Math.random()*8);
+ var calls = completedDemos['phone-agent'] ? 12 + Math.floor(Math.random()*4) : 8 + Math.floor(Math.random()*5);
+ var revenue = demoStats.revenue > 0 ? demoStats.revenue + 9400 : 18400 + Math.floor(Math.random()*4200);
+ var proposals = completedDemos['proposal'] ? 8 + Math.floor(Math.random()*3) : 6 + Math.floor(Math.random()*4);
+ var signed = completedDemos['contracts'] ? Math.floor(proposals*0.55) : Math.floor(proposals*0.4);
+ var hours = demoStats.hoursSaved > 0 ? demoStats.hoursSaved + 14 : 31 + Math.floor(Math.random()*7);
+ var hotLeads = Math.floor(leads*0.4);
+ var invPending = 2 + Math.floor(Math.random()*3);
+ var smsToday = 8 + Math.floor(Math.random()*12);
+ var adSpend = 1000 + Math.floor(Math.random()*2000);
+
+ var tiles = [
+ { icon:'&#127919;', label:'Find Leads', color:'blue', panel:'find-leads',
+ items:[{dot:'green',text:leads+' leads this week'},{dot:'blue',text:hotLeads+' marked HOT'},{dot:'yellow',text:'Clay Â· Apollo Â· Google Maps'}],
+ footer:{text:'+'+(2+Math.floor(Math.random()*4))+' new since yesterday',color:'green'}},
+ { icon:'&#128269;', label:'SEO + AEO', color:'purple', panel:'seo',
+ items:[{dot:'green',text:'3 pages ranking page 1'},{dot:'blue',text:'Cited by AI 12x this week'},{dot:'yellow',text:'2 new opportunities'}],
+ footer:{text:'Organic traffic +31%',color:'green'}},
+ { icon:'&#128231;', label:'Smart CRM', color:'blue', panel:'cold-email',
+ items:[{dot:'green',text:'3 sequences active'},{dot:'blue',text:'47 sent Â· 22% open rate'},{dot:'yellow',text:'4 replies - 2 hot leads'}],
+ footer:{text:'Reply rate: 8.5%',color:'green'}},
+ { icon:'&#128222;', label:'Phone Agent', color:'green', panel:'phone-agent',
+ items:[{dot:'green',text:calls+' calls today'},{dot:'blue',text:Math.floor(calls*0.7)+' qualified'},{dot:'yellow',text:'2 transfers pending'}],
+ footer:{text:'Avg call: 3:42',color:'blue'}},
+ { icon:'&#128203;', label:'Proposals', color:'blue', panel:'proposal',
+ items:[{dot:'blue',text:proposals+' sent this week'},{dot:'green',text:Math.floor(proposals*0.6)+' opened'},{dot:'yellow',text:(proposals-Math.floor(proposals*0.6))+' unseen'}],
+ footer:{text:'Avg value: $3,200',color:'blue'}},
+ { icon:'&#9997;', label:'Contracts', color:'green', panel:'contracts',
+ items:[{dot:'green',text:signed+' signed this week'},{dot:'yellow',text:'2 awaiting signature'},{dot:'blue',text:'1 invoice triggered'}],
+ footer:{text:'$'+(signed*2800).toLocaleString()+' locked in',color:'green'}},
+ { icon:'&#128176;', label:'Invoicing', color:'green', panel:'invoicing',
+ items:[{dot:'green',text:'$'+revenue.toLocaleString()+' collected'},{dot:'yellow',text:invPending+' pending payment'},{dot:'red',text:'1 overdue - Day 7 reminder'}],
+ footer:{text:'â 23% vs last month',color:'green'}},
+ { icon:'&#128172;', label:'Follow-Up SMS', color:'yellow', panel:'followup',
+ items:[{dot:'green',text:smsToday+' messages today'},{dot:'blue',text:'3 triggers active'},{dot:'yellow',text:'2 replies need response'}],
+ footer:{text:'94% delivery rate',color:'green'}},
+ { icon:'&#128241;', label:'Social Media', color:'purple', panel:'social',
+ items:[{dot:'green',text:'5 posts scheduled'},{dot:'blue',text:'Instagram Â· Facebook Â· LinkedIn'},{dot:'yellow',text:'1 pending approval'}],
+ footer:{text:'Reach +18% this week',color:'green'}},
+ { icon:'&#128226;', label:'Ad Campaigns', color:'blue', panel:'ads',
+ items:[{dot:'green',text:'$'+adSpend.toLocaleString()+'/mo Â· 2 live'},{dot:'blue',text:'CTR: 3.2% Â· CPL: $'+(18+Math.floor(Math.random()*14))},{dot:'yellow',text:'Budget 68% spent'}],
+ footer:{text:'ROAS: 3.8x this month',color:'green'}},
+ { icon:'&#9993;', label:'Newsletter', color:'blue', panel:'newsletter',
+ items:[{dot:'green',text:'847 subscribers Â· 38% open'},{dot:'blue',text:'Next: Monday 9AM'},{dot:'yellow',text:'1 draft awaiting approval'}],
+ footer:{text:'+24 new subs this week',color:'green'}},
+ { icon:'&#9201;', label:'Hours Saved', color:'yellow', panel:'home',
+ items:[{dot:'green',text:hours+' hrs saved this week'},{dot:'blue',text:'~$'+(28*hours).toLocaleString()+' in labor cost'},{dot:'yellow',text:demoStats.demosRun+' of 12 stations active'}],
+ footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
+ ];
+
+ var html = '';
+ for (var i = 0; i < tiles.length; i++) {
+ var t = tiles[i];
+ var done = completedDemos[t.panel];
+ var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
+ html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
+ if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
+ html += '<div class="dash-tile-icon">' + t.icon + '</div>';
+ html += '<div class="dash-tile-label">' + t.label + '</div>';
+ html += '<div class="dash-tile-items">';
+ for (var j = 0; j < t.items.length; j++) {
+ html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
+ }
+ html += '</div>';
+ html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
+ html += '</div>';
+ }
+ document.getElementById('dashGrid').innerHTML = html;
+
+ var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
+ var existAct = document.getElementById('dashActivity');
+ if (existAct) existAct.remove();
+ var actDiv = document.createElement('div');
+ actDiv.id = 'dashActivity';
+ actDiv.className = 'dash-activity';
+ var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
+ for (var k = 0; k < combined.length; k++) {
+ var a = combined[k];
+ actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
+ }
+ actDiv.innerHTML = actHtml;
+ document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
+}
+
+var dashInited = false;
+var _sp = showPanel;
+showPanel = function(id) {
+ _sp(id);
+ if (id === 'dashboard-station') {
+ if (!dashInited) { dashInited = true; }
+ refreshDash();
+ demoComplete('dashboard-station');
+ }
+};
+
+document.addEventListener('keydown', function(e) {
+ if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
+ var active = document.querySelector('.panel.active');
+ if (!active) return;
+ var id = active.id.replace('panel-','');
+ var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
+ if (map[id]) map[id]();
+});
+
+function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
+  var hoursEl = document.getElementById(hoursId);
+  var rateEl = document.getElementById(rateId);
+  var impactEl = document.getElementById(impactId);
+  if (!hoursEl || !rateEl || !impactEl) return;
+  var hours = parseFloat(hoursEl.value || '0') || 0;
+  var rate = parseFloat(rateEl.value || '0') || 0;
+  var weekly = Math.round(hours * rate);
+  var annual = Math.round(weekly * 52);
+  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
+}
+
+function setupTaskCalculators() {
+  var calculators = [
+    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
+    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
+    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
+    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
+    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
+    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
+    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
+    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
+    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
+    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
+    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
+    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
+  ];
+  calculators.forEach(function(cfg) {
+    var hoursEl = document.getElementById(cfg[0]);
+    var rateEl = document.getElementById(cfg[1]);
+    if (!hoursEl || !rateEl) return;
+    var fn = function(){
+      updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]);
+      var stationByHours = {
+        'ls-hours-input':'find-leads',
+        'seo-hours-input':'seo',
+        'crm-hours-input':'cold-email',
+        'ph-hours-input':'phone-agent',
+        'pr-hours-input':'proposal',
+        'ct-hours-input':'contracts',
+        'iv-hours-input':'invoicing',
+        'fu-hours-input':'followup',
+        'sm-hours-input':'social',
+        'ads-hours-input':'ads',
+        'nl-hours-input':'newsletter',
+        'db-hours-input':'dashboard-station'
+      };
+      var stationId = stationByHours[cfg[0]];
+      if (stationId && completedDemos[stationId]) recomputeOverviewTotals();
+    };
+    hoursEl.addEventListener('input', fn);
+    rateEl.addEventListener('change', fn);
+    fn();
+  });
+}
+
+setupTaskCalculators();
+</script>
+
+
+<script>
+(function(){
+  var defaults = {
+    contact: 'Kelly',
+    company: 'Palm Desert AC Services',
+    vertical: 'homeservices',
+    teamSize: 'small'
+  };
+
+  function byId(id){ return document.getElementById(id); }
+  function setIfPossible(id, value){ var el = byId(id); if (el) el.value = value; }
+  function setText(sel, value){ var el = typeof sel === 'string' ? document.querySelector(sel) : sel; if (el) el.textContent = value; }
+
+  function applyDefaults(){
+    setIfPossible('crit-contact', defaults.contact);
+    setIfPossible('crit-company', defaults.company);
+    setIfPossible('crit-vertical', defaults.vertical);
+    setIfPossible('crit-teamsize', defaults.teamSize);
+
+    var summary = byId('criteria-summary');
+    if (summary) summary.textContent = defaults.company + ' â¢ HVAC';
+
+    var hero = document.querySelector('#panel-home .home-hero p');
+    if (hero) hero.textContent = '12 AI stations customized for ' + defaults.company + ' (HVAC). Select a station below to see it live.';
+
+    var badge = byId('prospectBadge');
+    var badgeText = byId('prospectBadgeText');
+    if (badge) badge.style.display = 'flex';
+    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
+
+    if (typeof window.prospect === 'object' && window.prospect) {
+      window.prospect.contact = defaults.contact;
+      window.prospect.company = defaults.company;
+      window.prospect.vertical = defaults.vertical;
+      window.prospect.teamSize = defaults.teamSize;
+    }
+
+    if (typeof window.applyVerticalDefaults === 'function') {
+      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
+    }
+    if (typeof window.updateCriteriaSummary === 'function') {
+      try { window.updateCriteriaSummary(); } catch (e) {}
+    }
+  }
+
+  function activatePanel(id){
+    if (!id) return false;
+    var panel = byId('panel-' + id);
+    if (!panel) return false;
+
+    var panels = document.querySelectorAll('.panel');
+    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+
+    panel.classList.add('active');
+
+    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
+    if (activeTab) activeTab.classList.add('active');
+
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
+    return true;
+  }
+
+  window.showPanel = activatePanel;
+
+  function inferPanelName(el){
+    if (!el) return '';
+    var direct = el.getAttribute('data-panel');
+    if (direct) return direct;
+    var onclickAttr = el.getAttribute('onclick') || '';
+    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
+    return m ? m[1] : '';
+  }
+
+  function bindStations(){
+    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
+    for (var i = 0; i < nodes.length; i++) {
+      (function(node){
+        var panelId = inferPanelName(node);
+        if (!panelId) return;
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          activatePanel(panelId);
+        }, true);
+      })(nodes[i]);
+    }
+  }
+
+  function boot(){
+    applyDefaults();
+    bindStations();
+    activatePanel('home');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  setTimeout(boot, 50);
+  setTimeout(boot, 250);
+  setTimeout(boot, 750);
+})();
+</script>
+
+</body>
+</html>
