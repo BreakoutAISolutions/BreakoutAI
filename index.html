@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -424,6 +424,53 @@ max-height: 600px; overflow-y: auto;
 .price-lbl { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-bright); margin-bottom: 6px; }
 .price-val { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .price-note { font-size: 12px; color: var(--text-dim); }
+
+.doc-logo {
+width: 56px;
+height: 56px;
+border-radius: 14px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Syne', sans-serif;
+font-size: 18px;
+font-weight: 800;
+letter-spacing: -0.5px;
+background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(59,130,246,0.05));
+border: 1px solid var(--blue-border);
+color: var(--blue-bright);
+box-shadow: 0 10px 24px rgba(59,130,246,0.14);
+flex-shrink: 0;
+}
+
+.doc-shell {
+background: var(--navy3);
+border: 1px solid var(--glass-border);
+border-radius: 16px;
+padding: 22px;
+margin-bottom: 16px;
+}
+
+.doc-topbar {
+display: flex;
+align-items: center;
+gap: 14px;
+margin-bottom: 18px;
+}
+
+.doc-company {
+font-family: 'Syne', sans-serif;
+font-size: 20px;
+font-weight: 800;
+color: var(--text);
+margin-bottom: 2px;
+}
+
+.doc-sub {
+font-size: 12px;
+color: var(--text-dimmer);
+}
+
 .prop-cta { display: inline-block; padding: 11px 24px; background: linear-gradient(135deg, var(--blue), var(--blue-dim)); border-radius: 7px; color: #fff; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; }
 .prop-footer { padding-top: 18px; border-top: 1px solid var(--glass-border); font-size: 11px; color: var(--text-dimmer); line-height: 1.7; }
 
@@ -2343,7 +2390,7 @@ color: var(--text-dim);
   </div>
  <div class="row2">
  <div class="field"><label>Client Name</label>
- <input class="inp" id="ct-client" type="text" value="Sarah Johnson" />
+ <input class="inp" id="ct-client" type="text" value="Kelly" />
  </div>
  <div class="field"><label>Service</label>
  <select class="sel" id="ct-service">
@@ -2507,7 +2554,7 @@ color: var(--text-dim);
  <div id="inv-form" style="display:none">
  <div class="row2">
  <div class="field"><label>Client</label>
- <input class="inp" id="inv-client" type="text" value="Rivera Home Services" /></div>
+ <input class="inp" id="inv-client" type="text" value="Palm Desert AC Services" /></div>
  <div class="field"><label>Service &amp; Amount</label>
  <select class="sel" id="inv-amount">
  <option value="2500">AI Audit + Roadmap - $2,500</option>
@@ -2969,17 +3016,27 @@ function runProposal() {
  var notes = document.getElementById('pr-notes').value.trim();
  var budget = document.getElementById('pr-budget').value.trim();
 
- if (!client || !notes) { document.getElementById('pr-notes').focus(); return; }
+ hideError('pr');
+ if (!client || !notes) {
+   showError('pr', 'Add a client name and notes to generate the proposal.');
+   document.getElementById('pr-notes').focus();
+   return;
+ }
  showStatus('pr');
  document.getElementById('pr-approved').style.display = 'none';
 
  setTimeout(function() {
-   hideStatus('pr');
-   var text = buildCannedProposalText(client, biz, industry, type, notes, budget);
-   rawStore['pr'] = text;
-   renderProposal(text, 'pr-body', client, biz);
-   showOut('pr');
-   demoComplete('proposal');
+   try {
+     var text = buildCannedProposalText(client, biz, industry, type, notes, budget);
+     rawStore['pr'] = text;
+     renderProposal(text, 'pr-body', client, biz);
+     hideStatus('pr');
+     showOut('pr');
+     demoComplete('proposal');
+   } catch (err) {
+     hideStatus('pr');
+     showError('pr', err && err.message ? err.message : 'Proposal demo failed to render.');
+   }
  }, 900);
 }
 
@@ -2997,9 +3054,12 @@ function renderProposal(text, bodyId, client, biz) {
  var cta = getField(text, 'CTA');
  var footer = getField(text, 'FOOTER');
 
+ var companyName = biz || (window.prospect && prospect.company) || 'Palm Desert AC Services';
  var today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
  var html = '';
 
+ html += '<div class="doc-shell">';
+ html += '<div class="doc-topbar">' + getDocumentLogoMarkup(companyName) + getDocumentBrandLine(companyName) + '</div>';
  html += '<div class="prop-hd"><div class="prop-tag">Proposal Â· ' + today + '</div>';
  html += '<div class="prop-title">' + esc(title || 'AI Engagement Proposal') + '</div>';
  html += '<div class="prop-for">Prepared for ' + esc(prepFor || (client + (biz ? ', ' + biz : ''))) + '</div></div>';
@@ -3035,6 +3095,7 @@ function renderProposal(text, bodyId, client, biz) {
  }
 
  if (footer) html += '<div class="prop-footer">' + esc(footer).replace(/\n/g,'<br>') + '</div>';
+ html += '</div>';
 
  document.getElementById(bodyId).innerHTML = html;
 }
@@ -3717,6 +3778,15 @@ function buildFakeBrand(name) {
   var parts = cleaned.split(/\s+/).filter(Boolean);
   var initials = parts.slice(0,2).map(function(p){ return p.charAt(0).toUpperCase(); }).join('');
   return initials || 'BA';
+}
+
+function getDocumentLogoMarkup(name) {
+  return '<div class="doc-logo">' + esc(buildFakeBrand(name)) + '</div>';
+}
+
+function getDocumentBrandLine(name) {
+  var company = name || (window.prospect && prospect.company) || 'Palm Desert AC Services';
+  return '<div><div class="doc-company">' + esc(company) + '</div><div class="doc-sub">Palm Desert HVAC Demo Document</div></div>';
 }
 
 function setValueSafe(id, value) {
@@ -4745,8 +4815,7 @@ function runContract() {
  var html = '<div style="background:var(--navy3);border:1px solid var(--glass-border);border-radius:12px;padding:24px;margin-bottom:14px">';
  html += '<div style="text-align:center;margin-bottom:18px">';
  html += '<div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dimmer);margin-bottom:6px">SERVICE AGREEMENT</div>';
- html += '<div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Breakout AI Solutions</div>';
- html += '<div style="font-size:12px;color:var(--text-dimmer);margin-top:3px">breakoutaisolutions.com &middot; Palm Desert, CA</div>';
+ html += '<div style="display:flex;align-items:center;justify-content:center;gap:14px">' + getDocumentLogoMarkup(prospect.company || 'Palm Desert AC Services') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(prospect.company || 'Palm Desert AC Services') + '</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:3px">Palm Desert HVAC Service Agreement</div></div></div>';
  html += '</div>';
  html += '<div style="height:1px;background:var(--glass-border);margin-bottom:16px"></div>';
  html += '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">';
@@ -4806,7 +4875,7 @@ function runInvoicing() {
   var amountMatch = amountLabel.match(/\$[\d,]+/);
   var amount = amountMatch ? amountMatch[0] : '$2,500';
   var html = '';
-  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(client)) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Invoice Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(client) + ' - ' + esc(invNo) + '</div></div></div>';
+  html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(client) + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Invoice Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(client) + ' - ' + esc(invNo) + '</div></div></div>';
   html += '<div style="background:var(--navy3);border:1px solid var(--glass-border);border-radius:12px;padding:20px;margin-bottom:16px">';
   html += '<div class="crm-field"><div class="crm-key">Bill To</div><div class="crm-val">' + esc(client) + '</div></div>';
   html += '<div class="crm-field"><div class="crm-key">Service</div><div class="crm-val">' + esc(amountLabel.replace(/\s+-\s+\$[\d,]+/, '')) + '</div></div>';
@@ -4835,7 +4904,7 @@ function runAdCampaign() {
   setTimeout(function() {
     hideStatus('ads');
     var html = '';
-    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div class="doc-logo">' + esc(buildFakeBrand(prospect.company || 'Breakout')) + '</div><div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
+    html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">' + getDocumentLogoMarkup(prospect.company || 'Breakout') + '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">Campaign Strategy Ready</div><div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">' + esc(platform) + ' - ' + esc(goal) + '</div></div></div>';
     html += '<div class="content-block" style="margin-bottom:16px"><div class="seo-lbl">Targeting</div><p><strong style="color:var(--text)">Audience:</strong> ' + esc(audience) + '</p><p><strong style="color:var(--text)">Monthly Budget:</strong> $' + Number(budget).toLocaleString() + '</p><p><strong style="color:var(--text)">Optimization Goal:</strong> ' + esc(goal) + '</p></div>';
     html += '<div class="row2"><div class="content-block"><div class="seo-lbl">Primary Hook</div><p>Stop losing revenue to slow follow-up. This campaign positions ' + esc(prospect.company || 'your team') + ' as the faster, smarter option.</p></div><div class="content-block"><div class="seo-lbl">Offer Angle</div><p>Free audit, fast response, and a clear next step that gets prospects into the pipeline immediately.</p></div></div>';
     html += '<div class="divider"></div><div class="content-block"><div class="seo-lbl">Sample Ad Copy</div><p><strong>Headline:</strong> Turn More Leads Into Revenue</p><p><strong>Body:</strong> Manual follow-up is costing you deals. See how an AI powered growth system can capture, qualify, and convert more leads without adding headcount.</p><p style="color:var(--blue-bright);font-weight:600;margin-top:10px">Call to Action: Book Your Demo</p></div>';
@@ -4926,100 +4995,4 @@ function refreshDash() {
  footer:{text:'ROI: '+(demoStats.demosRun>0?Math.round(demoStats.revenue/(demoStats.demosRun*1500)*10)/10:'0')+'x on investment',color:'green'}}
  ];
 
- var html = '';
- for (var i = 0; i < tiles.length; i++) {
- var t = tiles[i];
- var done = completedDemos[t.panel];
- var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
- html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
- if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
- html += '<div class="dash-tile-icon">' + t.icon + '</div>';
- html += '<div class="dash-tile-label">' + t.label + '</div>';
- html += '<div class="dash-tile-items">';
- for (var j = 0; j < t.items.length; j++) {
- html += '<div class="dash-item"><div class="dash-item-dot ' + t.items[j].dot + '"></div><span>' + esc(t.items[j].text) + '</span></div>';
- }
- html += '</div>';
- html += '<div class="dash-tile-footer ' + t.footer.color + '">' + esc(t.footer.text) + '</div>';
- html += '</div>';
- }
- document.getElementById('dashGrid').innerHTML = html;
-
- var combined = liveActivityFeed.concat(dashActivities).slice(0, 10);
- var existAct = document.getElementById('dashActivity');
- if (existAct) existAct.remove();
- var actDiv = document.createElement('div');
- actDiv.id = 'dashActivity';
- actDiv.className = 'dash-activity';
- var actHtml = '<div class="dash-activity-title">Live Activity Feed</div>';
- for (var k = 0; k < combined.length; k++) {
- var a = combined[k];
- actHtml += '<div class="activity-row"><div class="activity-dot ' + a.dot + '"></div><div class="activity-text">' + esc(a.text) + '</div><div class="activity-time">' + a.time + '</div></div>';
- }
- actDiv.innerHTML = actHtml;
- document.getElementById('dashGrid').insertAdjacentElement('afterend', actDiv);
-}
-
-var dashInited = false;
-var _sp = showPanel;
-showPanel = function(id) {
- _sp(id);
- if (id === 'dashboard-station') {
- if (!dashInited) { dashInited = true; }
- refreshDash();
- demoComplete('dashboard-station');
- }
-};
-
-document.addEventListener('keydown', function(e) {
- if (e.key !== 'Enter' || e.shiftKey || e.target.tagName === 'TEXTAREA') return;
- var active = document.querySelector('.panel.active');
- if (!active) return;
- var id = active.id.replace('panel-','');
- var map = { 'cold-email': runColdEmail, 'proposal': runProposal, 'followup': runFollowup, 'newsletter': runNewsletter, 'social': runSocial, 'seo': runSEO, 'find-leads': runLeadScan, 'ads': runAdCampaign, 'invoicing': runInvoicing };
- if (map[id]) map[id]();
-});
-
-function updateTaskImpact(hoursId, rateId, impactId, taskLabel) {
-  var hoursEl = document.getElementById(hoursId);
-  var rateEl = document.getElementById(rateId);
-  var impactEl = document.getElementById(impactId);
-  if (!hoursEl || !rateEl || !impactEl) return;
-  var hours = parseFloat(hoursEl.value || '0') || 0;
-  var rate = parseFloat(rateEl.value || '0') || 0;
-  var weekly = Math.round(hours * rate);
-  var annual = Math.round(weekly * 52);
-  impactEl.innerHTML = 'You are currently spending <strong>$' + weekly.toLocaleString() + ' per week</strong> on ' + taskLabel + '. That is about <strong>$' + annual.toLocaleString() + ' per year</strong> in manual effort before AI compression.';
-}
-
-function setupTaskCalculators() {
-  var calculators = [
-    ['ls-hours-input','ls-hourly-rate','ls-impact','lead research and list building'],
-    ['seo-hours-input','seo-hourly-rate','seo-impact','SEO research and content planning'],
-    ['crm-hours-input','crm-hourly-rate','crm-impact','CRM follow up and message writing'],
-    ['ph-hours-input','ph-hourly-rate','ph-impact','answering and routing inbound calls'],
-    ['pr-hours-input','pr-hourly-rate','pr-impact','writing proposals and scope docs'],
-    ['ct-hours-input','ct-hourly-rate','ct-impact','contract prep and follow through'],
-    ['iv-hours-input','iv-hourly-rate','iv-impact','billing and payment follow up'],
-    ['fu-hours-input','fu-hourly-rate','fu-impact','manual follow up and re engagement'],
-    ['sm-hours-input','sm-hourly-rate','sm-impact','social planning and content writing'],
-    ['ads-hours-input','ads-hourly-rate','ads-impact','campaign setup and copy work'],
-    ['nl-hours-input','nl-hourly-rate','nl-impact','newsletter planning and writing'],
-    ['db-hours-input','db-hourly-rate','db-impact','gathering updates and checking systems']
-  ];
-  calculators.forEach(function(cfg) {
-    var hoursEl = document.getElementById(cfg[0]);
-    var rateEl = document.getElementById(cfg[1]);
-    if (!hoursEl || !rateEl) return;
-    var fn = function(){ updateTaskImpact(cfg[0], cfg[1], cfg[2], cfg[3]); };
-    hoursEl.addEventListener('input', fn);
-    rateEl.addEventListener('change', fn);
-    fn();
-  });
-}
-
-setupTaskCalculators();
-</script>
-
-</body>
-</html>
+ var htm
