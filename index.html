@@ -718,6 +718,221 @@ line-height: 1.7;
 .status-dot span { display: none; }
 }
 
+
+/* Phone agent voice simulator */
+.phone-sim-grid {
+display: grid;
+grid-template-columns: 1.05fr 1fr;
+gap: 16px;
+align-items: stretch;
+}
+.phone-sim-call {
+background: var(--navy3);
+border: 1px solid var(--glass-border);
+border-radius: 16px;
+padding: 18px;
+display: flex;
+flex-direction: column;
+min-height: 520px;
+}
+.phone-sim-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+margin-bottom: 12px;
+}
+.phone-stage {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 5px 10px;
+border-radius: 999px;
+font-size: 11px;
+font-weight: 600;
+background: var(--blue-glow);
+border: 1px solid var(--blue-border);
+color: var(--blue-bright);
+}
+.phone-stage.live::before {
+content: '';
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: var(--success);
+box-shadow: 0 0 8px var(--success);
+}
+.phone-caller-card {
+background: linear-gradient(180deg, rgba(59,130,246,0.08), rgba(255,255,255,0.02));
+border: 1px solid var(--glass-border);
+border-radius: 14px;
+padding: 18px 16px;
+text-align: center;
+margin-bottom: 14px;
+}
+.phone-caller-avatar {
+width: 64px;
+height: 64px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 10px;
+background: linear-gradient(135deg, var(--blue), var(--blue-dim));
+font-size: 28px;
+box-shadow: 0 0 20px rgba(59,130,246,0.35);
+}
+.phone-caller-name {
+font-family: 'Syne', sans-serif;
+font-size: 18px;
+font-weight: 700;
+margin-bottom: 4px;
+}
+.phone-caller-sub {
+font-size: 12px;
+color: var(--text-dim);
+line-height: 1.5;
+}
+.phone-transcript {
+display: flex;
+flex-direction: column;
+gap: 10px;
+max-height: 240px;
+overflow-y: auto;
+padding-right: 4px;
+margin-bottom: 14px;
+}
+.phone-transcript::-webkit-scrollbar { width: 3px; }
+.phone-transcript::-webkit-scrollbar-thumb { background: var(--blue-border); border-radius: 2px; }
+.phone-controls {
+display: flex;
+gap: 10px;
+margin-top: auto;
+flex-wrap: wrap;
+}
+.phone-btn {
+flex: 1;
+min-width: 120px;
+padding: 11px 14px;
+border-radius: 10px;
+border: 1px solid var(--glass-border);
+background: transparent;
+color: var(--text);
+font-family: 'DM Sans', sans-serif;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.18s;
+}
+.phone-btn:hover {
+border-color: var(--blue-border);
+background: var(--blue-glow);
+}
+.phone-btn.accept {
+background: rgba(52,211,153,0.12);
+border-color: rgba(52,211,153,0.3);
+color: var(--success);
+}
+.phone-btn.decline {
+background: rgba(239,68,68,0.08);
+border-color: rgba(239,68,68,0.2);
+color: #fca5a5;
+}
+.phone-choice-card {
+background: var(--navy3);
+border: 1px solid var(--glass-border);
+border-radius: 16px;
+padding: 18px;
+display: flex;
+flex-direction: column;
+min-height: 520px;
+}
+.phone-choice-head {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 10px;
+margin-bottom: 12px;
+flex-wrap: wrap;
+}
+.phone-choice-title {
+font-family: 'Syne', sans-serif;
+font-size: 14px;
+font-weight: 700;
+color: var(--text);
+}
+.phone-choice-sub {
+font-size: 12px;
+color: var(--text-dimmer);
+}
+.phone-choice-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 10px;
+margin-bottom: 14px;
+}
+.phone-choice-btn {
+padding: 12px 14px;
+border-radius: 12px;
+border: 1px solid var(--glass-border);
+background: var(--navy2);
+color: var(--text-dim);
+font-size: 13px;
+font-weight: 500;
+text-align: left;
+cursor: pointer;
+transition: all 0.18s;
+line-height: 1.45;
+}
+.phone-choice-btn:hover {
+border-color: var(--blue-border);
+background: var(--blue-glow);
+color: var(--text);
+transform: translateY(-1px);
+}
+.phone-helper {
+background: rgba(255,255,255,0.02);
+border: 1px solid var(--glass-border);
+border-radius: 12px;
+padding: 14px;
+font-size: 12px;
+line-height: 1.6;
+color: var(--text-dim);
+margin-top: auto;
+}
+.phone-helper strong {
+display: block;
+font-size: 10px;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(--blue-bright);
+margin-bottom: 6px;
+}
+.phone-voice-note {
+font-size: 11px;
+color: var(--text-dimmer);
+margin-top: 10px;
+}
+.phone-summary {
+display: none;
+margin-top: 14px;
+background: rgba(52,211,153,0.08);
+border: 1px solid rgba(52,211,153,0.25);
+border-radius: 12px;
+padding: 14px;
+font-size: 13px;
+line-height: 1.65;
+color: var(--text-dim);
+}
+.phone-summary strong {
+color: var(--success);
+}
+@media (max-width: 768px) {
+.phone-sim-grid { grid-template-columns: 1fr; }
+.phone-sim-call, .phone-choice-card { min-height: 0; }
+}
+
+
 /* ââ INTRO SCREEN ââ */
 #introScreen {
 position: fixed; inset: 0;
@@ -907,6 +1122,60 @@ opacity: 0; pointer-events: none;
 transition: opacity 0.4s ease;
 }
 
+
+/* Persistent demo criteria panel */
+#introScreen { display: none !important; }
+
+.criteria-wrap {
+max-width: 960px;
+margin: 18px auto 0;
+padding: 0 32px;
+position: relative;
+z-index: 2;
+}
+.criteria-card {
+background: var(--navy2);
+border: 1px solid var(--glass-border);
+border-radius: 16px;
+padding: 18px 20px;
+margin-bottom: 14px;
+position: relative;
+overflow: hidden;
+}
+.criteria-card::before {
+content: '';
+position: absolute; top: 0; left: 0; right: 0; height: 1px;
+background: linear-gradient(90deg, transparent, var(--blue), transparent);
+opacity: 0.45;
+}
+.criteria-head {
+display: flex; align-items: center; justify-content: space-between; gap: 12px;
+margin-bottom: 12px; flex-wrap: wrap;
+}
+.criteria-title {
+font-family: 'Syne', sans-serif;
+font-size: 14px; font-weight: 700; color: var(--text);
+}
+.criteria-sub {
+font-size: 12px; color: var(--text-dimmer);
+}
+.criteria-grid {
+display: grid;
+grid-template-columns: 1.1fr 1.2fr 1fr 0.8fr;
+gap: 10px;
+}
+.criteria-note {
+margin-top: 10px;
+font-size: 12px;
+color: var(--text-dim);
+}
+.criteria-note strong { color: var(--blue-bright); }
+
+@media (max-width: 768px) {
+.criteria-wrap { padding: 0 16px; }
+.criteria-grid { grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -945,8 +1214,8 @@ transition: opacity 0.4s ease;
  <label>Industry / Vertical</label>
  <select class="intro-sel" id="intro-vertical">
         <option value="homeservices" selected>Home Services</option>
-        <option value="salesmarketing">Sales &amp; Marketing</option>
-        <option value="ecommerce">E-Commerce</option>
+        <option value="salesmarketing">Sales and Marketing</option>
+        <option value="ecommerce">E Commerce</option>
         <option value="professionalservices">Professional Services</option>
         <option value="realestate">Real Estate</option>
       </select>
@@ -973,7 +1242,7 @@ transition: opacity 0.4s ease;
  </div>
 </div>
 
-<div class="topnav" id="topNav" style="display:none">
+<div class="topnav" id="topNav">
  <div class="topnav-main">
  <div class="brand-row">
  <div class="brand-icon">â¡</div>
@@ -1036,7 +1305,52 @@ transition: opacity 0.4s ease;
 
 <!-- MAIN -->
 
-<div class="main" id="mainContent" style="display:none">
+<div class="main" id="mainContent">
+
+<div class="criteria-wrap">
+  <div class="criteria-card">
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-sub">No launch step needed</div>
+    </div>
+    <div class="criteria-grid">
+      <div class="field">
+        <label>Prospect First Name</label>
+        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" />
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" />
+      </div>
+      <div class="field">
+        <label>Vertical</label>
+        <select class="sel" id="crit-vertical">
+          <option value="homeservices" selected>Home Services</option>
+          <option value="salesmarketing">Sales and Marketing</option>
+          <option value="ecommerce">E Commerce</option>
+          <option value="professionalservices">Professional Services</option>
+          <option value="realestate">Real Estate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team Size</label>
+        <select class="sel" id="crit-teamsize">
+          <option value="solo">Solo / 1 person</option>
+          <option value="small" selected>2-5 people</option>
+          <option value="medium">6-15 people</option>
+          <option value="large">16-50 people</option>
+        </select>
+      </div>
+    </div>
+    <div class="criteria-note">
+      Showing a live demo configured for <strong id="criteria-summary">Home Services</strong>. Update any field and the station defaults refresh automatically.
+    </div>
+  </div>
+</div>
+
 
  <!-- ââââââââââââââââââââââââââââââââââââââââââ
  HOME
@@ -1652,66 +1966,117 @@ transition: opacity 0.4s ease;
  PHONE AGENT DEMO
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
- <div class="panel" id="panel-phone-agent">
- <div class="section-hero">
- <div class="section-eyebrow">Station 4 Â· Live Agent</div>
- <div class="section-title">AI calls your lead<br><span>in 60 seconds.</span></div>
- <div class="section-sub">A new lead fills out your form. The AI dials instantly, qualifies them with your script, and logs everything to your CRM - no human required.</div>
- </div>
- <div class="card">
- <div class="row2">
- <div class="field"><label>Lead Name</label>
- <input class="inp" id="ph-name" type="text" value="Marcus Rivera" />
- </div>
- <div class="field"><label>Business</label>
- <input class="inp" id="ph-biz" type="text" value="Rivera Plumbing" />
- </div>
- </div>
- <div class="row2">
- <div class="field"><label>Industry</label>
- <select class="sel" id="ph-industry">
- <option value="plumbing">Plumbing / Trades</option>
- <option value="realestate">Real Estate</option>
- <option value="medspa">Med Spa</option>
- <option value="restaurant">Restaurant</option>
- </select>
- </div>
- <div class="field"><label>Script Style</label>
- <select class="sel" id="ph-script">
- <option value="discovery">Discovery Call</option>
- <option value="qualify">Lead Qualification</option>
- <option value="followup">Post-Quote Follow-Up</option>
- </select>
- </div>
- </div>
- <button class="btn-primary" id="ph-btn" onclick="runPhoneCall()">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16z"/></svg>
- Initiate AI Call
- </button>
- </div>
- <div class="out-card" id="ph-out" style="margin-top:0">
- <div class="out-header">
- <div class="out-title" id="ph-call-status">Call In Progress</div>
- <div class="out-actions">
- <div id="ph-timer" style="font-family:'Syne',sans-serif;font-size:13px;color:var(--text-dim)">0:00</div>
- </div>
- </div>
- <!-- Phone UI -->
- <div id="ph-call-ui" style="padding:20px 24px">
- <div id="ph-transcript" style="display:flex;flex-direction:column;gap:10px;max-height:320px;overflow-y:auto;margin-bottom:16px"></div>
- <div id="ph-typing" style="display:none;padding:10px 14px;background:var(--navy3);border-radius:10px;border:1px solid var(--glass-border);font-size:13px;color:var(--text-dimmer);font-style:italic"></div>
- </div>
- <!-- CRM log -->
- <div id="ph-crm" style="display:none;border-top:1px solid var(--glass-border);padding:20px 24px">
- <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:12px">CRM Entry Logged Automatically</div>
- <div id="ph-crm-body"></div>
- </div>
- <div class="meta-strip" id="ph-meta" style="display:none"></div>
- </div>
- </div>
+ 
+<div class="panel" id="panel-phone-agent">
+  <div class="section-hero">
+    <div class="section-eyebrow">Station 4 Â· Live Agent</div>
+    <div class="section-title">AI answers the call<br><span>while you stay in control.</span></div>
+  </div>
 
- <!-- ââââââââââââââââââââââââââââââââââââââââââ
- CONTRACTS DEMO
+  <div class="ls-bullets">
+    <div class="ls-bullet"><span class="ls-bullet-icon">&#128222;</span><span>Simulates a <strong>live inbound phone call</strong> with accept and end call controls</span></div>
+    <div class="ls-bullet"><span class="ls-bullet-icon">&#128266;</span><span>Uses a real browser voice so the AI receptionist <strong>speaks out loud during the demo</strong></span></div>
+    <div class="ls-bullet"><span class="ls-bullet-icon">&#128204;</span><span>You choose from <strong>pre selected caller requests</strong> so the conversation stays polished</span></div>
+    <div class="ls-bullet"><span class="ls-bullet-icon">&#129302;</span><span>Each response is <strong>pre trained by scenario</strong> including new service, pricing, status, and urgency</span></div>
+    <div class="ls-bullet"><span class="ls-bullet-icon">&#128279;</span><span>Ends with a clear <strong>call outcome and CRM summary</strong> so prospects see the full workflow</span></div>
+  </div>
+
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Business Name</label>
+        <input class="inp" id="ph-biz" type="text" value="Rivera Plumbing" />
+      </div>
+      <div class="field"><label>AI Receptionist Name</label>
+        <input class="inp" id="ph-ai-name" type="text" value="Maya" />
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Industry</label>
+        <select class="sel" id="ph-industry">
+          <option value="plumbing">Plumbing / Trades</option>
+          <option value="realestate">Real Estate</option>
+          <option value="medspa">Med Spa</option>
+          <option value="restaurant">Restaurant</option>
+        </select>
+      </div>
+      <div class="field"><label>Call Scenario</label>
+        <select class="sel" id="ph-script" onchange="voiceDemoPrepareOptions()">
+          <option value="reception">Inbound Reception</option>
+          <option value="pricing">Pricing Questions</option>
+          <option value="status">Appointment Status</option>
+          <option value="urgent">Urgent Service</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary" id="ph-btn" onclick="startVoiceCallDemo()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 014 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16z"/></svg>
+      Start Voice Call Demo
+    </button>
+  </div>
+
+  <div class="out-card" id="ph-out" style="display:none">
+    <div class="out-header">
+      <div class="out-title" id="ph-call-status">Incoming Call</div>
+      <div class="out-actions">
+        <div id="ph-timer" style="font-family:'Syne',sans-serif;font-size:13px;color:var(--text-dim)">0:00</div>
+      </div>
+    </div>
+    <div class="out-body" style="padding:20px 24px">
+      <div class="phone-sim-grid">
+        <div class="phone-sim-call">
+          <div class="phone-sim-top">
+            <div class="phone-stage live" id="ph-stage">Incoming Call</div>
+            <div style="font-size:11px;color:var(--text-dimmer)">Voice Demo</div>
+          </div>
+
+          <div class="phone-caller-card">
+            <div class="phone-caller-avatar">&#128222;</div>
+            <div class="phone-caller-name" id="ph-caller-name">New Caller</div>
+            <div class="phone-caller-sub" id="ph-caller-sub">Tap Accept to hear the AI receptionist answer the call.</div>
+          </div>
+
+          <div class="phone-transcript" id="ph-transcript"></div>
+
+          <div id="ph-typing" style="display:none;padding:10px 14px;background:var(--navy2);border-radius:10px;border:1px solid var(--glass-border);font-size:13px;color:var(--text-dimmer);font-style:italic;margin-bottom:10px">AI is speaking...</div>
+
+          <div class="phone-controls">
+            <button class="phone-btn accept" id="ph-accept-btn" onclick="acceptVoiceCall()">Accept</button>
+            <button class="phone-btn decline" id="ph-end-btn" onclick="endVoiceCall()">End Call</button>
+          </div>
+        </div>
+
+        <div class="phone-choice-card">
+          <div class="phone-choice-head">
+            <div>
+              <div class="phone-choice-title">Caller Request Options</div>
+              <div class="phone-choice-sub" id="ph-choice-sub">Accept the call to unlock the next caller request.</div>
+            </div>
+            <button class="btn-sm" onclick="voiceDemoPrepareOptions()">Refresh</button>
+          </div>
+
+          <div class="phone-choice-grid" id="ph-choice-grid"></div>
+
+          <div class="phone-helper" id="ph-helper">
+            <strong>Presenter Prompt</strong>
+            Hit Accept, let the AI receptionist greet the caller, then choose one of the caller requests to show how the business would handle the conversation live.
+          </div>
+
+          <div class="phone-summary" id="ph-summary"></div>
+
+          <div id="ph-crm" style="display:none;border-top:1px solid var(--glass-border);padding-top:14px;margin-top:14px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue-bright);margin-bottom:12px">CRM Entry Logged Automatically</div>
+            <div id="ph-crm-body"></div>
+          </div>
+
+          <div class="phone-voice-note">Uses the browser default voice for the demo now. You can later swap this for a production voice provider.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââ
+     CONTRACTS DEMO
  ââââââââââââââââââââââââââââââââââââââââââ -->
 
  <div class="panel" id="panel-contracts">
@@ -2774,6 +3139,8 @@ function applyVerticalDefaults(key) {
   setValueSafe('ph-biz', prospect.company);
   setSelectValue('ph-industry', cfg.phIndustry);
   setSelectValue('ph-script', cfg.phScript);
+  setValueSafe('ph-ai-name', 'Maya');
+  if (typeof voiceDemoPrepareOptions === 'function') voiceDemoPrepareOptions();
   setValueSafe('ct-client', prospect.contact);
   setValueSafe('inv-client', prospect.company);
   var invTrigger = document.getElementById('inv-trigger-text');
@@ -2781,56 +3148,410 @@ function applyVerticalDefaults(key) {
   if (typeof updateLeadImpact === 'function') updateLeadImpact();
 }
 
+function updateCriteriaSummary() {
+  var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
+  var summary = document.getElementById('criteria-summary');
+  if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
+}
+
+function syncCriteriaToProspect() {
+  var cName = document.getElementById('crit-contact');
+  var cCompany = document.getElementById('crit-company');
+  var cVertical = document.getElementById('crit-vertical');
+  var cTeam = document.getElementById('crit-teamsize');
+
+  prospect.contact = (cName && cName.value.trim()) || 'Marcus';
+  prospect.company = (cCompany && cCompany.value.trim()) || 'Rivera Home Services';
+  prospect.vertical = (cVertical && cVertical.value) || 'homeservices';
+  prospect.teamSize = (cTeam && cTeam.value) || 'small';
+
+  applyVerticalDefaults(prospect.vertical);
+
+  var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
+  var heroP = document.querySelector('#panel-home .home-hero p');
+  if (heroP) heroP.textContent = '12 AI stations - customized for ' + prospect.company + ' (' + cfg.label + '). Select any station to see it live.';
+
+  var badgeText = document.getElementById('prospectBadgeText');
+  if (badgeText) badgeText.textContent = prospect.contact + ' - ' + prospect.company;
+  var badge = document.getElementById('prospectBadge');
+  if (badge) badge.style.display = 'flex';
+
+  var calcSub = document.querySelector('.roi-calc-sub');
+  if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
+
+  updateCriteriaSummary();
+}
+
+
 // Update button label as contact name is typed
+
+// ââ PHONE AGENT VOICE DEMO ââ
+var voiceCallState = {
+  started: false,
+  accepted: false,
+  timer: null,
+  seconds: 0,
+  currentChoices: [],
+  currentScenario: 'reception'
+};
+
+var voiceCallScenarios = {
+  reception: {
+    callerName: 'New Customer',
+    sub: 'General inbound call for a service business',
+    greeting: 'Thank you for calling {biz}. My name is {ai}. How can I help you today?',
+    helper: 'Choose a caller request to show how the AI receptionist handles a normal inbound service call.',
+    choices: [
+      {
+        label: 'I need to book a service appointment.',
+        response: 'Absolutely. I can help with that. I have your business location and preferred time window, then I can place this into the schedule and send a confirmation right away.',
+        outcome: 'New service request captured and ready for scheduling.'
+      },
+      {
+        label: 'Can you tell me if you service my area?',
+        response: 'Yes. We service the surrounding coverage area and can confirm availability based on your ZIP code or city. If you share that with me, I can let you know immediately and log the lead for follow up.',
+        outcome: 'Coverage confirmed and service area qualification completed.'
+      },
+      {
+        label: 'I want to speak with a live person.',
+        response: 'Of course. I can route this to the right team member now, and I will also summarize your request so they have context before they pick up.',
+        outcome: 'Warm transfer initiated with call summary attached.'
+      },
+      {
+        label: 'Do you offer emergency service?',
+        response: 'Yes. We do offer emergency support. I can mark this as urgent, collect the problem details, and escalate it so the team sees it immediately.',
+        outcome: 'Urgent inbound flagged and escalated.'
+      }
+    ]
+  },
+  pricing: {
+    callerName: 'Pricing Inquiry',
+    sub: 'Customer wants cost guidance before moving forward',
+    greeting: 'Thank you for calling {biz}. This is {ai}, the AI receptionist. How can I help you today?',
+    helper: 'Use this flow when you want to show pricing questions, quote positioning, and how the AI keeps the lead warm without overpromising.',
+    choices: [
+      {
+        label: 'How much does a typical service call cost?',
+        response: 'Pricing depends on the type of service and the specifics of the issue, but I can collect a few quick details and have the team send an accurate estimate or pricing range right away.',
+        outcome: 'Pricing conversation captured without the AI making risky promises.'
+      },
+      {
+        label: 'Can I get a quote before booking?',
+        response: 'Yes. I can log the request, capture the service details, and route it for a quote follow up. That way the team already has the context before they reach back out.',
+        outcome: 'Quote request logged and assigned for follow up.'
+      },
+      {
+        label: 'Do you have financing or payment options?',
+        response: 'Payment options can vary by service, but I can note that as part of the request so the team follows up with the right information and options.',
+        outcome: 'Financing interest noted for the sales team.'
+      },
+      {
+        label: 'I am comparing a few providers right now.',
+        response: 'Totally understood. I can still help by capturing what matters most to you and making sure the team sends back the most relevant next step instead of a generic reply.',
+        outcome: 'Competitive shopper retained and moved into follow up.'
+      }
+    ]
+  },
+  status: {
+    callerName: 'Existing Customer',
+    sub: 'Customer is checking on timing or appointment details',
+    greeting: 'Thank you for calling {biz}. My name is {ai}. How can I help you today?',
+    helper: 'This path demonstrates appointment support, status updates, and lower friction customer service.',
+    choices: [
+      {
+        label: 'I am checking on my appointment time.',
+        response: 'I can help with that. I can confirm the scheduled time window, update the team if anything changed, and make sure your record is tagged for priority visibility.',
+        outcome: 'Appointment status request handled and logged.'
+      },
+      {
+        label: 'I need to reschedule my service.',
+        response: 'No problem. I can capture your preferred windows and route that request so the team can shift the appointment without losing the service details.',
+        outcome: 'Reschedule request captured for dispatch.'
+      },
+      {
+        label: 'I want to know if the tech is on the way.',
+        response: 'I can note that for the team and trigger a status check so they can confirm the technician progress and update you quickly.',
+        outcome: 'Technician status check requested.'
+      },
+      {
+        label: 'Can you text me the appointment details?',
+        response: 'Yes. I can log that preference and make sure the confirmation details are sent by text so you have them in one place.',
+        outcome: 'SMS appointment confirmation requested.'
+      }
+    ]
+  },
+  urgent: {
+    callerName: 'Urgent Caller',
+    sub: 'High priority issue that needs fast escalation',
+    greeting: 'Thank you for calling {biz}. This is {ai}. How can I help you today?',
+    helper: 'Use this to show how the AI triages urgency, de escalates stress, and pushes critical issues to the front of the line.',
+    choices: [
+      {
+        label: 'I have an emergency and need someone now.',
+        response: 'I am sorry you are dealing with that. I can mark this as urgent right now, capture the issue details, and escalate it to the team immediately for priority follow up.',
+        outcome: 'Emergency case prioritized and escalated.'
+      },
+      {
+        label: 'My system stopped working completely.',
+        response: 'Understood. I will classify this as a no service event, log the severity, and make sure the team sees it as a high priority service issue.',
+        outcome: 'Critical outage documented and routed.'
+      },
+      {
+        label: 'There is water damage and I need help fast.',
+        response: 'I understand. I can flag this as time sensitive, note the risk factors, and route the call as an urgent service event so the team can respond quickly.',
+        outcome: 'Damage risk recorded and urgent routing applied.'
+      },
+      {
+        label: 'I need someone to call me back right away.',
+        response: 'Absolutely. I can create an immediate callback request and include the reason for urgency so the team has the right context before they return the call.',
+        outcome: 'Immediate callback request created.'
+      }
+    ]
+  }
+};
+
+function voiceDemoStopSpeech() {
+  try {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  } catch (e) {}
+}
+
+function voiceDemoSpeak(text, done) {
+  var typing = document.getElementById('ph-typing');
+  if (typing) typing.style.display = 'block';
+  try {
+    if ('speechSynthesis' in window && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 1;
+      u.pitch = 1;
+      u.volume = 1;
+      u.onend = function() {
+        if (typing) typing.style.display = 'none';
+        if (done) done();
+      };
+      u.onerror = function() {
+        if (typing) typing.style.display = 'none';
+        if (done) done();
+      };
+      window.speechSynthesis.speak(u);
+    } else {
+      if (typing) typing.style.display = 'none';
+      if (done) setTimeout(done, 400);
+    }
+  } catch (e) {
+    if (typing) typing.style.display = 'none';
+    if (done) setTimeout(done, 400);
+  }
+}
+
+function voiceDemoAddLine(role, text) {
+  var box = document.getElementById('ph-transcript');
+  if (!box) return;
+  var html = '';
+  html += '<div class="call-bubble ' + (role === 'ai' ? 'ai' : 'lead') + '">';
+  html += '<div class="bubble-avatar ' + (role === 'ai' ? 'ai-av' : 'lead-av') + '">' + (role === 'ai' ? '&#129302;' : '&#128100;') + '</div>';
+  html += '<div class="bubble-text">';
+  html += '<div class="bubble-label">' + (role === 'ai' ? 'AI Receptionist' : 'Caller') + '</div>';
+  html += escapeHtml(text);
+  html += '</div></div>';
+  box.insertAdjacentHTML('beforeend', html);
+  box.scrollTop = box.scrollHeight;
+}
+
+function voiceDemoFormatTime(secs) {
+  var m = Math.floor(secs / 60);
+  var s = secs % 60;
+  return m + ':' + (s < 10 ? '0' + s : s);
+}
+
+function voiceDemoResetUI() {
+  voiceDemoStopSpeech();
+  if (voiceCallState.timer) clearInterval(voiceCallState.timer);
+  voiceCallState.timer = null;
+  voiceCallState.seconds = 0;
+  voiceCallState.started = false;
+  voiceCallState.accepted = false;
+  var transcript = document.getElementById('ph-transcript');
+  if (transcript) transcript.innerHTML = '';
+  var summary = document.getElementById('ph-summary');
+  if (summary) { summary.style.display = 'none'; summary.innerHTML = ''; }
+  var crm = document.getElementById('ph-crm');
+  if (crm) crm.style.display = 'none';
+  var crmBody = document.getElementById('ph-crm-body');
+  if (crmBody) crmBody.innerHTML = '';
+  var typing = document.getElementById('ph-typing');
+  if (typing) typing.style.display = 'none';
+  var timer = document.getElementById('ph-timer');
+  if (timer) timer.textContent = '0:00';
+  var stage = document.getElementById('ph-stage');
+  if (stage) stage.textContent = 'Incoming Call';
+  var status = document.getElementById('ph-call-status');
+  if (status) status.textContent = 'Incoming Call';
+  var sub = document.getElementById('ph-choice-sub');
+  if (sub) sub.textContent = 'Accept the call to unlock the next caller request.';
+  var helper = document.getElementById('ph-helper');
+  if (helper) helper.innerHTML = '<strong>Presenter Prompt</strong>Hit Accept, let the AI receptionist greet the caller, then choose one of the caller requests to show how the business would handle the conversation live.';
+  var acceptBtn = document.getElementById('ph-accept-btn');
+  if (acceptBtn) { acceptBtn.disabled = false; acceptBtn.textContent = 'Accept'; }
+  var endBtn = document.getElementById('ph-end-btn');
+  if (endBtn) endBtn.textContent = 'End Call';
+}
+
+function voiceDemoPrepareOptions() {
+  var scriptSel = document.getElementById('ph-script');
+  var key = scriptSel ? scriptSel.value : 'reception';
+  voiceCallState.currentScenario = key;
+  var scenario = voiceCallScenarios[key] || voiceCallScenarios.reception;
+  var callerName = document.getElementById('ph-caller-name');
+  if (callerName) callerName.textContent = scenario.callerName;
+  var callerSub = document.getElementById('ph-caller-sub');
+  if (callerSub) callerSub.textContent = scenario.sub;
+  var helper = document.getElementById('ph-helper');
+  if (helper) helper.innerHTML = '<strong>Presenter Prompt</strong>' + escapeHtml(scenario.helper);
+  var grid = document.getElementById('ph-choice-grid');
+  if (!grid) return;
+  var html = '';
+  for (var i = 0; i < scenario.choices.length; i++) {
+    html += '<button class="phone-choice-btn" ' + (voiceCallState.accepted ? '' : 'disabled') + ' onclick="voiceDemoHandleChoice(' + i + ')">' + escapeHtml(scenario.choices[i].label) + '</button>';
+  }
+  grid.innerHTML = html;
+}
+
+function startVoiceCallDemo() {
+  var out = document.getElementById('ph-out');
+  if (out) out.style.display = 'block';
+  voiceDemoResetUI();
+  voiceDemoPrepareOptions();
+  var stage = document.getElementById('ph-stage');
+  if (stage) stage.textContent = 'Incoming Call';
+  var status = document.getElementById('ph-call-status');
+  if (status) status.textContent = 'Incoming Call for ' + (document.getElementById('ph-biz').value || 'your business');
+  out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function acceptVoiceCall() {
+  if (voiceCallState.accepted) return;
+  voiceCallState.accepted = true;
+  var acceptBtn = document.getElementById('ph-accept-btn');
+  if (acceptBtn) { acceptBtn.disabled = true; acceptBtn.textContent = 'Call Active'; }
+  var stage = document.getElementById('ph-stage');
+  if (stage) stage.textContent = 'Live Call';
+  var status = document.getElementById('ph-call-status');
+  if (status) status.textContent = 'AI Receptionist Live';
+  var sub = document.getElementById('ph-choice-sub');
+  if (sub) sub.textContent = 'Choose the caller request you want the AI receptionist to handle next.';
+  voiceCallState.seconds = 0;
+  var timer = document.getElementById('ph-timer');
+  if (timer) timer.textContent = '0:00';
+  voiceCallState.timer = setInterval(function() {
+    voiceCallState.seconds++;
+    var t = document.getElementById('ph-timer');
+    if (t) t.textContent = voiceDemoFormatTime(voiceCallState.seconds);
+  }, 1000);
+
+  voiceDemoPrepareOptions();
+
+  var biz = (document.getElementById('ph-biz').value || 'your business');
+  var ai = (document.getElementById('ph-ai-name').value || 'Maya');
+  var scenario = voiceCallScenarios[voiceCallState.currentScenario] || voiceCallScenarios.reception;
+  var greeting = scenario.greeting.replace(/{biz}/g, biz).replace(/{ai}/g, ai);
+  voiceDemoAddLine('ai', greeting);
+  voiceDemoSpeak(greeting);
+}
+
+function voiceDemoHandleChoice(index) {
+  if (!voiceCallState.accepted) return;
+  var scenario = voiceCallScenarios[voiceCallState.currentScenario] || voiceCallScenarios.reception;
+  var choice = scenario.choices[index];
+  if (!choice) return;
+
+  voiceDemoAddLine('lead', choice.label);
+  voiceDemoAddLine('ai', choice.response);
+  voiceDemoSpeak(choice.response);
+
+  var helper = document.getElementById('ph-helper');
+  if (helper) helper.innerHTML = '<strong>Presenter Prompt</strong>Point out that the AI stayed on brand, handled the request instantly, and can now push the result into CRM or the next workflow without human delay.';
+
+  var summary = document.getElementById('ph-summary');
+  if (summary) {
+    summary.style.display = 'block';
+    summary.innerHTML = '<strong>Call Outcome</strong><br>' + escapeHtml(choice.outcome) + '<br><br><strong>Next Workflow</strong><br>CRM updated, call tagged, and the business can trigger follow up, scheduling, or escalation from here.';
+  }
+
+  var crm = document.getElementById('ph-crm');
+  var crmBody = document.getElementById('ph-crm-body');
+  if (crm && crmBody) {
+    crm.style.display = 'block';
+    crmBody.innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:10px">' +
+      '<div class="crm-field"><div class="crm-key">Business</div><div class="crm-val">' + escapeHtml(document.getElementById('ph-biz').value || 'Your Business') + '</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Scenario</div><div class="crm-val">' + escapeHtml(scenario.callerName) + '</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Caller Request</div><div class="crm-val">' + escapeHtml(choice.label) + '</div></div>' +
+      '<div class="crm-field"><div class="crm-key">Outcome</div><div class="crm-val"><span class="crm-val tag qualified">â ' + escapeHtml(choice.outcome) + '</span></div></div>' +
+      '<div class="crm-field"><div class="crm-key">Handled By</div><div class="crm-val">' + escapeHtml(document.getElementById('ph-ai-name').value || 'Maya') + ' - AI Receptionist</div></div>' +
+      '</div>';
+  }
+
+  demoComplete('phone-agent');
+}
+
+function endVoiceCall() {
+  voiceDemoStopSpeech();
+  if (voiceCallState.timer) clearInterval(voiceCallState.timer);
+  voiceCallState.timer = null;
+  var stage = document.getElementById('ph-stage');
+  if (stage) stage.textContent = 'Call Ended';
+  var status = document.getElementById('ph-call-status');
+  if (status) status.textContent = 'Call Completed';
+  var sub = document.getElementById('ph-choice-sub');
+  if (sub) sub.textContent = 'You can restart the voice demo call at any time.';
+  var endBtn = document.getElementById('ph-end-btn');
+  if (endBtn) endBtn.textContent = 'Call Ended';
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
  var contactInput = document.getElementById('intro-contact');
  if (contactInput) {
- contactInput.addEventListener('input', function() {
- var name = this.value.trim();
- document.getElementById('intro-btn-name').textContent = name ? name : 'This Prospect';
- });
+   contactInput.addEventListener('input', function() {
+     var name = this.value.trim();
+     var btnName = document.getElementById('intro-btn-name');
+     if (btnName) btnName.textContent = name ? name : 'This Prospect';
+   });
  }
+
+ var defaults = {
+   contact: 'Marcus',
+   company: 'Rivera Home Services',
+   vertical: 'homeservices',
+   teamSize: 'small'
+ };
+
+ var cName = document.getElementById('crit-contact');
+ var cCompany = document.getElementById('crit-company');
+ var cVertical = document.getElementById('crit-vertical');
+ var cTeam = document.getElementById('crit-teamsize');
+
+ if (cName && !cName.value) cName.value = defaults.contact;
+ if (cCompany && !cCompany.value) cCompany.value = defaults.company;
+ if (cVertical && !cVertical.value) cVertical.value = defaults.vertical;
+ if (cTeam && !cTeam.value) cTeam.value = defaults.teamSize;
+
+ ['crit-contact','crit-company','crit-vertical','crit-teamsize'].forEach(function(id){
+   var el = document.getElementById(id);
+   if (el) el.addEventListener('input', syncCriteriaToProspect);
+   if (el) el.addEventListener('change', syncCriteriaToProspect);
+ });
+
+ syncCriteriaToProspect();
+ updatePhonePresenterPrompts();
+ initROI();
+ applyPackageView();
 });
 
 function startDemo() {
-  try {
-    prospect.contact = (document.getElementById('intro-contact') && document.getElementById('intro-contact').value.trim()) || 'the prospect';
-    prospect.company = (document.getElementById('intro-company') && document.getElementById('intro-company').value.trim()) || 'their business';
-    prospect.vertical = (document.getElementById('intro-vertical') && document.getElementById('intro-vertical').value) || 'homeservices';
-    prospect.teamSize = (document.getElementById('intro-teamsize') && document.getElementById('intro-teamsize').value) || 'small';
-
-    var cfg = verticalConfig[prospect.vertical] || verticalConfig.homeservices;
-    applyVerticalDefaults(prospect.vertical);
-
-    var heroP = document.querySelector('#panel-home .home-hero p');
-    if (heroP) heroP.textContent = '12 AI stations - customized for ' + prospect.company + ' (' + cfg.label + '). Select any station to see it live.';
-
-    var badgeText = document.getElementById('prospectBadgeText');
-    if (badgeText) badgeText.textContent = prospect.contact + ' - ' + prospect.company;
-    var badge = document.getElementById('prospectBadge');
-    if (badge) badge.style.display = 'flex';
-
-    var calcSub = document.querySelector('.roi-calc-sub');
-    if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
-
-    var screen = document.getElementById('introScreen');
-    if (screen) {
-      screen.classList.add('hidden');
-      setTimeout(function() {
-        screen.style.display = 'none';
-        var topNav = document.getElementById('topNav');
-        var mainContent = document.getElementById('mainContent');
-        if (topNav) topNav.style.display = 'block';
-        if (mainContent) mainContent.style.display = 'block';
-      }, 400);
-    }
-
-    applyPackageView();
-    initROI();
-  } catch (err) {
-    console.error('startDemo failed', err);
-    alert('The demo hit a setup error. Please reload and try again.');
-  }
+  syncCriteriaToProspect();
 }
 
 function applyPackageView(activeList) {
@@ -2846,11 +3567,8 @@ function applyPackageView(activeList) {
 }
 
 function resetIntro() {
- document.getElementById('topNav').style.display = 'none';
- document.getElementById('mainContent').style.display = 'none';
- var screen = document.getElementById('introScreen');
- screen.style.display = 'flex';
- setTimeout(function() { screen.classList.remove('hidden'); }, 10);
+  var top = document.getElementById('mainContent');
+  if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 
