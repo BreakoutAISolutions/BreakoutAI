@@ -5967,10 +5967,11 @@ setupTaskCalculators();
   function placeProspectBadge(){
     var badge = document.getElementById('prospectBadge');
     var roiBar = document.getElementById('roiBar');
+    var heroTitle = document.querySelector('#panel-home .home-hero h1');
     var homePanel = document.getElementById('panel-home');
     if (!badge) return;
 
-    var onHome = homePanel && homePanel.classList.contains('active') && roiBar;
+    var onHome = homePanel && homePanel.classList.contains('active') && roiBar && heroTitle;
 
     if (!onHome) {
       badge.style.position = 'relative';
@@ -5981,16 +5982,21 @@ setupTaskCalculators();
       return;
     }
 
-    var rect = roiBar.getBoundingClientRect();
+    var roiRect = roiBar.getBoundingClientRect();
+    var heroRect = heroTitle.getBoundingClientRect();
+    var centerX = roiRect.left + (roiRect.width / 2);
+    var gapCenterY = heroRect.bottom + ((roiRect.top - heroRect.bottom) / 2);
+
     badge.style.position = 'fixed';
-    badge.style.left = (rect.left + rect.width / 2) + 'px';
-    badge.style.top = (rect.top - 18) + 'px';
-    badge.style.transform = 'translateX(-50%)';
+    badge.style.left = centerX + 'px';
+    badge.style.top = gapCenterY + 'px';
+    badge.style.transform = 'translate(-50%, -50%)';
     badge.style.zIndex = '140';
   }
 
   var originalShowPanel = window.showPanel;
-  if (typeof originalShowPanel === 'function') {
+  if (typeof originalShowPanel === 'function' && !window.__badgeWrapped) {
+    window.__badgeWrapped = true;
     window.showPanel = function(id) {
       originalShowPanel(id);
       setTimeout(placeProspectBadge, 0);
