@@ -462,38 +462,22 @@ background: rgba(255,255,255,0.96);
 border-color: rgba(255,255,255,0.24);
 }
 .doc-logo.has-image img {
-width: auto;
-height: auto;
+width: 100%;
+height: 100%;
 max-width: 100%;
 max-height: 100%;
 object-fit: contain;
-object-position: center;
 display: block;
 border-radius: 10px;
-margin: 0 auto;
-}
-.doc-topbar .doc-logo,
-.price-box .doc-logo,
-.content-block .doc-logo,
-.out-body .doc-logo {
-align-self: center;
 }
 .logo-preview-box {
 overflow: hidden;
-display: flex;
-align-items: center;
-justify-content: center;
-background: rgba(255,255,255,0.96);
 }
 .logo-preview-box img {
-width: auto;
-height: auto;
-max-width: 100%;
-max-height: 100%;
+width: 100%;
+height: 100%;
 object-fit: contain;
-object-position: center;
 display: block;
-margin: 0 auto;
 background: rgba(255,255,255,0.96);
 }
 
@@ -3736,10 +3720,6 @@ function buildSocialPreviewImage(platform, day, postText, tags) {
  var subhead = platform + ' â¢ ' + day;
  var hook = (postText || '').split('\n')[0].slice(0, 72);
  var footer = (tags || '#HVAC #PalmDesert').slice(0, 52);
- var logoMarkup = '';
- if (window.prospect && prospect.logoDataUrl) {
-  logoMarkup = '<image x="780" y="140" width="160" height="160" preserveAspectRatio="xMidYMid meet" href="' + svgEscape(prospect.logoDataUrl) + '"/>';
- }
  var svg =
    '<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">' +
    '<defs>' +
@@ -5769,5 +5749,4 @@ setupTaskCalculators();
     var hero = document.querySelector('#panel-home .home-hero p');
     if (hero) hero.textContent = '';
 
-    var badge = byId('prospectBadge');
     var ba
