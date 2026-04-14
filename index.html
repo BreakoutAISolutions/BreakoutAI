@@ -597,26 +597,6 @@ color: var(--text-dimmer);
 .home-hero h1 span { background: linear-gradient(90deg, var(--blue-bright), #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .home-hero p { display:none; }
 
-.roi-wrap {
-position: relative;
-max-width: 960px;
-margin: 28px auto 12px;
-padding-top: 18px;
-}
-
-.prospect-badge-overlay {
-position: absolute;
-left: 50%;
-top: 0;
-transform: translateX(-50%);
-z-index: 3;
-top: 0;
-}
-
-.prospect-badge-overlay:hover {
-transform: translateX(-50%);
-}
-
 /* ROI STATS BAR */
 .roi-bar {
 display: flex; align-items: center; justify-content: center;
@@ -1426,7 +1406,7 @@ font-weight: 500; white-space: nowrap;
 cursor: pointer;
 transition: all 0.18s;
 position: relative;
-top: 0;
+top: 3px;
 }
 
 .prospect-badge:hover { background: rgba(59,130,246,0.2); }
@@ -1695,6 +1675,10 @@ display: none;
 </div>
 
 <div class="topnav-right">
+ <div id="prospectBadge" style="display:none" class="prospect-badge" onclick="resetIntro()">
+ <div class="prospect-badge-dot"></div>
+ <span id="prospectBadgeText">Demo Active</span>
+ </div>
  <div class="status-dot"><span>AI Online</span></div>
 </div>
 
@@ -1721,11 +1705,6 @@ display: none;
  </div>
 
 <!-- ROI STATS BAR -->
-<div class="roi-wrap">
-<div id="prospectBadge" style="display:none" class="prospect-badge prospect-badge-overlay" onclick="resetIntro()">
- <div class="prospect-badge-dot"></div>
- <span id="prospectBadgeText">Demo Active</span>
- </div>
 <div class="roi-bar" id="roiBar">
  <div class="roi-stat">
  <div class="roi-num" id="statHours">0</div>
@@ -1746,7 +1725,6 @@ display: none;
  <div class="roi-num" id="statROI">0x</div>
  <div class="roi-label">saved / year</div>
  </div>
-</div>
 </div>
 
 <div class="stations-grid">
@@ -5982,6 +5960,52 @@ setupTaskCalculators();
     </div>
     </div>
 </div>
+
+
+<script>
+(function(){
+  function placeProspectBadge(){
+    var badge = document.getElementById('prospectBadge');
+    var roiBar = document.getElementById('roiBar');
+    var homePanel = document.getElementById('panel-home');
+    if (!badge) return;
+
+    var onHome = homePanel && homePanel.classList.contains('active') && roiBar;
+
+    if (!onHome) {
+      badge.style.position = 'relative';
+      badge.style.left = '';
+      badge.style.top = '3px';
+      badge.style.transform = '';
+      badge.style.zIndex = '';
+      return;
+    }
+
+    var rect = roiBar.getBoundingClientRect();
+    badge.style.position = 'fixed';
+    badge.style.left = (rect.left + rect.width / 2) + 'px';
+    badge.style.top = (rect.top - 18) + 'px';
+    badge.style.transform = 'translateX(-50%)';
+    badge.style.zIndex = '140';
+  }
+
+  var originalShowPanel = window.showPanel;
+  if (typeof originalShowPanel === 'function') {
+    window.showPanel = function(id) {
+      originalShowPanel(id);
+      setTimeout(placeProspectBadge, 0);
+    };
+  }
+
+  window.addEventListener('resize', placeProspectBadge);
+  window.addEventListener('scroll', placeProspectBadge, { passive: true });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(placeProspectBadge, 50); });
+  } else {
+    setTimeout(placeProspectBadge, 50);
+  }
+})();
+</script>
 
 </body>
 </html>
