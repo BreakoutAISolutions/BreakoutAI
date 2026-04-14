@@ -438,8 +438,6 @@ max-height: 600px; overflow-y: auto;
 .doc-logo {
 width: 56px;
 height: 56px;
-min-width: 56px;
-min-height: 56px;
 border-radius: 14px;
 display: flex;
 align-items: center;
@@ -453,32 +451,6 @@ border: 1px solid var(--blue-border);
 color: var(--blue-bright);
 box-shadow: 0 10px 24px rgba(59,130,246,0.14);
 flex-shrink: 0;
-overflow: hidden;
-position: relative;
-}
-.doc-logo.has-image {
-padding: 6px;
-background: rgba(255,255,255,0.96);
-border-color: rgba(255,255,255,0.24);
-}
-.doc-logo.has-image img {
-width: 100%;
-height: 100%;
-max-width: 100%;
-max-height: 100%;
-object-fit: contain;
-display: block;
-border-radius: 10px;
-}
-.logo-preview-box {
-overflow: hidden;
-}
-.logo-preview-box img {
-width: 100%;
-height: 100%;
-object-fit: contain;
-display: block;
-background: rgba(255,255,255,0.96);
 }
 
 .doc-shell {
@@ -3731,9 +3703,8 @@ function buildSocialPreviewImage(platform, day, postText, tags) {
    '<rect width="1080" height="1080" fill="url(#bg)"/>' +
    '<rect x="56" y="56" width="968" height="968" rx="36" fill="rgba(8,12,24,0.28)" stroke="rgba(255,255,255,0.18)"/>' +
    '<circle cx="860" cy="220" r="120" fill="rgba(255,255,255,0.08)"/>' +
-   logoMarkup +
-   '<text x="220" y="160" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#93c5fd">' + svgEscape(subhead.toUpperCase()) + '</text>' +
-   '<text x="96" y="300" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="78" fill="#ffffff">' + svgEscape(company) + '</text>' +
+   '<text x="96" y="160" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#93c5fd">' + svgEscape(subhead.toUpperCase()) + '</text>' +
+   '<text x="96" y="290" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="78" fill="#ffffff">' + svgEscape(company) + '</text>' +
    '<text x="96" y="390" font-family="Arial, Helvetica, sans-serif" font-size="52" fill="#dbeafe">FAST HVAC HELP IN PALM DESERT</text>' +
    '<foreignObject x="96" y="460" width="840" height="260">' +
    '<div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial, Helvetica, sans-serif;color:#e2e8f0;font-size:44px;line-height:1.25;font-weight:600;">' + htmlEscape(hook) + '</div>' +
@@ -3960,7 +3931,7 @@ function renderSEO(data, bodyId) {
   var html = '';
 
   html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">';
-  html += getDocumentLogoMarkup(data.biz);
+  html += '<div class="doc-logo">' + esc(buildFakeBrand(data.biz)) + '</div>';
   html += '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(data.biz) + ' SEO + AEO Package</div>';
   html += '<div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">Local expansion system built around city landing pages</div></div></div>';
 
@@ -4240,24 +4211,8 @@ function buildFakeBrand(name) {
   return initials || 'BA';
 }
 
-function escAttr(s) {
-  return String(s == null ? '' : s)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-function getCompanyLogoMarkup(name, extraClass) {
-  var cls = 'doc-logo' + (prospect.logoDataUrl ? ' has-image' : '') + (extraClass ? ' ' + extraClass : '');
-  if (prospect.logoDataUrl) {
-    return '<div class="' + cls + '"><img src="' + escAttr(prospect.logoDataUrl) + '" alt="' + escAttr((name || prospect.company || 'Company') + ' logo') + '"></div>';
-  }
-  return '<div class="' + cls + '">' + esc(buildFakeBrand(name)) + '</div>';
-}
-
 function getDocumentLogoMarkup(name) {
-  return getCompanyLogoMarkup(name);
+  return '<div class="doc-logo">' + esc(buildFakeBrand(name)) + '</div>';
 }
 
 function getDocumentBrandLine(name) {
@@ -4314,38 +4269,6 @@ function updateCriteriaSummary() {
   if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
 }
 
-function updateLogoPreview() {
-  var preview = document.getElementById('crit-logo-preview');
-  var nameEl = document.getElementById('crit-logo-name');
-  if (!preview) return;
-  if (prospect.logoDataUrl) {
-    preview.innerHTML = '<img src="' + escAttr(prospect.logoDataUrl) + '" alt="' + escAttr((prospect.company || 'Company') + ' logo preview') + '">';
-  } else {
-    preview.innerHTML = '<div class="logo-preview-placeholder">' + esc(buildFakeBrand(prospect.company || 'Palm Desert AC Services')) + '</div>';
-  }
-  if (nameEl) nameEl.textContent = prospect.logoName || 'No logo uploaded yet';
-}
-
-function handleLogoUpload(evt) {
-  var file = evt && evt.target && evt.target.files ? evt.target.files[0] : null;
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    prospect.logoDataUrl = e.target && e.target.result ? String(e.target.result) : '';
-    prospect.logoName = file.name || 'Uploaded logo';
-    updateLogoPreview();
-  };
-  reader.readAsDataURL(file);
-}
-
-function clearLogoUpload() {
-  prospect.logoDataUrl = '';
-  prospect.logoName = '';
-  var input = document.getElementById('crit-logo');
-  if (input) input.value = '';
-  updateLogoPreview();
-}
-
 function syncCriteriaToProspect() {
   var cName = document.getElementById('crit-contact');
   var cCompany = document.getElementById('crit-company');
@@ -4372,7 +4295,6 @@ function syncCriteriaToProspect() {
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
   updateCriteriaSummary();
-  updateLogoPreview();
 }
 
 
@@ -5749,4 +5671,191 @@ setupTaskCalculators();
     var hero = document.querySelector('#panel-home .home-hero p');
     if (hero) hero.textContent = '';
 
-    var ba
+    var badge = byId('prospectBadge');
+    var badgeText = byId('prospectBadgeText');
+    if (badge) badge.style.display = 'flex';
+    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
+
+    if (typeof window.prospect === 'object' && window.prospect) {
+      window.prospect.contact = defaults.contact;
+      window.prospect.company = defaults.company;
+      window.prospect.vertical = defaults.vertical;
+      window.prospect.teamSize = defaults.teamSize;
+    }
+
+    if (typeof window.applyVerticalDefaults === 'function') {
+      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
+    }
+    if (typeof window.updateCriteriaSummary === 'function') {
+      try { window.updateCriteriaSummary(); } catch (e) {}
+    }
+  }
+
+  function activatePanel(id){
+    if (!id) return false;
+    var panel = byId('panel-' + id);
+    if (!panel) return false;
+
+    var panels = document.querySelectorAll('.panel');
+    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+
+    var tabs = document.querySelectorAll('.nav-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+
+    panel.classList.add('active');
+
+    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
+    if (activeTab) activeTab.classList.add('active');
+
+    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
+    return true;
+  }
+
+  window.showPanel = activatePanel;
+
+  function inferPanelName(el){
+    if (!el) return '';
+    var direct = el.getAttribute('data-panel');
+    if (direct) return direct;
+    var onclickAttr = el.getAttribute('onclick') || '';
+    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
+    return m ? m[1] : '';
+  }
+
+  function bindStations(){
+    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
+    for (var i = 0; i < nodes.length; i++) {
+      (function(node){
+        var panelId = inferPanelName(node);
+        if (!panelId) return;
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          activatePanel(panelId);
+        }, true);
+      })(nodes[i]);
+    }
+  }
+
+  function boot(){
+    applyDefaults();
+    bindStations();
+    activatePanel('home');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  setTimeout(boot, 50);
+  setTimeout(boot, 250);
+  setTimeout(boot, 750);
+})();
+</script>
+
+
+<script>
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  function openCriteriaModal(){
+    var modal = byId('criteriaModal');
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    var first = byId('crit-contact');
+    if (first) setTimeout(function(){ try { first.focus(); first.select(); } catch(e){} }, 20);
+  }
+  function closeCriteriaModal(){
+    var modal = byId('criteriaModal');
+    if (!modal) return;
+    if (typeof window.syncCriteriaToProspect === 'function') {
+      try { window.syncCriteriaToProspect(); } catch(e){}
+    }
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  function bindCriteriaModal(){
+    var trigger = byId('autopilotTrigger');
+    var closeBtn = byId('criteriaClose');
+    var backdrop = byId('criteriaBackdrop');
+    if (trigger && !trigger.dataset.criteriaBound) {
+      trigger.dataset.criteriaBound = '1';
+      trigger.addEventListener('click', openCriteriaModal);
+      trigger.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openCriteriaModal();
+        }
+      });
+    }
+    if (closeBtn && !closeBtn.dataset.criteriaBound) {
+      closeBtn.dataset.criteriaBound = '1';
+      closeBtn.addEventListener('click', closeCriteriaModal);
+    }
+    if (backdrop && !backdrop.dataset.criteriaBound) {
+      backdrop.dataset.criteriaBound = '1';
+      backdrop.addEventListener('click', closeCriteriaModal);
+    }
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeCriteriaModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindCriteriaModal);
+  } else {
+    bindCriteriaModal();
+  }
+  setTimeout(bindCriteriaModal, 100);
+})();
+</script>
+<div class="criteria-modal" id="criteriaModal" aria-hidden="true">
+  <div class="criteria-modal-backdrop" id="criteriaBackdrop"></div>
+  <div class="criteria-modal-card">
+    <button class="criteria-close" id="criteriaClose" type="button" aria-label="Save and close">Ã</button>
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-sub">No launch step needed</div>
+    </div>
+    <div class="criteria-grid">
+      <div class="field">
+        <label>Prospect First Name</label>
+        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
+      </div>
+      <div class="field">
+        <label>Vertical</label>
+        <select class="sel" id="crit-vertical">
+          <option value="homeservices" selected>Home Services</option>
+          <option value="salesmarketing">Sales and Marketing</option>
+          <option value="ecommerce">E Commerce</option>
+          <option value="professionalservices">Professional Services</option>
+          <option value="realestate">Real Estate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team Size</label>
+        <select class="sel" id="crit-teamsize">
+          <option value="solo">Solo / 1 person</option>
+          <option value="small" selected>2-5 people</option>
+          <option value="medium">6-15 people</option>
+          <option value="large">16-50 people</option>
+        </select>
+      </div>
+    </div>
+    <div class="criteria-note">
+      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
+    </div>
+    </div>
+</div>
+
+</body>
+</html>
