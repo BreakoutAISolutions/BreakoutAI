@@ -429,7 +429,7 @@ max-height: 600px; overflow-y: auto;
 .prop-sec-body { font-size: 14px; line-height: 1.75; color: #b8cde0; font-weight: 300; white-space: pre-wrap; }
 .deliv-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
 .deliv-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 14px; background: var(--navy3); border-radius: 8px; border: 1px solid var(--glass-border); font-size: 13px; color: #b8cde0; line-height: 1.5; }
-.deliv-item::before { content: 'â'; color: var(--success); font-weight: 700; flex-shrink: 0; }
+.deliv-item::before { content: 'â¢'; color: var(--success); font-weight: 700; flex-shrink: 0; }
 .price-box { background: var(--blue-glow); border: 1px solid var(--blue-border); border-radius: 12px; padding: 18px 22px; text-align: center; margin-bottom: 22px; }
 .price-lbl { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-bright); margin-bottom: 6px; }
 .price-val { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
@@ -3383,7 +3383,7 @@ function approveProposal() {
  '<div style="display:flex;flex-direction:column;gap:8px">' +
  '<div class="crm-field"><div class="crm-key">Sent To</div><div class="crm-val">' + esc(client) + ' \u00b7 ' + esc(biz) + '</div></div>' +
  '<div class="crm-field"><div class="crm-key">Delivery</div><div class="crm-val">Email + PDF attachment via DocuSign</div></div>' +
- '<div class="crm-field"><div class="crm-key">Follow-Up</div><div class="crm-val"><span class="crm-val tag qualified">&#10003; 3-day SMS reminder sequence armed</span></div></div>' +
+ '<div class="crm-field"><div class="crm-key">Follow-Up</div><div class="crm-val"><span class="crm-val tag qualified">â¢ 3-day SMS reminder sequence armed</span></div></div>' +
  '<div class="crm-field"><div class="crm-key">CRM</div><div class="crm-val">Proposal logged to HubSpot \u2014 stage: Proposal Sent</div></div>' +
  '<div class="crm-field"><div class="crm-key">Sent At</div><div class="crm-val">' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) + ' \u00b7 ' + now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) + '</div></div>' +
  '</div>';
@@ -3405,7 +3405,7 @@ function scheduleNewsletter() {
  '<div class="crm-field"><div class="crm-key">Scheduled For</div><div class="crm-val">Next ' + day + ' at ' + time + '</div></div>' +
  '<div class="crm-field"><div class="crm-key">Send To</div><div class="crm-val">' + subs.toLocaleString() + ' subscribers</div></div>' +
  '<div class="crm-field"><div class="crm-key">Platform</div><div class="crm-val">Mailchimp \u00b7 Verified list</div></div>' +
- '<div class="crm-field"><div class="crm-key">Status</div><div class="crm-val"><span class="crm-val tag qualified">&#10003; Scheduled \u2014 awaiting send window</span></div></div>' +
+ '<div class="crm-field"><div class="crm-key">Status</div><div class="crm-val"><span class="crm-val tag qualified">â¢ Scheduled \u2014 awaiting send window</span></div></div>' +
  '</div>';
  document.getElementById('nl-scheduled').scrollIntoView({ behavior:'smooth', block:'nearest' });
  liveActivityFeed.unshift({ dot:'blue', text:'Newsletter scheduled \u2014 ' + subs.toLocaleString() + ' subscribers, ' + day + ' ' + time, time:'just now' });
@@ -4827,7 +4827,7 @@ function voiceDemoHandleChoice(index) {
       '<div class="crm-field"><div class="crm-key">Business</div><div class="crm-val">' + escapeHtml(document.getElementById('ph-biz').value || 'Your Business') + '</div></div>' +
       '<div class="crm-field"><div class="crm-key">Scenario</div><div class="crm-val">' + escapeHtml(scenario.callerName) + '</div></div>' +
       '<div class="crm-field"><div class="crm-key">Caller Request</div><div class="crm-val">' + escapeHtml(choice.label) + '</div></div>' +
-      '<div class="crm-field"><div class="crm-key">Outcome</div><div class="crm-val"><span class="crm-val tag qualified">â ' + escapeHtml(choice.outcome) + '</span></div></div>' +
+      '<div class="crm-field"><div class="crm-key">Outcome</div><div class="crm-val"><span class="crm-val tag qualified">â¢ ' + escapeHtml(choice.outcome) + '</span></div></div>' +
       '<div class="crm-field"><div class="crm-key">Handled By</div><div class="crm-val">' + escapeHtml(document.getElementById('ph-ai-name').value || 'Maya') + ' - AI Receptionist</div></div>' +
       '</div>';
   }
@@ -5321,7 +5321,7 @@ function importToCRM() {
  '<div class="crm-field"><div class="crm-key">Records Imported</div><div class="crm-val">' + leads + ' leads</div></div>' +
  '<div class="crm-field"><div class="crm-key">Destination</div><div class="crm-val">HubSpot CRM - Leads Pipeline</div></div>' +
  '<div class="crm-field"><div class="crm-key">Tags Applied</div><div class="crm-val">AI-Sourced, Needs Outreach</div></div>' +
- '<div class="crm-field"><div class="crm-key">Follow-Up Sequence</div><div class="crm-val"><span class="crm-val tag qualified">â Smart CRM Sequence Triggered</span></div></div>' +
+ '<div class="crm-field"><div class="crm-key">Follow-Up Sequence</div><div class="crm-val"><span class="crm-val tag qualified">â¢ Smart CRM Sequence Triggered</span></div></div>' +
  '<div class="crm-field"><div class="crm-key">Assigned To</div><div class="crm-val">Dave - Breakout AI Solutions</div></div>' +
  '</div>';
  document.getElementById('ls-crm-confirm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -5408,7 +5408,7 @@ function runPhoneCall() {
 function playLines(lines, idx, name, biz) {
  if (idx >= lines.length) {
  if (phoneTimer) clearInterval(phoneTimer);
- document.getElementById('ph-call-status').textContent = 'â Call Complete - CRM Updated';
+ document.getElementById('ph-call-status').textContent = 'â¢ Call Complete - CRM Updated';
  showCRMLog(name, biz);
  document.getElementById('ph-btn').disabled = false;
  var transcript = document.getElementById('ph-transcript');
@@ -5448,7 +5448,7 @@ function doLiveTransfer(btn, name) {
  var card = document.getElementById('ph-transfer-card');
  if (card) card.innerHTML = '<div style="font-size:13px;color:var(--text-dim)">&#128222; Transferring <strong style="color:var(--text)">' + esc(name) + '</strong> to Dave... <span style="color:var(--text-dimmer)">(ringing)</span></div>';
  setTimeout(function() {
- if (card) card.innerHTML = '<div style="font-size:13px;color:var(--success)">&#10003; Live transfer complete - Dave is now on the call with ' + esc(name) + '</div>';
+ if (card) card.innerHTML = '<div style="font-size:13px;color:var(--success)">â¢ Live transfer complete - Dave is now on the call with ' + esc(name) + '</div>';
  liveActivityFeed.unshift({ dot:'green', text:'Live transfer - ' + name + ' connected to Dave', time:'just now' });
  }, 2200);
 }
@@ -5467,7 +5467,7 @@ function showCRMLog(name, biz) {
  '<div class="crm-field"><div class="crm-key">Contact</div><div class="crm-val">' + esc(name) + '</div></div>' +
  '<div class="crm-field"><div class="crm-key">Business</div><div class="crm-val">' + esc(biz) + '</div></div>' +
  '<div class="crm-field"><div class="crm-key">Call Duration</div><div class="crm-val">' + document.getElementById('ph-timer').textContent + '</div></div>' +
- '<div class="crm-field"><div class="crm-key">Status</div><div class="crm-val"><span class="crm-val tag qualified">&#10003; Qualified</span></div></div>' +
+ '<div class="crm-field"><div class="crm-key">Status</div><div class="crm-val"><span class="crm-val tag qualified">â¢ Qualified</span></div></div>' +
  '<div class="crm-field"><div class="crm-key">Pain Point</div><div class="crm-val">Manual follow-ups - losing quotes to faster competitors</div></div>' +
  '<div class="crm-field"><div class="crm-key">Next Action</div><div class="crm-val">Dave to call within 1 hour - send audit proposal</div></div>' +
  '<div class="crm-field"><div class="crm-key">Logged</div><div class="crm-val">' + dateStr + ' at ' + timeStr + '</div></div>';
@@ -5562,7 +5562,7 @@ function runInvoicing() {
   html += '<div class="crm-field"><div class="crm-key">Delivery</div><div class="crm-val">' + esc(via) + '</div></div>';
   html += '</div>';
   html += '<div class="pipeline">';
-  html += '<div class="pipe-step done"><div class="pipe-dot">&#10003;</div><div class="pipe-content"><div class="pipe-title">Invoice Generated</div><div class="pipe-detail">Branded invoice created with service, amount, and payment terms.</div><div class="pipe-time">Just now</div></div></div>';
+  html += '<div class="pipe-step done"><div class="pipe-dot">â¢</div><div class="pipe-content"><div class="pipe-title">Invoice Generated</div><div class="pipe-detail">Branded invoice created with service, amount, and payment terms.</div><div class="pipe-time">Just now</div></div></div>';
   html += '<div class="pipe-step done"><div class="pipe-dot">&#128231;</div><div class="pipe-content"><div class="pipe-title">Sent to Client</div><div class="pipe-detail">' + esc(via) + ' triggered automatically for ' + esc(client) + '.</div><div class="pipe-time">In under 10 seconds</div></div></div>';
   html += '<div class="pipe-step active"><div class="pipe-dot">&#9201;</div><div class="pipe-content"><div class="pipe-title">Reminder Sequence Armed</div><div class="pipe-detail">Automatic payment reminders scheduled until paid.</div><div class="pipe-time">Monitoring</div></div></div>';
   html += '</div>';
@@ -5678,7 +5678,7 @@ function refreshDash() {
  var done = completedDemos[t.panel];
  var borderStyle = done ? 'border-color:rgba(52,211,153,0.4);' : '';
  html += '<div class="dash-tile ' + t.color + '" onclick="showPanel(\'' + t.panel + '\')" style="' + borderStyle + '">';
- if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">&#10003; DONE</div>';
+ if (done) html += '<div style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:700;color:var(--success)">â¢ DONE</div>';
  html += '<div class="dash-tile-icon">' + t.icon + '</div>';
  html += '<div class="dash-tile-label">' + t.label + '</div>';
  html += '<div class="dash-tile-items">';
@@ -5801,219 +5801,4 @@ setupTaskCalculators();
 
   function applyDefaults(){
     setIfPossible('crit-contact', defaults.contact);
-    setIfPossible('crit-company', defaults.company);
-    setIfPossible('crit-vertical', defaults.vertical);
-    setIfPossible('crit-teamsize', defaults.teamSize);
-
-    var summary = byId('criteria-summary');
-    if (summary) summary.textContent = defaults.company + ' â¢ HVAC';
-
-    var hero = document.querySelector('#panel-home .home-hero p');
-    if (hero) hero.textContent = '';
-
-    var badge = byId('prospectBadge');
-    var badgeText = byId('prospectBadgeText');
-    if (badge) badge.style.display = 'flex';
-    if (badgeText) badgeText.textContent = defaults.contact + ' - ' + defaults.company;
-
-    if (typeof window.prospect === 'object' && window.prospect) {
-      window.prospect.contact = defaults.contact;
-      window.prospect.company = defaults.company;
-      window.prospect.vertical = defaults.vertical;
-      window.prospect.teamSize = defaults.teamSize;
-    }
-
-    if (typeof window.applyVerticalDefaults === 'function') {
-      try { window.applyVerticalDefaults(defaults.vertical); } catch (e) {}
-    }
-    if (typeof window.updateCriteriaSummary === 'function') {
-      try { window.updateCriteriaSummary(); } catch (e) {}
-    }
-  }
-
-  function activatePanel(id){
-    if (!id) return false;
-    var panel = byId('panel-' + id);
-    if (!panel) return false;
-
-    var panels = document.querySelectorAll('.panel');
-    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
-
-    var tabs = document.querySelectorAll('.nav-tab');
-    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
-
-    panel.classList.add('active');
-
-    var activeTab = document.querySelector('.nav-tab[data-panel="' + id + '"]');
-    if (activeTab) activeTab.classList.add('active');
-
-    try { window.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {}
-    return true;
-  }
-
-  window.showPanel = activatePanel;
-
-  function inferPanelName(el){
-    if (!el) return '';
-    var direct = el.getAttribute('data-panel');
-    if (direct) return direct;
-    var onclickAttr = el.getAttribute('onclick') || '';
-    var m = onclickAttr.match(/showPanel\('([^']+)'\)/);
-    return m ? m[1] : '';
-  }
-
-  function bindStations(){
-    var nodes = document.querySelectorAll('.station-tile, .nav-tab');
-    for (var i = 0; i < nodes.length; i++) {
-      (function(node){
-        var panelId = inferPanelName(node);
-        if (!panelId) return;
-        node.style.cursor = 'pointer';
-        node.addEventListener('click', function(ev){
-          ev.preventDefault();
-          ev.stopPropagation();
-          activatePanel(panelId);
-        }, true);
-      })(nodes[i]);
-    }
-  }
-
-  function boot(){
-    applyDefaults();
-    bindStations();
-    activatePanel('home');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-
-  setTimeout(boot, 50);
-  setTimeout(boot, 250);
-  setTimeout(boot, 750);
-})();
-</script>
-
-
-<script>
-(function(){
-  function byId(id){ return document.getElementById(id); }
-  function openCriteriaModal(){
-    var modal = byId('criteriaModal');
-    if (!modal) return;
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    var first = byId('crit-contact');
-    if (first) setTimeout(function(){ try { first.focus(); first.select(); } catch(e){} }, 20);
-  }
-  function closeCriteriaModal(){
-    var modal = byId('criteriaModal');
-    if (!modal) return;
-    if (typeof window.syncCriteriaToProspect === 'function') {
-      try { window.syncCriteriaToProspect(); } catch(e){}
-    }
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-  function bindCriteriaModal(){
-    var trigger = byId('autopilotTrigger');
-    var closeBtn = byId('criteriaClose');
-    var backdrop = byId('criteriaBackdrop');
-    if (trigger && !trigger.dataset.criteriaBound) {
-      trigger.dataset.criteriaBound = '1';
-      trigger.addEventListener('click', openCriteriaModal);
-      trigger.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openCriteriaModal();
-        }
-      });
-    }
-    if (closeBtn && !closeBtn.dataset.criteriaBound) {
-      closeBtn.dataset.criteriaBound = '1';
-      closeBtn.addEventListener('click', closeCriteriaModal);
-    }
-    if (backdrop && !backdrop.dataset.criteriaBound) {
-      backdrop.dataset.criteriaBound = '1';
-      backdrop.addEventListener('click', closeCriteriaModal);
-    }
-    var logoInput = byId('crit-logo');
-    if (logoInput && !logoInput.dataset.criteriaBound) {
-      logoInput.dataset.criteriaBound = '1';
-      logoInput.addEventListener('change', handleLogoUpload);
-    }
-    var logoClear = byId('crit-logo-clear');
-    if (logoClear && !logoClear.dataset.criteriaBound) {
-      logoClear.dataset.criteriaBound = '1';
-      logoClear.addEventListener('click', clearLogoUpload);
-    }
-    updateLogoPreview();
-    document.addEventListener('keydown', function(e){
-      if (e.key === 'Escape') closeCriteriaModal();
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bindCriteriaModal);
-  } else {
-    bindCriteriaModal();
-  }
-  setTimeout(bindCriteriaModal, 100);
-})();
-</script>
-<div class="criteria-modal" id="criteriaModal" aria-hidden="true">
-  <div class="criteria-modal-backdrop" id="criteriaBackdrop"></div>
-  <div class="criteria-modal-card">
-    <button class="criteria-close" id="criteriaClose" type="button" aria-label="Save and close">Ã</button>
-    <div class="criteria-head">
-      <div>
-        <div class="criteria-title">Demo Criteria</div>
-        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
-      </div>
-      <div class="criteria-sub">No launch step needed</div>
-    </div>
-    <div class="criteria-grid">
-      <div class="field">
-        <label>Prospect First Name</label>
-        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
-      </div>
-      <div class="field">
-        <label>Company Name</label>
-        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
-      </div>
-      <div class="field">
-        <label>Vertical</label>
-        <select class="sel" id="crit-vertical">
-          <option value="homeservices" selected>Home Services</option>
-          <option value="salesmarketing">Sales and Marketing</option>
-          <option value="ecommerce">E Commerce</option>
-          <option value="professionalservices">Professional Services</option>
-          <option value="realestate">Real Estate</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Team Size</label>
-        <select class="sel" id="crit-teamsize">
-          <option value="solo">Solo / 1 person</option>
-          <option value="small" selected>2-5 people</option>
-          <option value="medium">6-15 people</option>
-          <option value="large">16-50 people</option>
-        </select>
-      </div>
-    </div>
-    <div class="criteria-logo-row">
-      <div class="field">
-        <label>Company Logo</label>
-        <div class="logo-upload-wrap">
-          <div class="logo-preview-box" id="crit-logo-preview"><div class="logo-preview-placeholder">PD</div></div>
-          <div class="logo-upload-meta">
-            <input class="inp" id="crit-logo" type="file" accept="image/*" />
-            <div class="logo-upload-name" id="crit-logo-name">No logo uploaded yet</div>
-            <div class="logo-upload-help">Upload a logo once and it will appear across proposals, contracts, invoices, social previews, and other rendered demos.</div>
-            <button class="logo-clear-btn" id="crit-logo-clear" type="button">Remove logo</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div clas
+    setIfPoss
