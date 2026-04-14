@@ -3703,8 +3703,9 @@ function buildSocialPreviewImage(platform, day, postText, tags) {
    '<rect width="1080" height="1080" fill="url(#bg)"/>' +
    '<rect x="56" y="56" width="968" height="968" rx="36" fill="rgba(8,12,24,0.28)" stroke="rgba(255,255,255,0.18)"/>' +
    '<circle cx="860" cy="220" r="120" fill="rgba(255,255,255,0.08)"/>' +
-   '<text x="96" y="160" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#93c5fd">' + svgEscape(subhead.toUpperCase()) + '</text>' +
-   '<text x="96" y="290" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="78" fill="#ffffff">' + svgEscape(company) + '</text>' +
+   logoMarkup +
+   '<text x="220" y="160" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#93c5fd">' + svgEscape(subhead.toUpperCase()) + '</text>' +
+   '<text x="96" y="300" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="78" fill="#ffffff">' + svgEscape(company) + '</text>' +
    '<text x="96" y="390" font-family="Arial, Helvetica, sans-serif" font-size="52" fill="#dbeafe">FAST HVAC HELP IN PALM DESERT</text>' +
    '<foreignObject x="96" y="460" width="840" height="260">' +
    '<div xmlns="http://www.w3.org/1999/xhtml" style="font-family:Arial, Helvetica, sans-serif;color:#e2e8f0;font-size:44px;line-height:1.25;font-weight:600;">' + htmlEscape(hook) + '</div>' +
@@ -3931,7 +3932,7 @@ function renderSEO(data, bodyId) {
   var html = '';
 
   html += '<div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap">';
-  html += '<div class="doc-logo">' + esc(buildFakeBrand(data.biz)) + '</div>';
+  html += getDocumentLogoMarkup(data.biz);
   html += '<div><div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;color:var(--text)">' + esc(data.biz) + ' SEO + AEO Package</div>';
   html += '<div style="font-size:12px;color:var(--text-dimmer);margin-top:4px">Local expansion system built around city landing pages</div></div></div>';
 
@@ -4211,8 +4212,24 @@ function buildFakeBrand(name) {
   return initials || 'BA';
 }
 
+function escAttr(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function getCompanyLogoMarkup(name, extraClass) {
+  var cls = 'doc-logo' + (prospect.logoDataUrl ? ' has-image' : '') + (extraClass ? ' ' + extraClass : '');
+  if (prospect.logoDataUrl) {
+    return '<div class="' + cls + '"><img src="' + escAttr(prospect.logoDataUrl) + '" alt="' + escAttr((name || prospect.company || 'Company') + ' logo') + '"></div>';
+  }
+  return '<div class="' + cls + '">' + esc(buildFakeBrand(name)) + '</div>';
+}
+
 function getDocumentLogoMarkup(name) {
-  return '<div class="doc-logo">' + esc(buildFakeBrand(name)) + '</div>';
+  return getCompanyLogoMarkup(name);
 }
 
 function getDocumentBrandLine(name) {
@@ -4269,6 +4286,38 @@ function updateCriteriaSummary() {
   if (summary) summary.textContent = prospect.company + ' â¢ ' + cfg.label;
 }
 
+function updateLogoPreview() {
+  var preview = document.getElementById('crit-logo-preview');
+  var nameEl = document.getElementById('crit-logo-name');
+  if (!preview) return;
+  if (prospect.logoDataUrl) {
+    preview.innerHTML = '<img src="' + escAttr(prospect.logoDataUrl) + '" alt="' + escAttr((prospect.company || 'Company') + ' logo preview') + '">';
+  } else {
+    preview.innerHTML = '<div class="logo-preview-placeholder">' + esc(buildFakeBrand(prospect.company || 'Palm Desert AC Services')) + '</div>';
+  }
+  if (nameEl) nameEl.textContent = prospect.logoName || 'No logo uploaded yet';
+}
+
+function handleLogoUpload(evt) {
+  var file = evt && evt.target && evt.target.files ? evt.target.files[0] : null;
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    prospect.logoDataUrl = e.target && e.target.result ? String(e.target.result) : '';
+    prospect.logoName = file.name || 'Uploaded logo';
+    updateLogoPreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearLogoUpload() {
+  prospect.logoDataUrl = '';
+  prospect.logoName = '';
+  var input = document.getElementById('crit-logo');
+  if (input) input.value = '';
+  updateLogoPreview();
+}
+
 function syncCriteriaToProspect() {
   var cName = document.getElementById('crit-contact');
   var cCompany = document.getElementById('crit-company');
@@ -4295,6 +4344,7 @@ function syncCriteriaToProspect() {
   if (calcSub) calcSub.textContent = 'Numbers build as you run each station for ' + prospect.company;
 
   updateCriteriaSummary();
+  updateLogoPreview();
 }
 
 
@@ -5799,6 +5849,17 @@ setupTaskCalculators();
       backdrop.dataset.criteriaBound = '1';
       backdrop.addEventListener('click', closeCriteriaModal);
     }
+    var logoInput = byId('crit-logo');
+    if (logoInput && !logoInput.dataset.criteriaBound) {
+      logoInput.dataset.criteriaBound = '1';
+      logoInput.addEventListener('change', handleLogoUpload);
+    }
+    var logoClear = byId('crit-logo-clear');
+    if (logoClear && !logoClear.dataset.criteriaBound) {
+      logoClear.dataset.criteriaBound = '1';
+      logoClear.addEventListener('click', clearLogoUpload);
+    }
+    updateLogoPreview();
     document.addEventListener('keydown', function(e){
       if (e.key === 'Escape') closeCriteriaModal();
     });
@@ -5849,6 +5910,20 @@ setupTaskCalculators();
           <option value="medium">6-15 people</option>
           <option value="large">16-50 people</option>
         </select>
+      </div>
+    </div>
+    <div class="criteria-logo-row">
+      <div class="field">
+        <label>Company Logo</label>
+        <div class="logo-upload-wrap">
+          <div class="logo-preview-box" id="crit-logo-preview"><div class="logo-preview-placeholder">PD</div></div>
+          <div class="logo-upload-meta">
+            <input class="inp" id="crit-logo" type="file" accept="image/*" />
+            <div class="logo-upload-name" id="crit-logo-name">No logo uploaded yet</div>
+            <div class="logo-upload-help">Upload a logo once and it will appear across proposals, contracts, invoices, social previews, and other rendered demos.</div>
+            <button class="logo-clear-btn" id="crit-logo-clear" type="button">Remove logo</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="criteria-note">
