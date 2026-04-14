@@ -1443,6 +1443,93 @@ color: var(--text-dim);
 .criteria-grid { grid-template-columns: 1fr; }
 }
 
+
+
+.autopilot-trigger {
+cursor: pointer;
+display: inline-block;
+position: relative;
+}
+
+.autopilot-trigger:hover,
+.autopilot-trigger:focus-visible {
+filter: brightness(1.08);
+outline: none;
+}
+
+.criteria-modal {
+position: fixed;
+inset: 0;
+display: none;
+align-items: center;
+justify-content: center;
+padding: 20px;
+z-index: 1000;
+}
+
+.criteria-modal.open {
+display: flex;
+}
+
+.criteria-modal-backdrop {
+position: absolute;
+inset: 0;
+background: rgba(8,12,24,0.68);
+backdrop-filter: blur(10px);
+}
+
+.criteria-modal-card {
+position: relative;
+width: min(960px, calc(100vw - 32px));
+max-height: calc(100vh - 48px);
+overflow: auto;
+background: var(--navy2);
+border: 1px solid var(--glass-border);
+border-radius: 18px;
+padding: 24px 20px 20px;
+box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+z-index: 1;
+}
+
+.criteria-close {
+position: absolute;
+top: 12px;
+right: 12px;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+border: 1px solid var(--glass-border);
+background: var(--navy3);
+color: var(--text-dim);
+font-size: 20px;
+line-height: 1;
+cursor: pointer;
+}
+
+.criteria-close:hover {
+border-color: var(--blue-border);
+color: var(--text);
+background: var(--blue-glow);
+}
+
+.criteria-modal-card .criteria-card {
+margin-bottom: 0;
+background: transparent;
+border: none;
+padding: 0;
+}
+
+.criteria-modal-card .criteria-card::before {
+display: none;
+}
+
+@media (max-width: 768px) {
+  .criteria-modal-card {
+    width: calc(100vw - 20px);
+    padding: 22px 14px 14px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1585,7 +1672,7 @@ color: var(--text-dim);
 
  <div class="panel active" id="panel-home">
  <div class="home-hero">
- <h1>Your Business Runs on<br><span>Autopilot.</span></h1>
+ <h1>Your Business Runs on<br><span class="autopilot-trigger" id="autopilotTrigger" role="button" tabindex="0" aria-label="Open demo criteria">Autopilot.</span></h1>
  <p>12 AI stations working together for an HVAC company in Palm Desert. Select a station below to see the canned demo flow.</p>
  </div>
 
@@ -1687,49 +1774,7 @@ color: var(--text-dim);
  </div>
 </div>
 
-<div class="criteria-wrap">
-  <div class="criteria-card">
-    <div class="criteria-head">
-      <div>
-        <div class="criteria-title">Demo Criteria</div>
-        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
-      </div>
-      <div class="criteria-sub">No launch step needed</div>
-    </div>
-    <div class="criteria-grid">
-      <div class="field">
-        <label>Prospect First Name</label>
-        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
-      </div>
-      <div class="field">
-        <label>Company Name</label>
-        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
-      </div>
-      <div class="field">
-        <label>Vertical</label>
-        <select class="sel" id="crit-vertical">
-          <option value="homeservices" selected>Home Services</option>
-          <option value="salesmarketing">Sales and Marketing</option>
-          <option value="ecommerce">E Commerce</option>
-          <option value="professionalservices">Professional Services</option>
-          <option value="realestate">Real Estate</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Team Size</label>
-        <select class="sel" id="crit-teamsize">
-          <option value="solo">Solo / 1 person</option>
-          <option value="small" selected>2-5 people</option>
-          <option value="medium">6-15 people</option>
-          <option value="large">16-50 people</option>
-        </select>
-      </div>
-    </div>
-    <div class="criteria-note">
-      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
-    </div>
-  </div>
-</div>
+
 
  </div>
 
@@ -5710,6 +5755,107 @@ setupTaskCalculators();
   setTimeout(boot, 750);
 })();
 </script>
+
+
+<script>
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  function openCriteriaModal(){
+    var modal = byId('criteriaModal');
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    var first = byId('crit-contact');
+    if (first) setTimeout(function(){ try { first.focus(); first.select(); } catch(e){} }, 20);
+  }
+  function closeCriteriaModal(){
+    var modal = byId('criteriaModal');
+    if (!modal) return;
+    if (typeof window.syncCriteriaToProspect === 'function') {
+      try { window.syncCriteriaToProspect(); } catch(e){}
+    }
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  function bindCriteriaModal(){
+    var trigger = byId('autopilotTrigger');
+    var closeBtn = byId('criteriaClose');
+    var backdrop = byId('criteriaBackdrop');
+    if (trigger && !trigger.dataset.criteriaBound) {
+      trigger.dataset.criteriaBound = '1';
+      trigger.addEventListener('click', openCriteriaModal);
+      trigger.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openCriteriaModal();
+        }
+      });
+    }
+    if (closeBtn && !closeBtn.dataset.criteriaBound) {
+      closeBtn.dataset.criteriaBound = '1';
+      closeBtn.addEventListener('click', closeCriteriaModal);
+    }
+    if (backdrop && !backdrop.dataset.criteriaBound) {
+      backdrop.dataset.criteriaBound = '1';
+      backdrop.addEventListener('click', closeCriteriaModal);
+    }
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeCriteriaModal();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindCriteriaModal);
+  } else {
+    bindCriteriaModal();
+  }
+  setTimeout(bindCriteriaModal, 100);
+})();
+</script>
+<div class="criteria-modal" id="criteriaModal" aria-hidden="true">
+  <div class="criteria-modal-backdrop" id="criteriaBackdrop"></div>
+  <div class="criteria-modal-card">
+    <button class="criteria-close" id="criteriaClose" type="button" aria-label="Save and close">Ã</button>
+    <div class="criteria-head">
+      <div>
+        <div class="criteria-title">Demo Criteria</div>
+        <div class="criteria-sub">Edit once. Defaults flow across the platform automatically.</div>
+      </div>
+      <div class="criteria-sub">No launch step needed</div>
+    </div>
+    <div class="criteria-grid">
+      <div class="field">
+        <label>Prospect First Name</label>
+        <input class="inp" id="crit-contact" type="text" placeholder="e.g. Marcus" value="Kelly" />
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input class="inp" id="crit-company" type="text" placeholder="e.g. Rivera Home Services" value="Palm Desert AC Services" />
+      </div>
+      <div class="field">
+        <label>Vertical</label>
+        <select class="sel" id="crit-vertical">
+          <option value="homeservices" selected>Home Services</option>
+          <option value="salesmarketing">Sales and Marketing</option>
+          <option value="ecommerce">E Commerce</option>
+          <option value="professionalservices">Professional Services</option>
+          <option value="realestate">Real Estate</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team Size</label>
+        <select class="sel" id="crit-teamsize">
+          <option value="solo">Solo / 1 person</option>
+          <option value="small" selected>2-5 people</option>
+          <option value="medium">6-15 people</option>
+          <option value="large">16-50 people</option>
+        </select>
+      </div>
+    </div>
+    <div class="criteria-note">
+      Showing a live demo configured for <strong id="criteria-summary">Palm Desert AC Services â¢ HVAC</strong>. Update any field and the station defaults refresh automatically.
+    </div>
+    </div>
+</div>
 
 </body>
 </html>
