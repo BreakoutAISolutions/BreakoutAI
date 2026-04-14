@@ -784,6 +784,104 @@ margin-bottom: 4px;
   }
 }
 
+
+
+/* Premium station formatting across all 12 stations */
+.main .panel:not(#panel-home) {
+  padding-top: 22px;
+}
+
+.main .panel:not(#panel-home) .section-hero {
+  max-width: 760px;
+  margin: 4px auto 30px;
+  text-align: center;
+}
+
+.main .panel:not(#panel-home) .section-eyebrow {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.main .panel:not(#panel-home) .section-title {
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.main .panel:not(#panel-home) .section-sub {
+  margin: 10px auto 0;
+  text-align: center;
+}
+
+.main .panel:not(#panel-home) .ls-bullets {
+  max-width: 780px;
+  margin: 0 auto 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 18px 20px;
+}
+
+.main .panel:not(#panel-home) .ls-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 11px 2px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #c9d8ea;
+}
+
+.main .panel:not(#panel-home) .ls-bullet + .ls-bullet {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.main .panel:not(#panel-home) .ls-bullet-icon {
+  width: 20px;
+  flex: 0 0 20px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+  margin-right: 2px;
+}
+
+.main .panel:not(#panel-home) > .card {
+  max-width: 860px;
+  margin: 0 auto 16px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.22);
+}
+
+.main .panel:not(#panel-home) .task-calc {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .main .panel:not(#panel-home) {
+    padding-top: 18px;
+  }
+
+  .main .panel:not(#panel-home) .section-title {
+    font-size: 32px;
+  }
+
+  .main .panel:not(#panel-home) .ls-bullets {
+    padding: 14px 14px;
+    margin-bottom: 18px;
+  }
+
+  .main .panel:not(#panel-home) .ls-bullet {
+    gap: 14px;
+    padding: 10px 0;
+  }
+
+  .main .panel:not(#panel-home) > .card {
+    padding: 22px 18px;
+  }
+}
 /* Platform chips for social */
 .platform-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
 .p-chip { padding: 6px 13px; border-radius: 18px; border: 1px solid var(--glass-border); background: transparent; color: var(--text-dim); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.18s; }
