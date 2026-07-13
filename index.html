@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#030407">
 <title>How AI Smart Are You? | Breakout AI Solutions</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root{
   --black:#030407;--navy:#07111f;--panel:#0b1424;--cyan:#27d8ff;--cyan2:#6ee7ff;
@@ -69,7 +70,7 @@ main{width:min(1040px,calc(100% - 20px));margin:auto;padding:12px 0 44px}
 .screen.active{display:block}
 @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .eyebrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
-.category{color:var(--cyan2);font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.category{display:inline-flex;align-items:center;gap:9px;color:var(--cyan2);font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
 .count{color:var(--dim);font-size:12px;font-weight:700}
 h1,h2{font-family:"Syne",sans-serif}
 h1{
@@ -208,82 +209,82 @@ h1 span,h2 span{color:var(--cyan);text-shadow:0 0 34px rgba(39,216,255,.35)}
 <script>
 const rounds = [
   {
-    category:"â¤ï¸ Health & Wellness",
-    icon:"â¤ï¸",
+    category:"Health & Wellness",
+    icon:"fa-solid fa-heart-pulse",
     explanation:"AI can help you better organize health information, understand terminology, prepare questions, build healthy routines, and stay on top of everyday wellness tasks.",
     note:"AI is not a doctor. Always verify health information with a qualified medical professional.",
     answers:[
-      ["ð©º","Explain confusing medical information"],
-      ["ð¥","Suggest healthier meal ideas"],
-      ["ð¨ââï¸","Prepare questions for doctor visits"],
-      ["ð","Create medication reminder checklists"],
-      ["ð¶","Build a walking or exercise routine"],
-      ["ð","Compare trusted health information"]
+      ["fa-solid fa-stethoscope","Explain confusing medical information"],
+      ["fa-solid fa-utensils","Suggest healthier meal ideas"],
+      ["fa-solid fa-user-doctor","Prepare questions for doctor visits"],
+      ["fa-solid fa-pills","Create medication reminder checklists"],
+      ["fa-solid fa-person-walking","Build a walking or exercise routine"],
+      ["fa-solid fa-book-medical","Compare trusted health information"]
     ]
   },
   {
-    category:"âï¸ Travel & Fun",
-    icon:"âï¸",
+    category:"Travel & Fun",
+    icon:"fa-solid fa-plane",
     explanation:"AI can help organize nearly every part of a trip, from comparing options and building itineraries to finding activities, restaurants, and memorable stops.",
     answers:[
-      ["ð¨","Compare hotels and resorts"],
-      ["âï¸","Research flight options"],
-      ["ðºï¸","Build a complete itinerary"],
-      ["ð½ï¸","Find restaurants you may enjoy"],
-      ["ð","Plan scenic road trips"],
-      ["â³","Create a golf or recreation getaway"]
+      ["fa-solid fa-hotel","Compare hotels and resorts"],
+      ["fa-solid fa-plane-departure","Research flight options"],
+      ["fa-solid fa-map-location-dot","Build a complete itinerary"],
+      ["fa-solid fa-utensils","Find restaurants you may enjoy"],
+      ["fa-solid fa-car-side","Plan scenic road trips"],
+      ["fa-solid fa-golf-ball-tee","Create a golf or recreation getaway"]
     ]
   },
   {
-    category:"ð¡ Home & Everyday Life",
-    icon:"ð¡",
+    category:"Home & Everyday Life",
+    icon:"fa-solid fa-house",
     explanation:"AI can simplify daily life by helping you compare choices, organize information, communicate clearly, plan meals, and tackle household projects.",
     answers:[
-      ["ð","Compare products before buying"],
-      ["ð§","Help write emails and messages"],
-      ["ð§¾","Explain confusing bills or paperwork"],
-      ["ð³","Plan meals and grocery lists"],
-      ["ð§","Help research home projects"],
-      ["ð","Organize schedules and appointments"]
+      ["fa-solid fa-cart-shopping","Compare products before buying"],
+      ["fa-solid fa-envelope","Help write emails and messages"],
+      ["fa-solid fa-file-invoice","Explain confusing bills or paperwork"],
+      ["fa-solid fa-kitchen-set","Plan meals and grocery lists"],
+      ["fa-solid fa-screwdriver-wrench","Help research home projects"],
+      ["fa-solid fa-calendar-check","Organize schedules and appointments"]
     ]
   },
   {
-    category:"ð± Technology & Safety",
-    icon:"ð±",
+    category:"Technology & Safety",
+    icon:"fa-solid fa-shield-halved",
     explanation:"AI can make technology feel less frustrating by helping you understand devices, troubleshoot common problems, recognize suspicious activity, and learn new tools.",
     answers:[
-      ["ð±","Explain phone settings and features"],
-      ["ð»","Troubleshoot computer problems"],
-      ["ð¡ï¸","Help recognize online scams"],
-      ["ð","Organize safer password habits"],
-      ["ð§­","Explain unfamiliar apps and websites"],
-      ["ð¨ï¸","Help solve printer and Wi-Fi issues"]
+      ["fa-solid fa-mobile-screen-button","Explain phone settings and features"],
+      ["fa-solid fa-laptop","Troubleshoot computer problems"],
+      ["fa-solid fa-shield-halved","Help recognize online scams"],
+      ["fa-solid fa-lock","Organize safer password habits"],
+      ["fa-solid fa-compass","Explain unfamiliar apps and websites"],
+      ["fa-solid fa-print","Help solve printer and Wi-Fi issues"]
     ]
   },
   {
-    category:"ð¶ Pets, Family & Hobbies",
-    icon:"ð¶",
+    category:"Pets, Family & Hobbies",
+    icon:"fa-solid fa-paw",
     explanation:"AI can support the things you care about most, including pets, family memories, hobbies, events, learning, and creative projects.",
     answers:[
-      ["ð","Research pet care and training ideas"],
-      ["ð±","Help with gardening questions"],
-      ["ð·","Organize family photos and memories"],
-      ["ð³","Research family history"],
-      ["ð¨","Help explore a new hobby"],
-      ["ð","Plan family gatherings and events"]
+      ["fa-solid fa-dog","Research pet care and training ideas"],
+      ["fa-solid fa-seedling","Help with gardening questions"],
+      ["fa-solid fa-images","Organize family photos and memories"],
+      ["fa-solid fa-tree","Research family history"],
+      ["fa-solid fa-palette","Help explore a new hobby"],
+      ["fa-solid fa-champagne-glasses","Plan family gatherings and events"]
     ]
   },
   {
-    category:"ð¤¯ Amazing Things AI Can Do",
-    icon:"ð¤¯",
+    category:"Amazing Things AI Can Do",
+    icon:"fa-solid fa-wand-magic-sparkles",
     explanation:"AI can do far more than answer questions. It can help restore memories, identify things around you, create personalized content, and organize projects that once felt overwhelming.",
     answers:[
-      ["ð¼ï¸","Restore or colorize old photos"],
-      ["ð¦","Identify birds, plants, or objects"],
-      ["ð","Help organize a life story or memoir"],
-      ["ð","Create personalized celebration ideas"],
-      ["ð","Translate languages while traveling"],
-      ["ð","Turn family recipes into a cookbook"]
+      ["fa-solid fa-image","Restore or colorize old photos"],
+      ["fa-solid fa-binoculars","Identify birds, plants, or objects"],
+      ["fa-solid fa-book-open","Help organize a life story or memoir"],
+      ["fa-solid fa-cake-candles","Create personalized celebration ideas"],
+      ["fa-solid fa-language","Translate languages while traveling"],
+      ["fa-solid fa-book","Turn family recipes into a cookbook"]
     ]
   }
 ];
@@ -305,7 +306,7 @@ function renderQuestion(){
 
   questionScreen.innerHTML = `
     <div class="eyebrow">
-      <div class="category">${round.category}</div>
+      <div class="category"><i class="${round.icon}" aria-hidden="true"></i><span>${round.category}</span></div>
       <div class="count">Question ${roundIndex + 1} of ${rounds.length}</div>
     </div>
     <h1>How <span>AI Smart</span> Are You?</h1>
@@ -315,7 +316,7 @@ function renderQuestion(){
       ${round.answers.map((a,i)=>`
         <button class="answer" type="button" data-id="${i}">
           <span class="check">â</span>
-          <span class="icon">${a[0]}</span>
+          <span class="icon"><i class="${a[0]}" aria-hidden="true"></i></span>
           <span class="label">${a[1]}</span>
         </button>
       `).join("")}
@@ -439,7 +440,7 @@ function showFinal(){
   revealScreen.classList.remove("active");
 
   finalScreen.innerHTML = `
-    <div class="reveal-badge">ð§ </div>
+    <div class="reveal-badge"><i class="fa-solid fa-brain" aria-hidden="true"></i></div>
     <h2>Your <span>AI IQ</span> Score</h2>
     <p class="reveal-copy">You have now seen how many everyday tasks AI can support across health, travel, home, technology, family, hobbies, and more.</p>
 
@@ -453,7 +454,7 @@ function showFinal(){
 
     <div class="reveal-actions">
       <button id="restartQuiz" class="secondary" type="button">Take the Quiz Again</button>
-      <button id="learnMore" class="primary" type="button">Learn More About Personal Coaching â</button>
+      <button id="learnMore" class="primary" type="button">Get Personal Coaching â</button>
     </div>
   `;
 
