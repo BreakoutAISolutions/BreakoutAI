@@ -3,27 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Breakout AI Core Industry Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#030407">
+
+<title>How AI Smart Are You? | Breakout AI Solutions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root {
   --black: #030407;
   --navy: #07111f;
   --panel: #0b1424;
-  --panel2: #101c30;
-  --panel3: #15243c;
   --cyan: #27d8ff;
   --cyan2: #6ee7ff;
   --blue: #2776ff;
-  --red: #ef1c25;
   --orange: #ff791f;
   --green: #22c55e;
-  --yellow: #facc15;
   --text: #f4f8ff;
-  --muted: #8fa6c3;
-  --dim: #536985;
-  --border: rgba(255,255,255,0.09);
-  --glow: rgba(39,216,255,0.18);
+  --muted: #9eb1ca;
+  --dim: #637994;
+  --border: rgba(255,255,255,.10);
 }
 
 * {
@@ -31,958 +30,894 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  background: var(--black);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: "DM Sans", sans-serif;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(39,216,255,0.15), transparent 34%),
-    radial-gradient(circle at 10% 20%, rgba(239,28,37,0.08), transparent 22%),
-    radial-gradient(circle at 90% 20%, rgba(255,121,31,0.08), transparent 22%),
-    var(--black);
   color: var(--text);
+  background:
+    radial-gradient(circle at 50% -10%, rgba(39,216,255,.20), transparent 38%),
+    radial-gradient(circle at 5% 40%, rgba(239,28,37,.08), transparent 24%),
+    radial-gradient(circle at 95% 25%, rgba(255,121,31,.08), transparent 24%),
+    linear-gradient(180deg, #030407, #06101d);
+  overflow-x: hidden;
 }
 
-body:before {
+body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(39,216,255,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(39,216,255,0.035) 1px, transparent 1px);
-  background-size: 46px 46px;
   pointer-events: none;
+  background-image:
+    linear-gradient(rgba(39,216,255,.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39,216,255,.032) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(#000, transparent 88%);
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app {
   position: relative;
   z-index: 1;
+  min-height: 100vh;
 }
 
 .topbar {
+  width: min(1120px, calc(100% - 28px));
+  margin: auto;
+  padding: 18px 0 14px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 18px 28px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(3,4,7,0.72);
-  backdrop-filter: blur(18px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  align-items: center;
+  gap: 16px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
-.logo-mark {
-  width: 48px;
-  height: 48px;
+.logo {
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 15px;
   color: var(--cyan2);
-  border: 1px solid rgba(39,216,255,0.35);
-  background: radial-gradient(circle at 30% 30%, rgba(39,216,255,0.22), rgba(7,17,31,0.95));
-  box-shadow: 0 0 24px rgba(39,216,255,0.22);
+  border: 1px solid rgba(39,216,255,.42);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(39,216,255,.26), rgba(7,17,31,.96));
+  box-shadow: 0 0 28px rgba(39,216,255,.2);
 }
 
 .brand-name {
   font-family: "Syne", sans-serif;
+  font-size: 16px;
   font-weight: 800;
-  font-size: 18px;
-  letter-spacing: 0.2px;
 }
 
 .brand-sub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--cyan2);
-  letter-spacing: 2px;
+  letter-spacing: 1.9px;
   text-transform: uppercase;
+  font-weight: 700;
   margin-top: 2px;
 }
 
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.industry-switcher {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.industry-btn {
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border: 1px solid rgba(255,255,255,0.10);
-  color: rgba(244,248,255,0.82);
-  background: rgba(255,255,255,0.03);
+.round-pill {
+  padding: 8px 12px;
   border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.22s ease;
-}
-
-.industry-btn:hover,
-.industry-btn.active {
-  border-color: rgba(39,216,255,0.26);
-  background: rgba(39,216,255,0.07);
+  border: 1px solid rgba(39,216,255,.25);
+  background: rgba(39,216,255,.075);
   color: var(--cyan2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
-.industry-btn svg {
-  width: 15px;
-  height: 15px;
+main {
+  width: min(1040px, calc(100% - 20px));
+  margin: auto;
+  padding: 12px 0 44px;
+}
+
+.shell {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 30px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.018)),
+    rgba(7,17,31,.88);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 28px 80px rgba(0,0,0,.42);
+}
+
+.progress {
+  height: 5px;
+  background: rgba(255,255,255,.06);
+}
+
+.progress span {
+  display: block;
+  width: 16.666%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  box-shadow: 0 0 18px rgba(39,216,255,.6);
+}
+
+.screen {
+  display: none;
+  min-height: 650px;
+  padding: clamp(28px, 5vw, 56px);
+  animation: enter .48s ease;
+}
+
+.screen.active {
   display: block;
 }
 
-.main {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 44px 24px 80px;
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.hero {
-  text-align: center;
-  max-width: 920px;
-  margin: 0 auto 34px;
-}
-
-.kicker {
-  display: inline-flex;
-  gap: 8px;
+.eyebrow {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.category {
   color: var(--cyan2);
-  border: 1px solid rgba(39,216,255,0.28);
-  background: rgba(39,216,255,0.08);
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: 11px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
+  font-size: 12px;
   font-weight: 800;
-  margin-bottom: 18px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 }
 
-.hero h1 {
+.count {
+  color: var(--dim);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+h1,
+h2 {
   font-family: "Syne", sans-serif;
-  font-size: clamp(38px, 6vw, 72px);
-  line-height: 0.95;
-  letter-spacing: -2.2px;
-  margin: 0 0 14px;
 }
 
-.hero h1 span {
+h1 {
+  max-width: 820px;
+  margin: 0 0 12px;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: .96;
+  letter-spacing: -2.4px;
+}
+
+h1 span,
+h2 span {
   color: var(--cyan);
-  text-shadow: 0 0 30px rgba(39,216,255,0.35);
+  text-shadow: 0 0 34px rgba(39,216,255,.35);
 }
 
-.hero p {
-  margin: 0 auto;
+.prompt {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.55;
+}
+
+.instruction {
+  margin-top: 12px;
+  color: var(--cyan2);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.answer {
+  position: relative;
+  min-height: 134px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.057), rgba(255,255,255,.023)),
+    rgba(9,18,32,.82);
+  box-shadow: 0 10px 25px rgba(0,0,0,.14);
+  transition: .22s ease;
+}
+
+.answer:hover {
+  transform: translateY(-3px);
+  border-color: rgba(39,216,255,.35);
+}
+
+.answer:active {
+  transform: scale(.985);
+}
+
+.answer.selected {
+  border-color: rgba(39,216,255,.8);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(39,216,255,.19), transparent 52%),
+    rgba(12,31,49,.94);
+  box-shadow: 0 0 28px rgba(39,216,255,.18);
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(39,216,255,.1);
+  border: 1px solid rgba(39,216,255,.19);
+  font-size: 21px;
+}
+
+.label {
+  font-size: 15px;
+  line-height: 1.32;
+  font-weight: 700;
+}
+
+.check {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.16);
+  color: transparent;
+  background: rgba(255,255,255,.04);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.answer.selected .check {
+  color: #041018;
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px rgba(39,216,255,.55);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.primary,
+.secondary {
+  min-height: 54px;
+  padding: 0 24px;
+  border-radius: 15px;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary {
+  border: 0;
+  color: #031018;
+  background: linear-gradient(135deg, var(--cyan2), var(--cyan));
+  box-shadow:
+    0 14px 28px rgba(39,216,255,.18),
+    0 0 24px rgba(39,216,255,.22);
+}
+
+.primary:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondary {
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: rgba(255,255,255,.035);
+}
+
+.reveal {
+  text-align: center;
+}
+
+.reveal-badge {
+  width: 92px;
+  height: 92px;
+  margin: 8px auto 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34,197,94,.45);
+  background:
+    radial-gradient(circle at 36% 28%, rgba(134,239,172,.33), rgba(34,197,94,.12)),
+    rgba(8,30,22,.9);
+  color: #9bf6b6;
+  font-size: 42px;
+  box-shadow: 0 0 42px rgba(34,197,94,.22);
+  animation: pop .55s ease;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(.45) rotate(-15deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal h2 {
+  margin: 0 auto 12px;
   max-width: 760px;
+  font-size: clamp(36px, 5vw, 62px);
+  line-height: 1;
+  letter-spacing: -1.8px;
+}
+
+.reveal-copy {
+  max-width: 760px;
+  margin: auto;
   color: var(--muted);
   font-size: 18px;
   line-height: 1.65;
 }
 
-.engine-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
-  margin: 34px 0 28px;
+.score-card {
+  width: min(420px, 100%);
+  margin: 28px auto 18px;
+  padding: 22px;
+  border-radius: 21px;
+  border: 1px solid rgba(39,216,255,.25);
+  background:
+    linear-gradient(135deg, rgba(39,216,255,.11), rgba(39,216,255,.025)),
+    rgba(5,13,24,.7);
 }
 
-.engine-tile {
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018));
-  border-radius: 18px;
-  padding: 20px 18px;
-  min-height: 182px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-}
-
-.engine-tile:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(39,216,255,0.14), transparent 55%);
-  opacity: 0;
-  transition: opacity 0.22s ease;
-}
-
-.engine-tile:hover,
-.engine-tile.active {
-  transform: translateY(-4px);
-  border-color: rgba(39,216,255,0.45);
-  box-shadow: 0 20px 46px rgba(0,0,0,0.28), 0 0 30px rgba(39,216,255,0.10);
-}
-
-.engine-tile:hover:before,
-.engine-tile.active:before {
-  opacity: 1;
-}
-
-.tile-step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgba(39,216,255,0.10);
-  border: 1px solid rgba(39,216,255,0.26);
+.score-label {
   color: var(--cyan2);
+  font-size: 11px;
   font-weight: 800;
-  font-size: 12px;
-  margin: 0 auto 14px;
-  position: relative;
-}
-
-.engine-tile h3 {
-  font-family: "Syne", sans-serif;
-  font-size: 18px;
-  margin: 0 0 10px;
-  position: relative;
-}
-
-.engine-tile ul {
-  margin: 0;
-  padding-left: 18px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: left;
-  display: inline-block;
-  position: relative;
-}
-
-.engine-view {
-  display: none;
-  grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.72fr);
-  gap: 18px;
-  align-items: stretch;
-}
-
-.engine-view.active {
-  display: grid;
-}
-
-.demo-panel,
-.coach-panel {
-  border: 1px solid var(--border);
-  background: rgba(11,20,36,0.9);
-  border-radius: 22px;
-  overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.32);
-}
-
-.panel-head {
-  padding: 18px 20px;
-  background: linear-gradient(90deg, rgba(39,216,255,0.10), rgba(255,255,255,0.02));
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.panel-title {
-  font-family: "Syne", sans-serif;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.panel-label {
-  color: var(--cyan2);
-  font-size: 10px;
   letter-spacing: 1.7px;
   text-transform: uppercase;
-  font-weight: 800;
 }
 
-.panel-body {
-  padding: 20px;
-}
-
-.flow {
-  display: grid;
-  gap: 12px;
-}
-
-.flow-card {
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.035);
-  border-radius: 16px;
-  padding: 16px;
-}
-
-.flow-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.flow-title {
-  font-weight: 800;
+.score {
+  margin-top: 3px;
   font-family: "Syne", sans-serif;
+  font-size: 58px;
+  line-height: 1;
+  font-weight: 800;
 }
 
-.flow-card ul {
+.score span {
+  color: var(--cyan);
+}
+
+.example {
+  max-width: 760px;
+  margin: 22px auto 0;
+  padding: 19px 20px;
+  text-align: left;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.035);
+}
+
+.example-label {
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+
+.example p {
   margin: 0;
-  padding-left: 18px;
-  color: var(--muted);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.55;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 90px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  text-align: center;
-}
-
-.hot {
-  background: rgba(239,28,37,0.13);
-  color: #ff9095;
-  border: 1px solid rgba(239,28,37,0.35);
-}
-
-.warm {
-  background: rgba(255,121,31,0.13);
-  color: #ffb27d;
-  border: 1px solid rgba(255,121,31,0.34);
-}
-
-.ready {
-  background: rgba(34,197,94,0.13);
-  color: #86efac;
-  border: 1px solid rgba(34,197,94,0.34);
-}
-
-.info {
-  background: rgba(39,216,255,0.12);
-  color: var(--cyan2);
-  border: 1px solid rgba(39,216,255,0.34);
-}
-
-.mini-dashboard {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.metric {
-  background: rgba(255,255,255,0.035);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-}
-
-.metric-num {
-  font-family: "Syne", sans-serif;
-  font-size: 30px;
-  font-weight: 800;
-  color: var(--cyan);
-  margin-bottom: 4px;
-}
-
-.metric-label {
-  color: var(--muted);
+.note {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: var(--dim);
   font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  line-height: 1.55;
 }
 
-.coach-panel {
-  background: rgba(7,17,31,0.94);
+.reveal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+  flex-wrap: wrap;
 }
 
-.coach-section {
-  border-bottom: 1px solid var(--border);
-  padding: 18px 20px;
+.spark {
+  position: fixed;
+  z-index: 30;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: confetti 900ms ease-out forwards;
 }
 
-.coach-section:last-child {
-  border-bottom: none;
+@keyframes confetti {
+  to {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(.45);
+  }
 }
 
-.coach-section h4 {
-  color: var(--cyan2);
-  margin: 0 0 10px;
-  font-family: "Syne", sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-}
-
-.coach-section ul {
-  margin: 0;
-  padding-left: 18px;
-  color: var(--muted);
-  line-height: 1.62;
-  font-size: 14px;
-}
-
-.coach-quote {
-  color: var(--text) !important;
-}
-
-.close-screen {
-  margin-top: 18px;
-  border: 1px solid rgba(39,216,255,0.28);
-  background: linear-gradient(135deg, rgba(39,216,255,0.12), rgba(39,216,255,0.03));
-  border-radius: 22px;
-  padding: 22px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 20px;
-  align-items: center;
-}
-
-.close-screen h2 {
-  font-family: "Syne", sans-serif;
-  margin: 0 0 8px;
-  font-size: 26px;
-}
-
-.close-screen ul {
-  margin: 0;
-  padding-left: 18px;
-  color: var(--muted);
-  line-height: 1.58;
-}
-
-.close-price {
-  text-align: center;
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.22);
-  border-radius: 18px;
-  padding: 18px;
-}
-
-.close-price strong {
-  display: block;
-  font-family: "Syne", sans-serif;
-  font-size: 32px;
-  color: var(--cyan);
-  margin-bottom: 4px;
-}
-
-.footer-note {
-  margin-top: 12px;
+.footer {
+  padding: 0 14px 18px;
   color: var(--dim);
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
 }
 
-@media (max-width: 1100px) {
-  .engine-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 980px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+@media (max-width: 820px) {
+  .screen {
+    min-height: auto;
+    padding: 28px 20px 26px;
   }
 
-  .top-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .engine-grid {
+  .answers {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .engine-view,
-  .close-screen {
-    grid-template-columns: 1fr;
-  }
 }
 
-@media (max-width: 560px) {
-  .topbar {
-    padding: 14px 16px;
+@media (max-width: 540px) {
+  .round-pill {
+    display: none;
   }
 
-  .main {
-    padding: 34px 16px 60px;
+  .brand-name {
+    font-size: 14px;
   }
 
-  .engine-grid {
-    grid-template-columns: 1fr;
+  .screen {
+    padding: 24px 14px 22px;
   }
 
-  .mini-dashboard {
-    grid-template-columns: 1fr;
+  .answers {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .answer {
+    min-height: 126px;
+    padding: 15px;
+    border-radius: 17px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status {
+    text-align: center;
+  }
+
+  .primary {
+    width: 100%;
+  }
+
+  .reveal h2 {
+    font-size: 38px;
+  }
+
+  .reveal-copy {
+    font-size: 16px;
   }
 }
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo-mark">BAI</div>
-      <div>
-        <div class="brand-name">Breakout AI Core</div>
-        <div class="brand-sub">AI Operating Layer</div>
-      </div>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="logo">BAI</div>
+
+    <div>
+      <div class="brand-name">Breakout AI Solutions</div>
+      <div class="brand-sub">AI IQ Challenge</div>
     </div>
-    <div class="top-actions">
-      <div class="industry-switcher">
-        <button class="industry-btn active" data-industry="attorney" aria-label="Switch to attorney presentation" title="Attorney">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3v3"></path>
-            <path d="M6 6h12"></path>
-            <path d="M8 6L5 12h6L8 6z"></path>
-            <path d="M16 6l-3 6h6l-3-6z"></path>
-            <path d="M12 6v11"></path>
-            <path d="M8 20h8"></path>
-          </svg>
-        </button>
-        <button class="industry-btn" data-industry="hvac" aria-label="Switch to HVAC presentation" title="HVAC">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 10.5L12 3l9 7.5"></path>
-            <path d="M5 9.5V21h14V9.5"></path>
-            <path d="M9 21v-6h6v6"></path>
-          </svg>
-        </button>
+
+  </div>
+
+  <div class="round-pill">Round 1 of 6</div>
+
+</header>
+
+<main>
+
+<section class="shell" aria-live="polite">
+
+  <div class="progress">
+    <span></span>
+  </div>
+
+  <div id="question" class="screen active">
+
+    <div class="eyebrow">
+
+      <div class="category">
+        ❤️ Health &amp; Wellness
       </div>
+
+      <div class="count">
+        Question 1 of 6
+      </div>
+
     </div>
-  </header>
 
-  <main class="main">
-    <section class="hero">
-      <div class="kicker" id="heroKicker">Breakout AI Solutions</div>
-      <h1 id="heroTitle">Your Law Firm. <span>Running on AI.</span></h1>
-      <p id="heroCopy"></p>
-    </section>
+    <h1>
+      How <span>AI Smart</span> Are You?
+    </h1>
 
-    <section class="engine-grid" id="engineGrid"></section>
+    <p class="prompt">
+      Which of these can AI help you with today?
+    </p>
 
-    <section id="engineView" class="engine-view active">
-      <div class="demo-panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-label" id="panelLabel"></div>
-            <div class="panel-title" id="panelTitle"></div>
-          </div>
-          <span class="badge info" id="panelBadge"></span>
-        </div>
-        <div class="panel-body" id="panelBody"></div>
+    <div class="instruction">
+      Select every answer you believe is possible.
+    </div>
+
+    <div class="answers">
+
+      <button class="answer" type="button" data-id="medical">
+        <span class="check">✓</span>
+        <span class="icon">🩺</span>
+        <span class="label">Explain confusing medical information</span>
+      </button>
+
+      <button class="answer" type="button" data-id="meals">
+        <span class="check">✓</span>
+        <span class="icon">🥗</span>
+        <span class="label">Suggest healthy meals from foods you already have</span>
+      </button>
+
+      <button class="answer" type="button" data-id="doctor">
+        <span class="check">✓</span>
+        <span class="icon">👨‍⚕️</span>
+        <span class="label">Prepare questions for your next doctor visit</span>
+      </button>
+
+      <button class="answer" type="button" data-id="medication">
+        <span class="check">✓</span>
+        <span class="icon">💊</span>
+        <span class="label">Create medication reminder checklists</span>
+      </button>
+
+      <button class="answer" type="button" data-id="walking">
+        <span class="check">✓</span>
+        <span class="icon">🚶</span>
+        <span class="label">Build a walking or exercise routine</span>
+      </button>
+
+      <button class="answer" type="button" data-id="research">
+        <span class="check">✓</span>
+        <span class="icon">📚</span>
+        <span class="label">Compare information from trusted health sources</span>
+      </button>
+
+    </div>
+
+    <div class="actions">
+
+      <div id="status" class="status">
+        Choose one or more answers
       </div>
-      <aside class="coach-panel">
-        <div class="panel-head"><div class="panel-title" id="sideTitle">What This Means</div></div>
-        <div id="sideBody"></div>
-      </aside>
-    </section>
 
-    <section class="close-screen">
-      <div>
-        <h2 id="closeTitle"></h2>
-        <div id="closeCopy"></div>
-      </div>
-      <div class="close-price">
-        <strong id="closePrice"></strong>
-        <span id="closePriceNote"></span>
-      </div>
-    </section>
+      <button id="checkScore" class="primary" type="button" disabled>
+        Check My Score →
+      </button>
 
-    <div class="footer-note">Use the small icons in the upper right to switch between industry presentations.</div>
-  </main>
+    </div>
+
+  </div>
+
+  <div id="reveal" class="screen reveal">
+
+    <div class="reveal-badge">
+      ✓
+    </div>
+
+    <h2>
+      AI can help with <span>all six.</span>
+    </h2>
+
+    <p class="reveal-copy">
+      AI is not a replacement for your doctor. It can help explain terminology,
+      organize information, prepare better questions, support healthy routines,
+      and make everyday health tasks easier to manage.
+    </p>
+
+    <div class="score-card">
+
+      <div class="score-label">
+        Your Health &amp; Wellness Score
+      </div>
+
+      <div class="score">
+        <span id="score">0</span> / 6
+      </div>
+
+    </div>
+
+    <div class="example">
+
+      <div class="example-label">
+        Example AI Prompt
+      </div>
+
+      <p>
+        “Explain this medical report in plain English and help me prepare five
+        questions to discuss with my doctor.”
+      </p>
+
+    </div>
+
+    <div class="note">
+      Always verify health information with a qualified medical professional.
+      Never use AI to diagnose a condition or change medication instructions.
+    </div>
+
+    <div class="reveal-actions">
+
+      <button id="restart" class="secondary" type="button">
+        Try This Round Again
+      </button>
+
+      <button id="next" class="primary" type="button">
+        Continue to Travel &amp; Fun →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<div class="footer">
+  © Breakout AI Solutions. Phase 1 prototype.
+</div>
+
 </div>
 
 <script>
-const industryConfigs = {
-  attorney: {
-    kicker: 'Breakout AI Solutions',
-    heroTitle: 'Your Law Firm. <span>Running on AI.</span>',
-    heroCopy: 'We install and manage AI systems that help law firms capture inquiries, qualify potential clients, schedule consultations, streamline onboarding, improve communication, and see the whole pipeline more clearly.',
-    close: {
-      title: 'We Do Not Just Install AI. We Help Your Firm Operate Smarter.',
-      bullets: [
-        'Identify the highest value opportunities',
-        'Install the systems and workflows',
-        'Train the team and improve the operating layer each month'
-      ],
-      price: '$3K to $8K',
-      note: 'Typical monthly starting range depending on scope'
-    },
-    sections: [
-      {
-        tileTitle: 'Growth Engine',
-        tileBullets: ['Bring in qualified inquiries', 'Capture calls and referrals', 'Start intake faster'],
-        panelLabel: 'Demo System One',
-        panelTitle: 'AI Client Acquisition and Intake',
-        panelBadge: 'Lead Flow',
-        type: 'flow',
-        cards: [
-          { title: 'New Case Inquiry Received', badge: 'New', badgeClass: 'hot', bullets: ['Website inquiry submitted after a car accident', 'Potential client requests consultation', 'Practice area fit identified early'] },
-          { title: 'AI Intake and Qualification', badge: 'Screened', badgeClass: 'warm', bullets: ['Captures incident date and location', 'Organizes case details instantly', 'Screens urgency and fit'] },
-          { title: 'Next Action Triggered', badge: 'Booked', badgeClass: 'ready', bullets: ['Routes to the right team member', 'Sends intake form automatically', 'Updates CRM and follow up queue'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Potential clients often reach out when the issue feels urgent', 'Slow response sends strong matters elsewhere'] },
-          { title: 'What It Solves', bullets: ['Captures every inquiry in one place', 'Reduces voicemail, inbox, and note chaos', 'Makes intake more consistent'] },
-          { title: 'The Result', bullets: ['Faster response times', 'Less admin drag', 'More qualified consultations moving forward'] }
-        ]
-      },
-      {
-        tileTitle: 'Sales Engine',
-        tileBullets: ['Book consultations', 'Move to signed retainers', 'Collect payments faster'],
-        panelLabel: 'Demo System Two',
-        panelTitle: 'AI Consultation to Retainer Flow',
-        panelBadge: 'Revenue Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Consultation Scheduled', badge: 'Active', badgeClass: 'info', bullets: ['Coordinates calendars automatically', 'Sends confirmations and reminders', 'Increases show up rate'] },
-          { title: 'Retainer Packet Prepared', badge: 'Ready', badgeClass: 'warm', bullets: ['Prepares engagement documents', 'Packages next step instructions', 'Keeps momentum after consultation'] },
-          { title: 'Payment and Matter Opened', badge: 'Signed', badgeClass: 'ready', bullets: ['Triggers payment request', 'Starts file setup', 'Launches onboarding tasks'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Strong consultations still stall when admin work is slow', 'Delay weakens momentum'] },
-          { title: 'What It Solves', bullets: ['Connects scheduling, documents, and payment', 'Reduces manual follow up'] },
-          { title: 'The Result', bullets: ['Smoother client experience', 'Faster close cycle', 'Better conversion to signed clients'] }
-        ]
-      },
-      {
-        tileTitle: 'Operations Engine',
-        tileBullets: ['Send updates', 'Manage handoffs', 'Track document requests'],
-        panelLabel: 'Demo System Three',
-        panelTitle: 'AI Client Communication and Operations',
-        panelBadge: 'Matter Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Client Update Sent', badge: 'Sent', badgeClass: 'ready', bullets: ['Delivers status updates on time', 'Sends reminders automatically', 'Requests needed documents'] },
-          { title: 'Internal Tasks Created', badge: 'Queued', badgeClass: 'warm', bullets: ['Assigns case tasks automatically', 'Creates reminders for next steps', 'Improves internal visibility'] },
-          { title: 'Document Collection Tracked', badge: 'Tracked', badgeClass: 'info', bullets: ['Shows what has been received', 'Flags missing items', 'Keeps staff aligned'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Routine communication eats up time', 'Handoffs can get messy'] },
-          { title: 'What It Solves', bullets: ['Makes client communication more consistent', 'Removes dependence on memory'] },
-          { title: 'The Result', bullets: ['Less friction for staff', 'Better client experience', 'More focus on legal work'] }
-        ]
-      },
-      {
-        tileTitle: 'Marketing Engine',
-        tileBullets: ['Refresh the website', 'Create useful content', 'Improve local visibility'],
-        panelLabel: 'Demo System Four',
-        panelTitle: 'AI Marketing and Digital Presence',
-        panelBadge: 'Content Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Website Content Updated', badge: 'Live', badgeClass: 'ready', bullets: ['Refreshes practice area pages', 'Builds focused landing pages', 'Aligns content to audience and location'] },
-          { title: 'Campaign Content Created', badge: 'Drafted', badgeClass: 'info', bullets: ['Drafts blogs and newsletters', 'Supports email sequences', 'Creates social content from one brief'] },
-          { title: 'SEO and Review Strategy Aligned', badge: 'Optimized', badgeClass: 'warm', bullets: ['Supports local search visibility', 'Helps improve online trust', 'Prepares content for AI search'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Online reputation shapes first impressions', 'Visibility drives qualified inquiries'] },
-          { title: 'What It Solves', bullets: ['Keeps website and content active', 'Improves search presence and consistency'] },
-          { title: 'The Result', bullets: ['More visibility', 'More credibility', 'Better positioning for the right cases'] }
-        ]
-      },
-      {
-        tileTitle: 'Intelligence Engine',
-        tileBullets: ['See the whole pipeline', 'Spot leaks faster', 'Make better decisions'],
-        panelLabel: 'Demo System Five',
-        panelTitle: 'AI Business Intelligence Dashboard',
-        panelBadge: 'Command Center',
-        type: 'dashboard',
-        metrics: [
-          { value: '48', label: 'Inquiries Captured' },
-          { value: '19', label: 'Consultations Booked' },
-          { value: '84', label: 'Hours Saved' }
-        ],
-        cards: [
-          { title: 'AI Insight', badge: 'Action', badgeClass: 'ready', bullets: ['Shows faster contacted inquiries convert better', 'Highlights where time is being lost', 'Guides the next operational fix'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Important data is usually scattered', 'Leadership needs one clear view'] },
-          { title: 'What It Solves', bullets: ['Connects intake and workflow activity', 'Turns activity into decision support'] },
-          { title: 'The Result', bullets: ['Clearer operating view', 'Faster adjustments', 'Smarter resource decisions'] }
-        ]
-      }
-    ]
-  },
-  hvac: {
-    kicker: 'Breakout AI Solutions',
-    heroTitle: 'Your HVAC Business. <span>Running on AI.</span>',
-    heroCopy: 'We install and manage AI systems that help HVAC businesses get found locally, capture every customer inquiry, convert more opportunities into booked work, streamline operations, and see where revenue is leaking.',
-    close: {
-      title: 'We Do Not Just Install AI. We Help You Book More Revenue and Run Leaner.',
-      bullets: [
-        'Improve visibility and local demand',
-        'Capture and convert more inbound opportunities',
-        'Train the team and improve the operating layer each month'
-      ],
-      price: '$3K to $8K',
-      note: 'Typical monthly starting range depending on scope'
-    },
-    sections: [
-      {
-        tileTitle: 'Marketing Engine',
-        tileBullets: ['Show up in Google and maps', 'Improve reviews and ads', 'Create more local demand'],
-        panelLabel: 'Demo System One',
-        panelTitle: 'AI Marketing and Local Visibility',
-        panelBadge: 'Demand Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Local Visibility Improved', badge: 'Live', badgeClass: 'ready', bullets: ['Aligns Google Business Profile and service pages', 'Improves local SEO', 'Gets found where nearby customers are searching'] },
-          { title: 'Campaigns Activated', badge: 'Running', badgeClass: 'warm', bullets: ['Launches seasonal offers', 'Supports Google ads', 'Keeps messaging aligned'] },
-          { title: 'Reviews and Reputation Boosted', badge: 'Growing', badgeClass: 'info', bullets: ['Prompts happy customers for reviews', 'Builds trust online', 'Turns reputation into more inbound calls'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['HVAC demand often starts with a right now search', 'Visibility creates the opportunity'] },
-          { title: 'What It Solves', bullets: ['Improves search, maps, ads, and review presence', 'Makes the business easier to find and trust'] },
-          { title: 'The Result', bullets: ['More qualified inbound demand', 'Better use of marketing spend', 'More consistent lead flow'] }
-        ]
-      },
-      {
-        tileTitle: 'Lead Intake Engine',
-        tileBullets: ['Capture calls and forms', 'Respond faster after hours', 'Stop leads from slipping away'],
-        panelLabel: 'Demo System Two',
-        panelTitle: 'AI Lead Intake and Qualification',
-        panelBadge: 'Lead Flow',
-        type: 'flow',
-        cards: [
-          { title: 'New Customer Inquiry Received', badge: 'Hot', badgeClass: 'hot', bullets: ['AC repair request comes from Google', 'Customer is in Palm Desert', 'Service is needed today'] },
-          { title: 'AI Qualification', badge: 'Qualified', badgeClass: 'warm', bullets: ['Confirms service area and urgency', 'Captures issue summary', 'Checks scheduling preference'] },
-          { title: 'Next Action Triggered', badge: 'Booked', badgeClass: 'ready', bullets: ['Routes appointment instantly', 'Updates CRM', 'Prepares follow up automatically'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Many HVAC businesses are already paying for demand', 'The bigger problem is losing it'] },
-          { title: 'What It Solves', bullets: ['Captures inbound demand in one system', 'Responds fast to calls and forms', 'Reduces missed opportunities'] },
-          { title: 'The Result', bullets: ['More booked jobs', 'Faster response time', 'Better first customer experience'] }
-        ]
-      },
-      {
-        tileTitle: 'Sales Engine',
-        tileBullets: ['Build estimates faster', 'Automate follow up', 'Turn interest into revenue'],
-        panelLabel: 'Demo System Three',
-        panelTitle: 'AI Sales and Estimate Flow',
-        panelBadge: 'Revenue Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Estimate Generated', badge: '$6,800', badgeClass: 'info', bullets: ['Creates a clean estimate', 'Includes scope and timeline', 'Keeps next steps clear'] },
-          { title: 'Follow Up Sequence', badge: 'Active', badgeClass: 'warm', bullets: ['Schedules email reminders', 'Sends text follow ups', 'Stays active until reply or booking'] },
-          { title: 'Invoice Created', badge: 'Ready', badgeClass: 'ready', bullets: ['Generates invoice automatically', 'Sends and tracks it', 'Reduces back and forth admin'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Strong opportunities still cool off', 'Slow paperwork creates drag'] },
-          { title: 'What It Solves', bullets: ['Connects estimate, follow up, and invoice flow', 'Keeps momentum moving'] },
-          { title: 'The Result', bullets: ['More approved jobs', 'Shorter sales cycle', 'Faster booked revenue'] }
-        ]
-      },
-      {
-        tileTitle: 'Operations Engine',
-        tileBullets: ['Handle scheduling', 'Send updates automatically', 'Keep the team aligned'],
-        panelLabel: 'Demo System Four',
-        panelTitle: 'AI Operations and Scheduling',
-        panelBadge: 'Admin Flow',
-        type: 'flow',
-        cards: [
-          { title: 'Job Scheduled', badge: 'Confirmed', badgeClass: 'ready', bullets: ['Checks team availability', 'Assigns the job', 'Updates the calendar'] },
-          { title: 'Customer Updated', badge: 'Sent', badgeClass: 'info', bullets: ['Sends arrival windows', 'Delivers reminders', 'Provides prep instructions'] },
-          { title: 'Internal Tasks Created', badge: 'Queued', badgeClass: 'warm', bullets: ['Pushes parts and notes into the workflow', 'Creates reminders', 'Keeps completion steps visible'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['After booking is where friction starts', 'Scheduling and communication affect the customer experience'] },
-          { title: 'What It Solves', bullets: ['Connects calendar and customer messaging', 'Keeps internal task flow organized'] },
-          { title: 'The Result', bullets: ['Smoother dispatch', 'Less repetitive admin work', 'Better customer communication'] }
-        ]
-      },
-      {
-        tileTitle: 'Intelligence Engine',
-        tileBullets: ['See booking speed', 'Track pipeline value', 'Spot revenue leaks'],
-        panelLabel: 'Demo System Five',
-        panelTitle: 'AI Business Intelligence Dashboard',
-        panelBadge: 'Command Center',
-        type: 'dashboard',
-        metrics: [
-          { value: '42', label: 'Leads Handled' },
-          { value: '$96K', label: 'Pipeline Value' },
-          { value: '120', label: 'Hours Saved' }
-        ],
-        cards: [
-          { title: 'AI Insight', badge: 'Action', badgeClass: 'ready', bullets: ['After hours leads convert higher with a 5 minute response', 'Shows what is working', 'Reveals where money is being lost'] }
-        ],
-        sideSections: [
-          { title: 'Why It Matters', bullets: ['Owners know they are busy but cannot always see the leaks', 'One clear view changes decision making'] },
-          { title: 'What It Solves', bullets: ['Turns lead flow and team activity into an operating view', 'Shows what needs attention first'] },
-          { title: 'The Result', bullets: ['Better visibility', 'Smarter decisions', 'Clearer path to improvement'] }
-        ]
-      }
-    ]
+const answers = [...document.querySelectorAll(".answer")];
+const selected = new Set();
+
+const status = document.getElementById("status");
+const checkScore = document.getElementById("checkScore");
+const question = document.getElementById("question");
+const reveal = document.getElementById("reveal");
+const score = document.getElementById("score");
+const restart = document.getElementById("restart");
+const next = document.getElementById("next");
+
+function updateSelection() {
+  const numberSelected = selected.size;
+
+  if (numberSelected === 0) {
+    status.textContent = "Choose one or more answers";
+    checkScore.disabled = true;
+    return;
   }
-};
 
-let currentIndustry = 'attorney';
-let activeSection = 0;
-
-const heroKicker = document.getElementById('heroKicker');
-const heroTitle = document.getElementById('heroTitle');
-const heroCopy = document.getElementById('heroCopy');
-const engineGrid = document.getElementById('engineGrid');
-const panelLabel = document.getElementById('panelLabel');
-const panelTitle = document.getElementById('panelTitle');
-const panelBadge = document.getElementById('panelBadge');
-const panelBody = document.getElementById('panelBody');
-const sideBody = document.getElementById('sideBody');
-const closeTitle = document.getElementById('closeTitle');
-const closeCopy = document.getElementById('closeCopy');
-const closePrice = document.getElementById('closePrice');
-const closePriceNote = document.getElementById('closePriceNote');
-const switchButtons = document.querySelectorAll('.industry-btn');
-
-function renderBulletList(items, className = '') {
-  return `<ul class="${className}">${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
+  status.textContent = `${numberSelected} of 6 selected`;
+  checkScore.disabled = false;
 }
 
-function renderTiles() {
-  const config = industryConfigs[currentIndustry];
-  engineGrid.innerHTML = config.sections.map((section, index) => `
-    <div class="engine-tile ${index === activeSection ? 'active' : ''}" data-index="${index}">
-      <div class="tile-step">${index + 1}</div>
-      <h3>${section.tileTitle}</h3>
-      ${renderBulletList(section.tileBullets)}
-    </div>
-  `).join('');
+answers.forEach((button) => {
 
-  engineGrid.querySelectorAll('.engine-tile').forEach(tile => {
-    tile.addEventListener('click', () => {
-      activeSection = Number(tile.dataset.index);
-      renderTiles();
-      renderSection();
-      document.getElementById('engineView').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-}
+  button.addEventListener("click", () => {
 
-function renderFlowCards(cards) {
-  return `
-    <div class="flow">
-      ${cards.map(card => `
-        <div class="flow-card">
-          <div class="flow-top">
-            <div class="flow-title">${card.title}</div>
-            <span class="badge ${card.badgeClass}">${card.badge}</span>
-          </div>
-          ${renderBulletList(card.bullets)}
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
+    const answerId = button.dataset.id;
 
-function renderDashboard(section) {
-  return `
-    <div class="mini-dashboard">
-      ${section.metrics.map(metric => `
-        <div class="metric">
-          <div class="metric-num">${metric.value}</div>
-          <div class="metric-label">${metric.label}</div>
-        </div>
-      `).join('')}
-    </div>
-    <div style="margin-top: 12px;">
-      ${renderFlowCards(section.cards)}
-    </div>
-  `;
-}
+    if (selected.has(answerId)) {
+      selected.delete(answerId);
+      button.classList.remove("selected");
+    } else {
+      selected.add(answerId);
+      button.classList.add("selected");
 
-function renderSection() {
-  const config = industryConfigs[currentIndustry];
-  const section = config.sections[activeSection];
+      if ("vibrate" in navigator) {
+        navigator.vibrate(12);
+      }
+    }
 
-  panelLabel.textContent = section.panelLabel;
-  panelTitle.textContent = section.panelTitle;
-  panelBadge.textContent = section.panelBadge;
-  panelBody.innerHTML = section.type === 'dashboard' ? renderDashboard(section) : renderFlowCards(section.cards);
+    updateSelection();
 
-  sideBody.innerHTML = section.sideSections.map(item => `
-    <div class="coach-section">
-      <h4>${item.title}</h4>
-      ${renderBulletList(item.bullets, item.className || '')}
-    </div>
-  `).join('');
-}
-
-function renderIndustry() {
-  const config = industryConfigs[currentIndustry];
-  heroKicker.textContent = config.kicker;
-  heroTitle.innerHTML = config.heroTitle;
-  heroCopy.textContent = config.heroCopy;
-  closeTitle.textContent = config.close.title;
-  closeCopy.innerHTML = renderBulletList(config.close.bullets);
-  closePrice.textContent = config.close.price;
-  closePriceNote.textContent = config.close.note;
-
-  switchButtons.forEach(button => {
-    button.classList.toggle('active', button.dataset.industry === currentIndustry);
   });
 
-  renderTiles();
-  renderSection();
-}
-
-function setIndustry(industry) {
-  if (!industryConfigs[industry]) return;
-  currentIndustry = industry;
-  activeSection = 0;
-  renderIndustry();
-}
-
-switchButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const industry = button.dataset.industry;
-    setIndustry(industry);
-    window.location.hash = industry;
-  });
 });
 
-window.addEventListener('hashchange', () => {
-  const industryFromHash = window.location.hash.replace('#', '');
-  if (industryConfigs[industryFromHash]) {
-    setIndustry(industryFromHash);
+function animateScore(targetScore) {
+
+  let currentScore = 0;
+
+  score.textContent = "0";
+
+  if (targetScore === 0) {
+    return;
   }
+
+  const timer = setInterval(() => {
+
+    currentScore += 1;
+    score.textContent = String(currentScore);
+
+    if (currentScore >= targetScore) {
+      clearInterval(timer);
+    }
+
+  }, 115);
+
+}
+
+function launchConfetti() {
+
+  const colors = [
+    "#27d8ff",
+    "#6ee7ff",
+    "#2776ff",
+    "#ff791f",
+    "#22c55e"
+  ];
+
+  for (let i = 0; i < 46; i += 1) {
+
+    const spark = document.createElement("span");
+
+    spark.className = "spark";
+
+    spark.style.left = `${window.innerWidth / 2}px`;
+    spark.style.top = `${Math.min(window.innerHeight * .32, 260)}px`;
+    spark.style.background = colors[i % colors.length];
+
+    spark.style.setProperty(
+      "--x",
+      `${(Math.random() - .5) * 620}px`
+    );
+
+    spark.style.setProperty(
+      "--y",
+      `${Math.random() * 380 + 100}px`
+    );
+
+    spark.style.setProperty(
+      "--r",
+      `${Math.random() * 720 - 360}deg`
+    );
+
+    document.body.appendChild(spark);
+
+    setTimeout(() => {
+      spark.remove();
+    }, 1100);
+
+  }
+
+}
+
+checkScore.addEventListener("click", () => {
+
+  if (selected.size === 0) {
+    return;
+  }
+
+  question.classList.remove("active");
+  reveal.classList.add("active");
+
+  animateScore(selected.size);
+  launchConfetti();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
 });
 
-const industryFromHash = window.location.hash.replace('#', '');
-if (industryConfigs[industryFromHash]) {
-  currentIndustry = industryFromHash;
-}
-renderIndustry();
+restart.addEventListener("click", () => {
+
+  selected.clear();
+
+  answers.forEach((button) => {
+    button.classList.remove("selected");
+  });
+
+  updateSelection();
+
+  reveal.classList.remove("active");
+  question.classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+});
+
+next.addEventListener("click", () => {
+
+  alert(
+    "Travel & Fun will be added after you approve this first round."
+  );
+
+});
+
+updateSelection();
 </script>
+
 </body>
 </html>
